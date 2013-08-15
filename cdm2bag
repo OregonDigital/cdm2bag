@@ -1,0 +1,81 @@
+#!/usr/bin/env ruby
+
+require 'rdf'
+require 'rdf/ntriples'
+require 'nokogiri'
+require 'bagit'
+require 'docopt'
+
+doc = <<DOCOPT
+ContentDM to BagIt
+
+Usage:
+  #{__FILE__} DIR [TARGET]
+  #{__FILE__} -h | --version
+
+Options:
+  -h --help      Show this help screen.
+  -v --version   Show version.
+
+DOCOPT
+
+# fix cdm's broken xml
+def preprocess_xml(f)
+  new_file = f + '.new'
+  File.open(new_file, 'w') do |fo|
+    fo.puts '<?xml version="1.0"?>'
+    fo.puts '<records>'
+    File.foreach(f) do |li|
+      fo.puts li
+    end
+    fo.puts '</records>'
+  end
+  File.delete(f)
+  File.rename(new_file, f)
+end
+
+def make_all_bags(dir, target)
+  target = FileUtils.mkdir_p(target)
+  Dir.foreach(dir) do |collection|
+    next if collection == '.' or collection == '..'
+    collection_f = File.join(dir, collection, 'index', 'description', 'desc.all')
+
+    preprocess_xml(collection_f) unless File.open(collection_f, &:readline).start_with?('<?xml version="1.0"?>')
+
+    xml = Nokogiri::XML.parse(File.open(File.join(dir, collection, 'index', 'description', 'desc.all')))
+    puts xml
+    col_dir = FileUtils.mkdir_p(File.join(target, collection))
+  end
+end
+  # graph.each_subject do |subject|
+  #   bag = BagIt::Bag.new(File.basename(subject))
+  #   RDF::Writer.open("descMetadata.nt", :format => :ntriples) do |writer|
+  #     query = RDF::Query.new do
+  #       pattern [subject, :pred, :obj]
+  #     end
+  #     query.execute(graph).each do |solution|
+  #       writer << RDF::Repository.new do |r|
+  #         r << RDF::Statement.new({:subject => subject, :predicate => solution[:pred], :object => solution[:obj]})
+  #       end
+  #     end
+  #   end
+  #   bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
+  #   bag.add_tag_file('hybag.yml', 'hybag.yml')
+  #   query = RDF::Query.new do
+  #     pattern [subject, RDF::URI('http://tom.oregonstate.edu/full'), :full]
+  #   end
+  #   fname = query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')
+  #   begin
+  #     bag.add_file('content.tif', File.join('..', 'braceros-tiffs', query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')))
+  #   rescue
+  #   end
+  #   bag.tagmanifest!
+  #   bag.manifest!
+  # end
+
+begin
+  opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.1')
+  make_all_bags(opts['DIR'], opts['TARGET'] || 'bags')
+rescue Docopt::Exit => e
+  puts e.message
+end
