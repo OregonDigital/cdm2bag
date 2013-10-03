@@ -2,80 +2,114 @@
 
 require 'rdf'
 require 'rdf/ntriples'
-require 'nokogiri'
+require 'cgi'
 require 'bagit'
+require 'yaml'
 require 'docopt'
 
 doc = <<DOCOPT
 ContentDM to BagIt
 
+Consumes a directory of ContentDM collections and converts them into
+bags.
+
 Usage:
-  #{__FILE__} DIR [TARGET]
+  #{__FILE__} [--skip] DIR [TARGET]
   #{__FILE__} -h | --version
 
 Options:
+  -s --skip     Skip missing fields.
   -h --help      Show this help screen.
   -v --version   Show version.
 
 DOCOPT
 
-# fix cdm's broken xml
-def preprocess_xml(f)
-  new_file = f + '.new'
-  File.open(new_file, 'w') do |fo|
-    fo.puts '<?xml version="1.0"?>'
-    fo.puts '<records>'
-    File.foreach(f) do |li|
-      fo.puts li
-    end
-    fo.puts '</records>'
+def create_graph(file)
+  @missing_fields ||= []
+  graph = RDF::Graph.new
+  mappings = YAML.load_file('mapping.yml')
+  namespaces = {}
+  mappings['namespaces'].each do |ns, base_uri|
+    namespaces[ns] = RDF::Vocabulary.new(base_uri)
   end
-  File.delete(f)
-  File.rename(new_file, f)
+  record = {}
+  File.readlines(file).each do |ln|
+    tag = ln.match(/^\s*<([a-z]+)>/)
+    next if tag.nil? or tag[1] == 'record' or tag[1] == 'records'
+    tag = tag[1]
+    ln.slice!("<#{tag}>")
+    ln.slice!("<\/#{tag}>")
+    record[tag] = ln.strip
+    if tag == 'dmrecord'
+      subject = RDF::URI("http://example.org/ns/#{record['dmrecord']}")
+      record.each do |field, content|
+        begin
+          ns, term = mappings['mappings'][field.to_s].split(':')
+          graph << RDF::Statement.new(subject, namespaces[ns][term], content) unless content == nil or content == ''
+        rescue
+          @missing_fields << field unless @missing_fields.include? field
+        end
+      end
+    end
+  end
+  graph
+end
+
+def write_desc_metadata(graph, subject, bag)
+  RDF::Writer.open("descMetadata.nt", :format => :ntriples) do |writer|
+    query = RDF::Query.new do
+      pattern [subject, :pred, :obj]
+    end
+    query.execute(graph).each do |solution|
+      writer << RDF::Repository.new do |r|
+        r << RDF::Statement.new({:subject => subject, :predicate => solution[:pred], :object => solution[:obj]})
+      end
+    end
+  end
+  bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
+end
+
+def add_content_file(graph, subject, bag)
+  begin
+    query = RDF::Query.new do
+      pattern [subject, RDF::URI('http://tom.oregonstate.edu/full'), :full]
+    end
+    fname = query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')
+    bag.add_file('content.tif', File.join('..', 'braceros-tiffs', query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')))
+  rescue
+  end
+end
+
+def make_bag(dir, graph, subject)
+  bag = BagIt::Bag.new(File.join(dir, File.basename(subject)))
+  write_desc_metadata(graph, subject, bag)
+  add_content_file(graph, subject, bag)
+  bag.tagmanifest!
+  bag.manifest!
+end
+
+def make_coll_bags(dir, target, collection, *args)
+  file = File.join(dir, collection, 'index', 'description', 'desc.all')
+  col_dir = FileUtils.mkdir_p(File.join(target, collection))
+
+  graph = create_graph(file)
+  graph.each_subject do |subject|
+    make_bag(col_dir, graph, subject) unless @missing_fields.empty? or @opts['--skip']
+  end
 end
 
 def make_all_bags(dir, target)
   target = FileUtils.mkdir_p(target)
   Dir.foreach(dir) do |collection|
     next if collection == '.' or collection == '..'
-    collection_f = File.join(dir, collection, 'index', 'description', 'desc.all')
-
-    preprocess_xml(collection_f) unless File.open(collection_f, &:readline).start_with?('<?xml version="1.0"?>')
-
-    xml = Nokogiri::XML.parse(File.open(File.join(dir, collection, 'index', 'description', 'desc.all')))
-    puts xml
-    col_dir = FileUtils.mkdir_p(File.join(target, collection))
+    make_coll_bags(dir, target, collection)
   end
 end
-  # graph.each_subject do |subject|
-  #   bag = BagIt::Bag.new(File.basename(subject))
-  #   RDF::Writer.open("descMetadata.nt", :format => :ntriples) do |writer|
-  #     query = RDF::Query.new do
-  #       pattern [subject, :pred, :obj]
-  #     end
-  #     query.execute(graph).each do |solution|
-  #       writer << RDF::Repository.new do |r|
-  #         r << RDF::Statement.new({:subject => subject, :predicate => solution[:pred], :object => solution[:obj]})
-  #       end
-  #     end
-  #   end
-  #   bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
-  #   bag.add_tag_file('hybag.yml', 'hybag.yml')
-  #   query = RDF::Query.new do
-  #     pattern [subject, RDF::URI('http://tom.oregonstate.edu/full'), :full]
-  #   end
-  #   fname = query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')
-  #   begin
-  #     bag.add_file('content.tif', File.join('..', 'braceros-tiffs', query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')))
-  #   rescue
-  #   end
-  #   bag.tagmanifest!
-  #   bag.manifest!
-  # end
 
 begin
-  opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.1')
-  make_all_bags(opts['DIR'], opts['TARGET'] || 'bags')
+  @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.1')
+  make_all_bags(@opts['DIR'], @opts['TARGET'] || 'bags')
+  puts @missing_fields unless @missing_fields.empty?
 rescue Docopt::Exit => e
   puts e.message
 end

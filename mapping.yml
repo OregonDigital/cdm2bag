@@ -1,0 +1,76 @@
+namespaces:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  owl: "http://www.w3.org/2002/07/owl#"
+  skos: "http://www.w3.org/2004/02/skos/core#"
+  dct: "http://purl.org/dc/terms/"
+  bibo: "http://purl.org/ontology/bibo/"
+  foaf: "http://xmlns.com/foaf/0.1/"
+  geo: "http://www.w3.org/2003/01/geo/wgs84_pos#"
+  frbr: "http://iflastandards.info/ns/fr/frbr/frbrer/"
+  mads: "http://www.loc.gov/mads/rdf/v1#"
+  marcrel: "http://id.loc.gov/vocabulary/relators/"
+  modsrdf: "http://www.loc.gov/standards/mods/modsrdf/v1/"
+  premis: "http://multimedialab.elis.ugent.be/users/samcoppe/ontologies/Premis/premis.owl#"
+  oregon: "http://tom.oregonstate.edu/"
+
+mappings:
+  #
+  # braceros
+  #
+  image_title: dct:title
+  digital_collection_title: dct:isPartOf
+  photographer: marcrel:pht
+  date: dct:date
+  date_created: dct:created
+  date_modified: dct:modified
+  descri: dct:description
+  subject: dct:subject
+  object_type: dct:type
+  original_format: mads:physicalDescription
+  original_collection: mads:Collection
+  item_number: dct:identifier
+  other_formats: dct:hasFormat
+  geographic_subject: dct:spatial
+  restrictions: dct:rights
+  transmission_data: oregon:conversionSpecifications
+  item_url: dct:replaces
+  full_resolution_: oregon:full
+  file_name: premis:originalName
+  #
+  # sheet music
+  #
+  title: dct:title
+  caption_title: dct:alternative
+  other_title: dct:alternative
+  composer: marcrel:cmp
+  lyricist: marcrel:lyr
+  arranger: marcrel:arr
+  original_place_of_publication: marcrel:pup
+  original_publisher: dct_publisher
+  original_copyright_holder: marcrel:cpc
+  physical_description: modsrdf:physicalExtent
+  physical_medium: dct:description
+  notes: dct:description
+  topic: dct:subject
+  #
+  # tom says not good. need cv for subject.
+  #
+  genre: modsrdf:genre
+  cover: dct:description
+  illust: oregon:coverArtist
+  lithog: marcrel:prm
+  first_line: oregon:sheetmusic/firstLine
+  first_line_of_chorus: oregon:sheetmusic/firsLineChorus
+  larger_work: oregon:sheetmusic/largerWork
+  repository: modsrdf:locationPhysical
+  repository_collection: mads:Collection
+  accession_or_call_number: modsrdf:locationShelfLocator
+  type: dct:type
+  rights: dct:rights
+  format: dct:format
+  date_of_publication: dct:date
+  digitization_specficiations: oregon:digitizationSpecifications
+  date_of_digitization: oregon:dateDigitized
+  digital_collection: oregon:set
+  contentdm_file_path: oregon:full
