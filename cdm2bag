@@ -93,8 +93,12 @@ def make_coll_bags(dir, target, collection, *args)
   col_dir = FileUtils.mkdir_p(File.join(target, collection))
 
   graph = create_graph(file)
-  graph.each_subject do |subject|
-    make_bag(col_dir, graph, subject) unless @missing_fields.empty? or @opts['--skip']
+  if @missing_fields.empty? or @opts['--skip']
+    graph.each_subject do |subject|
+      make_bag(col_dir, graph, subject)
+    end
+  else
+    puts "Missing fields, not writing bags for #{collection}. Add fields to mapping.yml, or use --skip flag."
   end
 end
 
