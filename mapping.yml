@@ -18,25 +18,26 @@ mappings:
   #
   # braceros
   #
-  image_title: dct:title
-  digital_collection_title: dct:isPartOf
-  photographer: marcrel:pht
+  title: dct:title
+  digita: dct:isPartOf
+  creato: marcrel:pht
   date: dct:date
-  date_created: dct:created
-  date_modified: dct:modified
+  dmcreated: dct:created
+  dmmodified: dct:modified
   descri: dct:description
-  subject: dct:subject
-  object_type: dct:type
-  original_format: mads:physicalDescription
-  original_collection: mads:Collection
-  item_number: dct:identifier
-  other_formats: dct:hasFormat
-  geographic_subject: dct:spatial
+  subjec: dct:subject
+  object: dct:type
+  type: mads:physicalDescription
+  source: mads:Collection
+  identi: dct:identifier
+  format: dct:hasFormat
+  covera:
+    method: geographic
   restrictions: dct:rights
   transmission_data: oregon:conversionSpecifications
   item_url: dct:replaces
-  full_resolution_: oregon:full
-  file_name: premis:originalName
+  fullrs: oregon:full
+  find: premis:originalName
   #
   # sheet music
   #

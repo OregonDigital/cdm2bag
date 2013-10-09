@@ -2,10 +2,15 @@
 
 require 'rdf'
 require 'rdf/ntriples'
-require 'cgi'
+require 'rdf/rdfxml'
 require 'bagit'
 require 'yaml'
+require 'rest_client'
+require 'json'
 require 'docopt'
+require './mapping_methods.rb'
+
+include MappingMethods
 
 doc = <<DOCOPT
 ContentDM to BagIt
@@ -44,9 +49,13 @@ def create_graph(file)
       subject = RDF::URI("http://example.org/ns/#{record['dmrecord']}")
       record.each do |field, content|
         begin
-          ns, term = mappings['mappings'][field.to_s].split(':')
-          graph << RDF::Statement.new(subject, namespaces[ns][term], content) unless content == nil or content == ''
-        rescue
+          if mappings['mappings'][field.to_s].include? 'method' and not (content == nil or content == '')
+            graph << send(mappings['mappings'][field.to_s]['method'].to_sym, subject, content)
+          else
+            ns, term = mappings['mappings'][field.to_s].split(':') unless (content == nil or content == '')
+            graph << RDF::Statement.new(subject, namespaces[ns][term], content)
+          end
+        rescue => e
           @missing_fields << field unless @missing_fields.include? field
         end
       end
