@@ -12,6 +12,7 @@ module MappingMethods
 
     def geographic(subject, data)
       data.slice!('(Ore.)')
+      data.slice!(';')
       data.strip!
       unless geocache.include? data
         begin
