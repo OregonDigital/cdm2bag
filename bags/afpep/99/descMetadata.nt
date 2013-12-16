@@ -1,0 +1,24 @@
+<http://example.org/ns/99> <http://purl.org/dc/terms/title> "Barack Obama bag" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/date> "2008" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/subject> "Elections" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/spatial> <http://sws.geonames.org/192950> .
+<http://example.org/ns/99> <http://purl.org/dc/terms/coverage> "Africa" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/description> "Front of B arack Obama tote bag.  Blue, beige, black, and white with a black and white photo of Barack Obama in the middle surrounded by the text \"HONGERA BARACK OBAMA.\"" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/type> <http://purl.org/dc/dcmitype/Image> .
+<http://example.org/ns/99> <http://purl.org/dc/terms/format> <http://purl.org/NET/mediatypes/image/jp2> .
+<http://example.org/ns/99> <http://purl.org/dc/terms/identifier> "Obama_bag_front_2009" .
+<http://example.org/ns/99> <http://creativecommons.org/ns#license> <http://creativecommons.org/licenses/by-nc-nd/3.0/us> .
+<http://example.org/ns/99> <http://purl.org/dc/elements/1.1/rights> "(c) University of Oregon. This image is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States License (http://creativecommons.org/licenses/by-nc-nd/3.0/us/ ). Acknowledgment of the University of Oregon Libraries as a source is required." .
+<http://example.org/ns/99> <http://purl.org/dc/terms/isPartOf> "University of Oregon. Libraries. African Political Ephemera and Realia." .
+<http://example.org/ns/99> <http://tom.oregonstate.edu/full> "Volume6/Obama_bag_front_2009.tif" .
+<http://example.org/ns/99> <http://multimedialab.elis.ugent.be/users/samcoppe/ontologies/Premis/premis.owl#originalName> "97.jp2" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/created> "2012-07-19" .
+<http://example.org/ns/99> <http://purl.org/dc/terms/modified> "2012-07-19" .
+<http://sws.geonames.org/192950/> <http://www.geonames.org/ontology#name> "Kenya" .
+<http://sws.geonames.org/192950/> <http://www.w3.org/2004/02/skos/core#prefLabel> "Kenya" .
+<http://sws.geonames.org/192950/> <http://www.w3.org/2003/01/geo/wgs84_pos#long> "38" .
+<http://sws.geonames.org/192950/> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "1" .
+<http://sws.geonames.org/192950/> <http://www.geonames.org/ontology#countryCode> "KE" .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/2000/01/rdf-schema#label> "Image"@en .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://purl.org/NET/mediatypes/image/jp2> <http://www.w3.org/2000/01/rdf-schema#label> "image/jp2" .

@@ -1,0 +1,3 @@
+46daca590ef80ba254129d049bbd4d45 bag-info.txt
+9e5ad981e0d29adc278f6a294b8c2aca bagit.txt
+cb39daaa03b84189e2a2bb60de78c75f descMetadata.nt

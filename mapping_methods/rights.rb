@@ -25,8 +25,8 @@ module MappingMethods
     def rights(subject, data)
       graph = RDF::Graph.new
       licenses = findCCLicenses(data)
+
       licenses.each do |license|
-        puts license
         graph << RDF::Statement.new(subject, RDF::URI('http://creativecommons.org/ns#license'), license)
       end
 

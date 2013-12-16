@@ -29,9 +29,9 @@ Options:
 
 DOCOPT
 
-def create_graph(file)
+def create_graphs(file)
   @missing_fields ||= []
-  graph = RDF::Graph.new
+  graphs = []
   mappings = YAML.load_file('mapping.yml')
   namespaces = {}
   mappings['namespaces'].each do |ns, base_uri|
@@ -47,52 +47,54 @@ def create_graph(file)
     record[tag] = ln.strip
     if tag == 'dmrecord'
       subject = RDF::URI("http://example.org/ns/#{record['dmrecord']}")
+      graph = RDF::Graph.new()
       record.each do |field, content|
         begin
           if mappings['mappings'][field.to_s].include? 'method' and not (content == nil or content == '')
-            graph << send(mappings['mappings'][field.to_s]['method'].to_sym, subject, content)
+            graph << send(mappings['mappings'][field.to_s]['method'].to_sym, subject, content) unless (content.downcase == 'unknown')
           else
             ns, term = mappings['mappings'][field.to_s].split(':') unless (content == nil or content == '')
-            graph << RDF::Statement.new(subject, namespaces[ns][term], content)
+            graph << RDF::Statement.new(subject, namespaces[ns][term], content) unless (content.downcase == 'unknown')
           end
         rescue => e
           @missing_fields << field unless @missing_fields.include? field
+          puts e unless e.message.include? 'undefined'
         end
       end
+      graphs << graph unless graph.empty?
     end
   end
-  graph
+  graphs
 end
 
-def write_desc_metadata(graph, subject, bag)
+def write_desc_metadata(graph, bag)
   RDF::Writer.open("descMetadata.nt", :format => :ntriples) do |writer|
-    query = RDF::Query.new do
-      pattern [subject, :pred, :obj]
-    end
-    query.execute(graph).each do |solution|
-      writer << RDF::Repository.new do |r|
-        r << RDF::Statement.new({:subject => subject, :predicate => solution[:pred], :object => solution[:obj]})
-      end
-    end
+    writer << graph
+    # graph.each_statement do |statement|
+    #   writer << RDF::Repository.new do |r|
+    #     r << RDF::Statement.new({:subject => statement.subject, :predicate => statement.predicate, :object => statement.object})
+    #   end
+    # end
   end
   bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
 end
 
-def add_content_file(graph, subject, bag)
+def add_content_file(graph, bag)
   begin
     query = RDF::Query.new do
-      pattern [subject, RDF::URI('http://tom.oregonstate.edu/full'), :full]
+      pattern [:subject, RDF::URI('http://tom.oregonstate.edu/full'), :full]
     end
     fname = query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')
     bag.add_file('content.tif', File.join('..', 'braceros-tiffs', query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')))
-  rescue
+  rescue => e
+    puts e unless e.message.include? 'undefined'
   end
 end
 
 def make_bag(dir, graph, subject)
   bag = BagIt::Bag.new(File.join(dir, File.basename(subject)))
-  write_desc_metadata(graph, subject, bag)
-  add_content_file(graph, subject, bag)
+  write_desc_metadata(graph, bag)
+  add_content_file(graph, bag)
   bag.tagmanifest!
   bag.manifest!
 end
@@ -101,10 +103,10 @@ def make_coll_bags(dir, target, collection, *args)
   file = File.join(dir, collection, 'index', 'description', 'desc.all')
   col_dir = FileUtils.mkdir_p(File.join(target, collection))
 
-  graph = create_graph(file)
+  graphs = create_graphs(file)
   if @missing_fields.empty? or @opts['--skip']
-    graph.each_subject do |subject|
-      make_bag(col_dir, graph, subject)
+    graphs.each do |graph|
+      make_bag(col_dir, graph, graph.first.subject)
     end
   else
     puts "Missing fields, not writing bags for #{collection}. Add fields to mapping.yml, or use --skip flag."

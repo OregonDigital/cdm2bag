@@ -1,0 +1,35 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.5)
+    bagit (0.3.2)
+      docopt (~> 0.5.0)
+      validatable (~> 1.6)
+    docopt (0.5.0)
+    ffi (1.9.0)
+    iso-639 (0.1.0)
+    json (1.8.1)
+    json-ld (1.0.8)
+      json (>= 1.7.5)
+      rdf (>= 1.0.8)
+    mime-types (1.23)
+    rdf (1.0.8)
+      addressable (>= 2.2)
+    rdf-raptor (1.0.1)
+      ffi (>= 1.0)
+      rdf (>= 1.0.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    validatable (1.6.7)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bagit
+  docopt
+  iso-639
+  json-ld
+  rdf
+  rdf-raptor
+  rest-client

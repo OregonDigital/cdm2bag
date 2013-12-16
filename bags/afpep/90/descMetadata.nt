@@ -1,0 +1,32 @@
+<http://example.org/ns/90> <http://purl.org/dc/terms/title> "Back of the Jean-Pierre Bembe T-shirt 2006" .
+<http://example.org/ns/90> <http://purl.org/dc/terms/date> "2006" .
+<http://example.org/ns/90> <http://purl.org/dc/terms/subject> "Elections;" .
+<http://example.org/ns/90> <http://purl.org/dc/terms/spatial> <http://sws.geonames.org/203312> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/coverage> "Africa" .
+<http://example.org/ns/90> <http://purl.org/dc/terms/description> "White short-sleeve shirt with large image of a black ant and the text \"MLC/ AVEC DIEU NOUS VAINCRONS\" in blue." .
+<http://example.org/ns/90> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/iso639-1/fr> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/iso639-2/fre> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/languages/fre> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/iso639-2/fra> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/type> <http://purl.org/dc/dcmitype/Image> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/format> <http://purl.org/NET/mediatypes/image/jp2> .
+<http://example.org/ns/90> <http://purl.org/dc/terms/identifier> "Bembe_tshirt_back_2006" .
+<http://example.org/ns/90> <http://creativecommons.org/ns#license> <http://creativecommons.org/licenses/by-nc-nd/3.0/us> .
+<http://example.org/ns/90> <http://purl.org/dc/elements/1.1/rights> "(c) University of Oregon. This image is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States License (http://creativecommons.org/licenses/by-nc-nd/3.0/us/ ). Acknowledgment of the University of Oregon Libraries as a source is required." .
+<http://example.org/ns/90> <http://purl.org/dc/terms/isPartOf> "University of Oregon. Libraries. African Political Ephemera and Realia." .
+<http://example.org/ns/90> <http://tom.oregonstate.edu/full> "Volume6/Bembe_tshirt_back_2006.tif" .
+<http://example.org/ns/90> <http://multimedialab.elis.ugent.be/users/samcoppe/ontologies/Premis/premis.owl#originalName> "88.jp2" .
+<http://example.org/ns/90> <http://purl.org/dc/terms/created> "2012-07-19" .
+<http://example.org/ns/90> <http://purl.org/dc/terms/modified> "2012-07-19" .
+<http://sws.geonames.org/203312/> <http://www.geonames.org/ontology#name> "Democratic Republic of the Congo" .
+<http://sws.geonames.org/203312/> <http://www.w3.org/2004/02/skos/core#prefLabel> "Democratic Republic of the Congo" .
+<http://sws.geonames.org/203312/> <http://www.w3.org/2003/01/geo/wgs84_pos#long> "25" .
+<http://sws.geonames.org/203312/> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "0" .
+<http://sws.geonames.org/203312/> <http://www.geonames.org/ontology#countryCode> "CD" .
+<http://id.loc.gov/vocabulary/iso639-1/fr> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://id.loc.gov/vocabulary/iso639-2/fre> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://id.loc.gov/vocabulary/languages/fre> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://id.loc.gov/vocabulary/iso639-2/fra> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/2000/01/rdf-schema#label> "Image"@en .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://purl.org/NET/mediatypes/image/jp2> <http://www.w3.org/2000/01/rdf-schema#label> "image/jp2" .

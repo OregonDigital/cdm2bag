@@ -1,3 +1,9 @@
+require 'rdf'
+require 'rest-client'
+require 'json'
+require 'rdf/ntriples'
+require 'rdf/raptor'
+
 module MappingMethods
   module Geographic
     def geocache
@@ -10,8 +16,29 @@ module MappingMethods
       geocache[str] = {:uri => RDF::URI(uri)}
     end
 
+    def geonames_graph(uri, str)
+      return @geocache[str][:graph] if @geocache[str].include? :graph
+      geo_graph = RDF::Graph.load(uri)
+      graph = RDF::Graph.new
+
+      q = RDF::Query.new do
+        pattern [:geoname, RDF::URI('http://www.geonames.org/ontology#name'), :name]
+        pattern [:geoname, RDF::URI('http://www.w3.org/2003/01/geo/wgs84_pos#long'), :long]
+        pattern [:geoname, RDF::URI('http://www.w3.org/2003/01/geo/wgs84_pos#lat'), :lat]
+        pattern [:geoname, RDF::URI('http://www.geonames.org/ontology#countryCode'), :countryCode]
+      end
+
+      q.execute(geo_graph).each do |solution|
+        graph << RDF::Statement.new(solution[:geoname], RDF::URI('http://www.geonames.org/ontology#name'), solution[:name])
+        graph << RDF::Statement.new(solution[:geoname], RDF::SKOS.prefLabel, solution[:name])
+        graph << RDF::Statement.new(solution[:geoname], RDF::URI('http://www.w3.org/2003/01/geo/wgs84_pos#long'), solution[:long])
+        graph << RDF::Statement.new(solution[:geoname], RDF::URI('http://www.w3.org/2003/01/geo/wgs84_pos#lat'), solution[:lat])
+        graph << RDF::Statement.new(solution[:geoname], RDF::URI('http://www.geonames.org/ontology#countryCode'), solution[:countryCode])
+      end
+      @geocache[str][:graph] = graph
+    end
+
     def geographic(subject, data)
-      data.slice!('(Ore.)')
       data.slice!(';')
       data.strip!
       unless geocache.include? data
@@ -22,7 +49,9 @@ module MappingMethods
         end
       end
       if geocache.include? data
-        return RDF::Statement.new(subject, RDF::DC[:spatial], geocache[data][:uri])
+        graph = RDF::Graph.new
+        graph << RDF::Statement.new(subject, RDF::DC[:spatial], geocache[data][:uri])
+        return graph << geonames_graph(geocache[data][:uri], data)
       else
         return RDF::Statement.new(subject, RDF::DC[:spatial], data)
       end

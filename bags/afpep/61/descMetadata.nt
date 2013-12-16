@@ -1,0 +1,31 @@
+<http://example.org/ns/61> <http://purl.org/dc/terms/title> "Abdoulaye Wade campaign poster" .
+<http://example.org/ns/61> <http://purl.org/dc/terms/date> "2007" .
+<http://example.org/ns/61> <http://purl.org/dc/terms/subject> "Wade, Abdoulaye; Elections; Presidents" .
+<http://example.org/ns/61> <http://purl.org/dc/terms/spatial> <http://sws.geonames.org/2245662> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/coverage> "Africa, West" .
+<http://example.org/ns/61> <http://purl.org/dc/terms/description> "Campaign poster for Abdoulaye Wade in the 2007 presidential election campaign in Senegal.  Wade, the Sopi Coalition candidate (from the Senegalese Democratic Party), is shown in a business suit with the text \"Ensemble continuons a batir le Senegal\" and \"Abdoulaye Wade 2007\".  The logo for Coaition Sopi appears in a small circle near the candidate's name." .
+<http://example.org/ns/61> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/iso639-1/fr> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/iso639-2/fre> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/languages/fre> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/language> <http://id.loc.gov/vocabulary/iso639-2/fra> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/type> <http://purl.org/dc/dcmitype/Image> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/format> <http://purl.org/NET/mediatypes/image/jp2> .
+<http://example.org/ns/61> <http://purl.org/dc/terms/identifier> "Wade_2007" .
+<http://example.org/ns/61> <http://purl.org/dc/elements/1.1/rights> "The item(s) may be subject to copyright restrictions by the creators or their assigns." .
+<http://example.org/ns/61> <http://purl.org/dc/terms/isPartOf> "University of Oregon. Libraries. African Political Ephemera and Realia.;" .
+<http://example.org/ns/61> <http://tom.oregonstate.edu/full> "Volume2\\Wade_2007.tif" .
+<http://example.org/ns/61> <http://multimedialab.elis.ugent.be/users/samcoppe/ontologies/Premis/premis.owl#originalName> "62.jp2" .
+<http://example.org/ns/61> <http://purl.org/dc/terms/created> "2009-02-11" .
+<http://example.org/ns/61> <http://purl.org/dc/terms/modified> "2009-04-17" .
+<http://sws.geonames.org/2245662/> <http://www.geonames.org/ontology#name> "Senegal" .
+<http://sws.geonames.org/2245662/> <http://www.w3.org/2004/02/skos/core#prefLabel> "Senegal" .
+<http://sws.geonames.org/2245662/> <http://www.w3.org/2003/01/geo/wgs84_pos#long> "-14" .
+<http://sws.geonames.org/2245662/> <http://www.w3.org/2003/01/geo/wgs84_pos#lat> "14" .
+<http://sws.geonames.org/2245662/> <http://www.geonames.org/ontology#countryCode> "SN" .
+<http://id.loc.gov/vocabulary/iso639-1/fr> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://id.loc.gov/vocabulary/iso639-2/fre> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://id.loc.gov/vocabulary/languages/fre> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://id.loc.gov/vocabulary/iso639-2/fra> <http://www.w3.org/2004/02/skos/core#prefLabel> "French"@en .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/2000/01/rdf-schema#label> "Image"@en .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://purl.org/NET/mediatypes/image/jp2> <http://www.w3.org/2000/01/rdf-schema#label> "image/jp2" .

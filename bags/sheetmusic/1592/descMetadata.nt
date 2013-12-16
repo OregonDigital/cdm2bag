@@ -1,0 +1,22 @@
+<http://example.org/ns/1592> <http://purl.org/dc/terms/title> "I could be happy - only with you" .
+<http://example.org/ns/1592> <http://id.loc.gov/vocabulary/relators/pht> "Smith, Emily" .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/date> "1906" .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/description> "Back cover contains four musical excerpts from \"The House Melodious\"" .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/description> "A mirrored image illustration of a women sitting under tree.  At the center of the page is a photograph of a woman named Holly." .
+<http://example.org/ns/1592> <http://www.loc.gov/standards/mods/modsrdf/v1/genre> "Sheet music" .
+<http://example.org/ns/1592> <http://www.loc.gov/mads/rdf/v1#Collection> "University of Oregon Libraries - Music Services" .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/identifier> "Music ShColl 011671" .
+<http://example.org/ns/1592> <http://creativecommons.org/ns#license> <http://creativecommons.org/publicdomain/mark/1.0/> .
+<http://example.org/ns/1592> <http://purl.org/dc/elements/1.1/rights> "This item is in the public domain. Acknowledgement of the University of Oregon Libraries as a source is requested." .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/type> <http://purl.org/dc/dcmitype/Image> .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/type> <http://purl.org/dc/dcmitype/Text> .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/format> <http://purl.org/NET/mediatypes/application/pdf> .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/isPartOf> "University of Oregon. Libraries. Historic Sheet Music Collection." .
+<http://example.org/ns/1592> <http://multimedialab.elis.ugent.be/users/samcoppe/ontologies/Premis/premis.owl#originalName> "1593.pdf" .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/created> "2010-10-04" .
+<http://example.org/ns/1592> <http://purl.org/dc/terms/modified> "2010-10-04" .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/2000/01/rdf-schema#label> "Image"@en .
+<http://purl.org/dc/dcmitype/Image> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://purl.org/dc/dcmitype/Text> <http://www.w3.org/2000/01/rdf-schema#label> "Text"@en .
+<http://purl.org/dc/dcmitype/Text> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
+<http://purl.org/NET/mediatypes/application/pdf> <http://www.w3.org/2000/01/rdf-schema#label> "application/pdf" .
