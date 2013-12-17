@@ -14,6 +14,7 @@ namespaces:
   modsrdf: "http://www.loc.gov/standards/mods/modsrdf/v1/"
   premis: "http://www.loc.gov/premis/rdf/v1#"
   oregon: "http://tom.oregonstate.edu/"
+  vra: "http://purl.org/vra/"
 
 mappings:
   #
@@ -53,41 +54,86 @@ mappings:
   #
   # afpep
   #
+  work: vra:workType  #uses Getty AAT cv
+  title: dct:title  
+  view: vra:view
+  creato: dct:creator
+  politi: dct:contributor
+  date: 
+    method: dc:date
+  earlie: vra:earliestDate
+  latest: vra:latestDate
+  subject: 
+    method: dc:subject.lcsh #not sure what you want to do here. field also contains lc names as subjects
+  cultua: vra:culturalContext
   countr:
     method: geographic
   region: dct:coverage
-  measur: modsrdf:physicalExtent # range is xsd:string (ignoring this, using plain literals)
+  locati: dct:provenance
+  measur: vra:measurements
+  descri: dct:description
+  inscri: vra:inscription
   langua:
     method: iso_language
+  relati: dct:isPartOf
+  type:
+    method: type
+  format:
+    method: format
+  identi: dct:identifier
+  rights:
+    method: rights #cc licenses for all
+  digiti: oregon:conversionSpecifications
+  digita: oregon:isPartOf/set
+  full: oregon:fullText
+  item_ur: dct:replaces
+  fullrs: oregon:full
+  find: premis:hasOriginalName
   #
   # sheet music
   #
-  captio: dct:alternative # ATTENTION KAREN:
-  other: dct:alternative  # do we want to merge these two properties?
+  title: dct:title
+  captio: dct:alternative # 
+  other: dct:alternative  # do we want to merge captio and other properties? waiting to hear from music cataloger
   composer: marcrel:cmp
   lyrici: marcrel:lyr
   arrang: marcrel:arr
   origib: marcrel:pup # geonamesify this!
-  publis: dct_publisher # ATTENTION KAREN:
-  origin: marcrel:cpc   # do i have these two right?
+  publis: dct:publisher
+  origin: marcrel:cpc   
+  date: dct:issued
   physic: modsrdf:physicalExtent
-  descri: dct:description # ATTENTION KAREN:
-  notes: dct:description  # do we want to merge these two properties?
-  topic: dct:subject
-  genre: dce:type # TOM MADE THIS UP, it needs a better handling
-                  # always "sheet music", i think. Can we find a controlled type vocab?
-                  # genre: modsrdf:genre
-  cover: dct:description # flattening a lot, here
-  illust: oregon:coverArtist # is coverArtist the term we want for sure? let's define it.
-  lithog: marcrel:prm #
+  descri: dct:description
+  perfor: oregon:sheetmusic/instrumentation
+  topic: 
+    method: subject  #uses LCHS and LC Names 
+  genre: vra:workType #use AAT, always "sheet music" for this collection
+  cover: 
+    method: cover  #create a method to move into dct:description and predicate value with "Cover depicts:" or parse and map to subject terms and put in oregon:sheetmusic/coverSubject.
+  illust: marcrel:ill 
+  lithog: marcrel:prm
+  sourca: vra:workType #add as second workType entry if present (e.g. lithographs)
   first: oregon:sheetmusic/firstLine
   firsta: oregon:sheetmusic/firsLineChorus
   relati: oregon:sheetmusic/largerWork
+  publia: oregon:sheetmusic/hostItem
   repository: modsrdf:locationPhysical
-  digita: mads:Collection # mads:Collection is still totally wrong.
+  digita: oregon:isPartOf/collection
   accession_or_call_number: modsrdf:locationShelfLocator
-
-  digitization_specficiations: oregon:digitizationSpecifications
+  rights:
+    method: rights
+  contac: #do not import
+  type:
+    method: type
+  format:
+    method:format
+  digitization_specficiations: oregon:conversionSpecifications
+  image: #do not import
+  metada: #do not import
+  catalo: #do not import
   date_of_digitization: oregon:dateDigitized
-  digital_collection: oregon:set
-  contentdm_file_path: oregon:full
+  digital_collection: oregon:isPartOf/set
+  ___ oregon:full #will need to be scripted, CDM doesn't track file paths for PDF files
+  item_ur: dct:replaces
+  fullrs: oregon:full
+  find: premis:hasOriginalName
