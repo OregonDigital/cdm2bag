@@ -1,3 +1,4 @@
+
 require 'rdf'
 require 'rest-client'
 require 'json'
@@ -11,6 +12,7 @@ module MappingMethods
     end
 
     def geonames_search(str)
+      str.slice! '(Ore.)'
       response = RestClient.get 'http://api.geonames.org/searchJSON', {:params => {:username => 'johnson_tom', :q => str, :maxRows => 1, :style => 'short'}}
       uri = "http://sws.geonames.org/#{JSON.parse(response)['geonames'][0]['geonameId']}"
       geocache[str] = {:uri => RDF::URI(uri)}

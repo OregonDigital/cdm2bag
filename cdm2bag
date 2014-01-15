@@ -1,12 +1,8 @@
 #!/usr/bin/env ruby
 
-require 'rdf'
-require 'rdf/ntriples'
-require 'rdf/rdfxml'
-require 'bagit'
+require 'linkeddata'
 require 'yaml'
-require 'rest_client'
-require 'json'
+require 'bagit'
 require 'docopt'
 require './mapping_methods.rb'
 
@@ -29,52 +25,59 @@ Options:
 
 DOCOPT
 
+@missing_fields = []
+@mappings = YAML.load_file('mapping.yml')
+@namespaces = {}
+@mappings['namespaces'].each do |ns, base_uri|
+  @namespaces[ns] = RDF::Vocabulary.new(base_uri)
+end
+@skip = ['unknown', 'n/a']
+
 def create_graphs(file)
-  @missing_fields ||= []
   graphs = []
-  mappings = YAML.load_file('mapping.yml')
-  namespaces = {}
-  mappings['namespaces'].each do |ns, base_uri|
-    namespaces[ns] = RDF::Vocabulary.new(base_uri)
-  end
-  record = {}
+  graph = RDF::Graph.new
   File.readlines(file).each do |ln|
     tag = ln.match(/^\s*<([a-z]+)>/)
     next if tag.nil? or tag[1] == 'record' or tag[1] == 'records'
     tag = tag[1]
     ln.slice!("<#{tag}>")
     ln.slice!("<\/#{tag}>")
-    record[tag] = ln.strip
-    if tag == 'dmrecord'
-      subject = RDF::URI("http://example.org/ns/#{record['dmrecord']}")
-      graph = RDF::Graph.new()
-      record.each do |field, content|
-        begin
-          if mappings['mappings'][field.to_s].include? 'method' and not (content == nil or content == '')
-            graph << send(mappings['mappings'][field.to_s]['method'].to_sym, subject, content) unless (content.downcase == 'unknown')
-          else
-            ns, term = mappings['mappings'][field.to_s].split(':') unless (content == nil or content == '')
-            graph << RDF::Statement.new(subject, namespaces[ns][term], content) unless (content.downcase == 'unknown')
-          end
-        rescue => e
-          @missing_fields << field unless @missing_fields.include? field
-          puts e unless e.message.include? 'undefined'
-        end
+    ln = ln.strip
+    bnode = RDF::Node.new
+    begin
+      if @mappings['mappings'][tag.to_s].include? 'method' and not (ln == nil or ln == '')
+        graph << send(@mappings['mappings'][tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+      else
+        ns, term = @mappings['mappings'][tag.to_s].split(':') unless (ln == nil or ln == '')
+        graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
       end
-      graphs << graph unless graph.empty?
+      
+    rescue NoMethodError => e
+      @missing_fields << tag unless @missing_fields.include? tag
+    end
+
+    if tag == 'dmrecord'
+      graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
+      graph = RDF::Graph.new
+      bnode = RDF::Node.new
     end
   end
   graphs
 end
 
+def set_subject(graph, subject)
+  graph.each_statement do |statement|
+    if statement.subject.node?
+      graph.delete(statement)
+      graph << RDF::Statement.new(subject, statement.predicate, statement.object)
+    end
+  end
+  graph
+end
+
 def write_desc_metadata(graph, bag)
   RDF::Writer.open("descMetadata.nt", :format => :ntriples) do |writer|
     writer << graph
-    # graph.each_statement do |statement|
-    #   writer << RDF::Repository.new do |r|
-    #     r << RDF::Statement.new({:subject => statement.subject, :predicate => statement.predicate, :object => statement.object})
-    #   end
-    # end
   end
   bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
 end
@@ -86,8 +89,9 @@ def add_content_file(graph, bag)
     end
     fname = query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')
     bag.add_file('content.tif', File.join('..', 'braceros-tiffs', query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')))
+  rescue NoMethodError => e
   rescue => e
-    puts e unless e.message.include? 'undefined'
+    puts e
   end
 end
 
@@ -106,7 +110,11 @@ def make_coll_bags(dir, target, collection, *args)
   graphs = create_graphs(file)
   if @missing_fields.empty? or @opts['--skip']
     graphs.each do |graph|
-      make_bag(col_dir, graph, graph.first.subject)
+      subject = ''
+      graph.each_statement do |s|
+        subject = s.subject if s.subject.start_with? 'http://example.org/ns/'
+      end
+      make_bag(col_dir, graph, subject)
     end
   else
     puts "Missing fields, not writing bags for #{collection}. Add fields to mapping.yml, or use --skip flag."
@@ -122,7 +130,7 @@ def make_all_bags(dir, target)
 end
 
 begin
-  @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.1')
+  @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.2')
   make_all_bags(@opts['DIR'], @opts['TARGET'] || 'bags')
   puts @missing_fields unless @missing_fields.empty?
 rescue Docopt::Exit => e
