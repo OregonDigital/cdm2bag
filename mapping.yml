@@ -13,127 +13,151 @@ namespaces:
   marcrel: "http://id.loc.gov/vocabulary/relators/"
   modsrdf: "http://www.loc.gov/standards/mods/modsrdf/v1/"
   premis: "http://www.loc.gov/premis/rdf/v1#"
-  oregon: "http://tom.oregonstate.edu/"
+  oregon: "http://opaquenamespace.org/ns/"
   vra: "http://purl.org/vra/"
 
 mappings:
   #
   # braceros
   #
-  title: dct:title
-  digita: dct:isPartOf
-  creato: marcrel:pht
-  date:
-    method: dc_date
-  date_of_publication:
-    method: dc_date
-  dmcreated:
-    method: dc_created
-  dmmodified:
-    method: dc_modified
-  rights:
-    method: rights
-  descri: dct:description
-  subjec: dct:subject
-  #  type: mads:physicalDescription # What's going on here?!
-  object:
-    method: type
-  type:
-    method: type
-  source: mads:Collection # this can't be right mads:Collection is a Class, not a property
-  identi: dct:identifier
-  format:
-    method: mime
-  covera:
-    method: geographic
-  restrictions: dce:rights
-  transmission_data: oregon:conversionSpecifications #what is the short tag for this?
-  item_url: dct:replaces #what is the short tag for this?
-  fullrs: oregon:full
-  find: premis:hasOriginalName # domain is the union of premis:File and premis:Representation; range is xsd:string (ignoring this, using plain literals)
+  bracero: 
+    title: dct:title
+    digita: dct:isPartOf
+    creato: marcrel:pht
+    date:
+      method: dc_date
+    date_of_publication:
+      method: dc_date
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    rights:
+      method: rights
+    descri: dct:description
+    subjec: dct:subject
+    #  type: mads:physicalDescription # What's going on here?!
+    object:
+      method: type
+    type:
+      method: type
+    source: mads:Collection # this can't be right mads:Collection is a Class, not a property
+    identi: dct:identifier
+    format:
+      method: mime
+    covera:
+      method: geographic
+    restrictions: dce:rights
+    transmission_data: oregon:conversionSpecifications #what is the short tag for this?
+    item_url: dct:replaces #what is the short tag for this?
+    fullrs: oregon:full
+    find: premis:hasOriginalName # domain is the union of premis:File and premis:Representation; range is xsd:string (ignoring this, using plain literals)
   #
   # afpep
   #
-  work: vra:workType  #uses Getty AAT cv
-  title: dct:title  
-  view: vra:view
-  creato: dct:creator
-  politi: dct:contributor
-  date: 
-    method: dc:date
-  earlie: vra:earliestDate
-  latest: vra:latestDate
-  subject: 
-    method: dc:subject.lcsh #not sure what you want to do here. field also contains lc names as subjects
-  cultua: vra:culturalContext
-  countr:
-    method: geographic
-  region: dct:coverage
-  locati: dct:provenance
-  measur: vra:measurements
-  descri: dct:description
-  inscri: vra:inscription
-  langua:
-    method: iso_language
-  relati: dct:isPartOf
-  type:
-    method: type
-  format:
-    method: format
-  identi: dct:identifier
-  rights:
-    method: rights #cc licenses for all
-  digiti: oregon:conversionSpecifications
-  digita: oregon:isPartOf/set
-  full: oregon:fullText
-  item_ur: dct:replaces
-  fullrs: oregon:full
-  find: premis:hasOriginalName
+  afpep:
+    work: vra:workType  #uses Getty AAT cv
+    title: dct:title  
+    view: vra:view
+    creato: dct:creator
+    politi: dct:contributor
+    date: 
+      method: dc:date
+    earlie: vra:earliestDate
+    latest: vra:latestDate
+    subject: 
+      method: dc:subject.lcsh #not sure what you want to do here. field also contains lc names as subjects
+    cultua: vra:culturalContext
+    countr:
+      method: geographic
+    region: dct:coverage
+    locati: dct:provenance
+    measur: vra:measurements
+    descri: dct:description
+    inscri: vra:inscription
+    langua:
+      method: iso_language
+      relati: dct:isPartOf
+    type:
+      method: type
+    format:
+      method: mime
+    identi: dct:identifier
+    rights:
+      method: rights #cc licenses for all
+    digiti: oregon:conversionSpecifications
+    digita: oregon:isPartOf/set
+    full: oregon:fullText
+    item_ur: dct:replaces
+    fullrs: oregon:full
+    find: premis:hasOriginalName
   #
   # sheet music
   #
-  title: dct:title
-  captio: dct:alternative # 
-  other: dct:alternative  # do we want to merge captio and other properties? waiting to hear from music cataloger
-  composer: marcrel:cmp
-  lyrici: marcrel:lyr
-  arrang: marcrel:arr
-  origib: marcrel:pup # geonamesify this!
-  publis: dct:publisher
-  origin: marcrel:cpc   
-  date: dct:issued
-  physic: modsrdf:physicalExtent
-  descri: dct:description
-  perfor: oregon:sheetmusic/instrumentation
-  topic: 
-    method: subject  #uses LCHS and LC Names 
-  genre: vra:workType #use AAT, always "sheet music" for this collection
-  cover: 
-    method: cover  #create a method to move into dct:description and predicate value with "Cover depicts:" or parse and map to subject terms and put in oregon:sheetmusic/coverSubject.
-  illust: marcrel:ill 
-  lithog: marcrel:prm
-  sourca: vra:workType #add as second workType entry if present (e.g. lithographs)
-  first: oregon:sheetmusic/firstLine
-  firsta: oregon:sheetmusic/firsLineChorus
-  relati: oregon:sheetmusic/largerWork
-  publia: oregon:sheetmusic/hostItem
-  repository: modsrdf:locationPhysical
-  digita: oregon:isPartOf/collection
-  accession_or_call_number: modsrdf:locationShelfLocator
-  rights:
-    method: rights
-  contac: #do not import
-  type:
-    method: type
-  format:
-    method:format
-  digitization_specficiations: oregon:conversionSpecifications
-  image: #do not import
-  metada: #do not import
-  catalo: #do not import
-  date_of_digitization: oregon:dateDigitized
-  digital_collection: oregon:isPartOf/set
-  ___ oregon:full #will need to be scripted, CDM doesn't track file paths for PDF files
-  item_ur: dct:replaces
-  fullrs: oregon:full
-  find: premis:hasOriginalName
+  sheetmusic:
+    title: dct:title
+    subjec: dct:subject
+    data:
+      method: dc_date
+    date:
+      method: dc_date
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    captio: dct:alternative # 
+    other: dct:alternative  # do we want to merge captio and other properties? waiting to hear from music cataloger
+    composer: marcrel:cmp
+    lyrici: marcrel:lyr
+    arrang: marcrel:arr
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    origib: marcrel:pup # geonamesify this!
+    publis: dct:publisher
+    origin: marcrel:cpc
+    date: dct:issued
+    physic: modsrdf:physicalExtent
+    descri: dct:description
+    perfor: oregon:sheetmusic/instrumentation
+    topic: 
+      method: subject  #uses LCHS and LC Names 
+    genre: vra:workType #use AAT, always "sheet music" for this collection
+    cover: 
+      method: cover  #create a method to move into dct:description and predicate value with "Cover depicts:" or parse and map to subject terms and put in oregon:sheetmusic/coverSubject.
+    illust: marcrel:ill 
+    lithog: marcrel:prm
+    sourca: vra:workType #add as second workType entry if present (e.g. lithographs)
+    first: oregon:sheetmusic/firstLine
+    firsa: oregon:sheetmusic/firsLineChorus
+    relati: oregon:sheetmusic/largerWork
+    publia: oregon:sheetmusic/hostItem
+    reposi: modsrdf:locationPhysical
+    digita: oregon:isPartOf/collection
+    accession_or_call_number: modsrdf:locationShelfLocator
+    rights:
+      method: rights
+    contac: SKIP
+    type:
+      method: type
+    format:
+      method: mime
+    digitization_specficiations: oregon:conversionSpecifications
+    image: SKIP
+    metada: SKIP
+    catalo: SKIP
+    date_of_digitization: oregon:dateDigitized
+    digital_collection: oregon:set
+    #    oregon:full #will need to be scripted, CDM doesn't track file paths for PDF files
+    item_ur: dct:replaces
+    fullrs: oregon:full
+    find: premis:hasOriginalName
+    dmrecord: SKIP
+    dmimage: SKIP
+    dmaccess: SKIP
+    dmoclcno: SKIP
+    theme: SKIP
+    source: oregon:set 
+    digiti: oregon:conversionSpecifications
+    identi: dct:identifier

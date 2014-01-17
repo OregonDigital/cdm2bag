@@ -43,24 +43,38 @@ def create_graphs(file)
     ln.slice!("<#{tag}>")
     ln.slice!("<\/#{tag}>")
     ln = ln.strip
-    bnode = RDF::Node.new
-    begin
-      if @mappings['mappings'][tag.to_s].include? 'method' and not (ln == nil or ln == '')
-        graph << send(@mappings['mappings'][tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
-      else
-        ns, term = @mappings['mappings'][tag.to_s].split(':') unless (ln == nil or ln == '')
-        graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
-      end
-      
-    rescue NoMethodError => e
-      @missing_fields << tag unless @missing_fields.include? tag
-    end
 
-    if tag == 'dmrecord'
+    bnode = RDF::Node.new
+
+    if tag.to_s == 'dmrecord'
+      graph << RDF::Statement.new(bnode, RDF::URI('http://oregondigital.org/oldid'), ln) unless @skip.include? ln.downcase
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new
+      next
     end
+
+    begin
+      if @collection_mappings[tag.to_s].include? 'method' and not (ln == nil or ln == '')
+        graph << send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+      else
+        next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
+        ns, term = @collection_mappings[tag.to_s].split(':') 
+        
+        # puts 'nil' if @namespaces[ns].to_s == ''
+        # puts @collection_mappings[tag.to_s].split(':') if ns.to_s == ''
+        graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
+        # graph.each_statement do |s|
+        #   puts s
+        # end
+      end
+    rescue NoMethodError => e
+      @missing_fields << tag unless @missing_fields.include? tag
+      # puts "#{e}: #{tag}"
+      # puts ns
+      # puts e.backtrace
+    end
+
   end
   graphs
 end
@@ -82,23 +96,40 @@ def write_desc_metadata(graph, bag)
   bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
 end
 
-def add_content_file(graph, bag)
+def add_content_file(graph, bag, dir)
   begin
-    query = RDF::Query.new do
-      pattern [:subject, RDF::URI('http://tom.oregonstate.edu/full'), :full]
+    if dir.include? 'sheetmusic'  
+      query = RDF::Query.new do
+        pattern [:subject, RDF::URI('http://oregondigital.org/oldid'), :full]
+      end
+    else
+      query = RDF::Query.new do
+        pattern [:subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
+      end
     end
-    fname = query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')
-    bag.add_file('content.tif', File.join('..', 'braceros-tiffs', query.execute(graph).first[:full].to_s.split('\\')[-1].gsub(/^1_/, '')))
-  rescue NoMethodError => e
+    results = query.execute(graph)
+    if results.empty?
+      puts 'no full'
+      return nil
+    end
+    fname = results.first[:full] 
+    if dir.include? 'sheetmusic'
+      file = File.join('/home', 'tjohnson', 'sheetmusic_bags', fname.to_s.split('.')[0], 'data', 'content.pdf') 
+    else
+      file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, ''))
+    end
+    puts file
+    bag.add_file('content.pdf', file)
   rescue => e
     puts e
+    puts fname if fname
   end
 end
 
-def make_bag(dir, graph, subject)
+def make_bag(dir, graph, subject, source_dir)
   bag = BagIt::Bag.new(File.join(dir, File.basename(subject)))
   write_desc_metadata(graph, bag)
-  add_content_file(graph, bag)
+  add_content_file(graph, bag, source_dir)
   bag.tagmanifest!
   bag.manifest!
 end
@@ -106,15 +137,20 @@ end
 def make_coll_bags(dir, target, collection, *args)
   file = File.join(dir, collection, 'index', 'description', 'desc.all')
   col_dir = FileUtils.mkdir_p(File.join(target, collection))
+  @collection_mappings = @mappings['mappings'][collection]
 
   graphs = create_graphs(file)
   if @missing_fields.empty? or @opts['--skip']
+    puts 'making bags'
     graphs.each do |graph|
       subject = ''
       graph.each_statement do |s|
-        subject = s.subject if s.subject.start_with? 'http://example.org/ns/'
+        if s.subject.start_with? 'http://example.org/ns/'
+          subject = s.subject
+          break
+        end
       end
-      make_bag(col_dir, graph, subject)
+      make_bag(col_dir, graph, subject, File.join(dir, collection))
     end
   else
     puts "Missing fields, not writing bags for #{collection}. Add fields to mapping.yml, or use --skip flag."

@@ -40,7 +40,7 @@ module MappingMethods
       @geocache[str][:graph] = graph
     end
 
-    def geographic(subject, data)
+    def geographic(subject, data, predicate=RDF::DC[:spatial])
       data.slice!(';')
       data.strip!
       unless geocache.include? data
@@ -52,11 +52,15 @@ module MappingMethods
       end
       if geocache.include? data
         graph = RDF::Graph.new
-        graph << RDF::Statement.new(subject, RDF::DC[:spatial], geocache[data][:uri])
+        graph << RDF::Statement.new(subject, predicate, geocache[data][:uri])
         return graph << geonames_graph(geocache[data][:uri], data)
       else
-        return RDF::Statement.new(subject, RDF::DC[:spatial], data)
+        return RDF::Statement.new(subject, predicate, data)
       end
+    end
+    
+    def pup_geographic(subject, data)
+      geographic(subject, data, RDF::URI("http://id.loc.gov/vocabulary/relators/pup"))
     end
   end
 end
