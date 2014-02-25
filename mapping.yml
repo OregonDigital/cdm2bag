@@ -57,17 +57,18 @@ mappings:
   # afpep
   #
   afpep:
-    work: vra:workType  # class not a property; uses Getty AAT cv
+    work: 
+      method: aat # vra:workType class not a property; uses Getty AAT cv in rdf:type
     title: dct:title  
-    view: vra:view
+    view: oregon:cco/viewDescription
     creato: dct:creator
     politi: dct:contributor
     date: 
-      method: dc:date
+      method: dc_date
     earlie: vra:earliestDate
     latest: vra:latestDate
     subject: 
-      method: dc:subject.lcsh # not sure what you want to do here. field also contains lc names as subjects
+      method: dc_subject_lc #  field also contains lc names as subjects and lcsh
     cultua: vra:culturalContext
     countr:
       method: geographic
@@ -85,7 +86,7 @@ mappings:
       method: mime
     identi: dct:identifier
     rights:
-      method: rights # cc licenses for all  by-nc-nd
+      method: rights # cc licenses for all  by-nc-nd , later look at lc.rightsbasis
     digiti: oregon:conversionSpecifications
     digita: oregon:isPartOf/set
     full: oregon:fullText
@@ -99,42 +100,45 @@ mappings:
     dmcreated: SKIP
     dmmodified: SKIP
     dmrecord: 
-      method: replace  #dmrecord has CDM number used in old CDM URL dct:replaces
+      method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
   #
   # sheet music
   #
   sheetmusic:
     title: dct:title
-    captio: oregon:caption # subproperty of dct:alternative, schema.org has caption for images and video only, not in sheetmusic dd
+    captio: oregon:captionTitle # subproperty of dct:alternative, schema.org has caption for images and video only, not in sheetmusic dd
     other: dct:alternative
     composer: marcrel:cmp
     lyrici: marcrel:lyr
     arrang: marcrel:arr
-    origib: marcrel:pup # geonamesify this!
-    publis: dct:publisher # or to use marcrel:pbl to match publisher location?
+    origib: 
+      method: geopup # marcrel:pup, street-level info., geonamesify this!
+    publis: dct:publisher 
     origin: marcrel:cpc
     date: dct:issued
     physic: modsrdf:physicalExtent
     perfor: oregon:sheetmusic/instrumentation
     descri: dct:description
     subjec:
-      method: subject  # uses LCHS and LC Names 
+      method: dc_subject_lc  # uses LCSH and LC Names 
     genre: 
-      method: workType # vra:workType class, use AAT, always "sheet music" for this collection
-    cover: oregon:coverDescription # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
+      method: aat # vra:workType class, use AAT, always "sheet music" for this collection
+    cover: 
+      method: cover # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
     illust: marcrel:ill 
     lithog: marcrel:prm
     sourca:
-      method: workType #vra:workType, new VRA may have workType as class, add as second workType entry if present (e.g. lithographs)
+      method: aat # vra:workType, new VRA may have workType as class, add as second workType entry if present (e.g. lithographs)
     first: oregon:sheetmusic/firstLine
     firsa: oregon:sheetmusic/firsLineChorus
     relati: oregon:sheetmusic/largerWork
     publia: oregon:sheetmusic/hostItem
     theme: oregon:exhibit # curated set, terms LC Subject, different from oregon:set?
     source: 
-      modsrdf:locationPhysical #need to split out on '-', so first part is modsrdf:locationPhyscal and second is mods:locationCopySublocation 
-    reposi: aat:collection
-    identi: modsrdf:locationCopyShelfLocator  #blank node for locationCopy? 
+      method: location  # need to split out on '-', so first part is modsrdf:locationPhyscal and second is mods:locationCopySublocation 
+    reposi: 
+      method: collection # use aat:collections concept as dc:isPartof
+    identi: modsrdf:locationCopyShelfLocator  
     rights:
       method: rights
     contac: SKIP
@@ -160,7 +164,7 @@ mappings:
   # folklore
   #
   folklore:
-    collec: aat:collections # need to add to dc:isPartOfi
+    collec: aat:collections # need to add to dc:isPartOfis
     collea: modsrdf:locationCopyShelfLocator  #blank node for locationCopy?    
     title: dct:title
     photo: dct:identifier
