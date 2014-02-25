@@ -14,7 +14,8 @@ namespaces:
   modsrdf: "http://www.loc.gov/standards/mods/modsrdf/v1/"
   premis: "http://www.loc.gov/premis/rdf/v1#"
   oregon: "http://opaquenamespace.org/ns/"
-  vra: "http://purl.org/vra/"
+  vra: "http://www.loc.gov/standards/vracore/vocab/"
+  aat: "http://vocab.getty.edu/resource/aat/"
 
 mappings:
   #
@@ -41,7 +42,7 @@ mappings:
       method: type
     type:
       method: type
-    source: mads:Collection # this can't be right mads:Collection is a Class, not a property
+    source: mads:Collection # this can't be right mads:Collection is a Class, not a property; ke says use aat:collection
     identi: dct:identifier
     format:
       method: mime
@@ -56,7 +57,7 @@ mappings:
   # afpep
   #
   afpep:
-    work: vra:workType  #uses Getty AAT cv
+    work: vra:workType  # class not a property; uses Getty AAT cv
     title: dct:title  
     view: vra:view
     creato: dct:creator
@@ -66,7 +67,7 @@ mappings:
     earlie: vra:earliestDate
     latest: vra:latestDate
     subject: 
-      method: dc:subject.lcsh #not sure what you want to do here. field also contains lc names as subjects
+      method: dc:subject.lcsh # not sure what you want to do here. field also contains lc names as subjects
     cultua: vra:culturalContext
     countr:
       method: geographic
@@ -77,65 +78,63 @@ mappings:
     inscri: vra:inscription
     langua:
       method: iso_language
-      relati: dct:isPartOf
+    relati: dct:hasPart
     type:
       method: type
     format:
       method: mime
     identi: dct:identifier
     rights:
-      method: rights #cc licenses for all
+      method: rights # cc licenses for all  by-nc-nd
     digiti: oregon:conversionSpecifications
     digita: oregon:isPartOf/set
     full: oregon:fullText
-    item_ur: dct:replaces
-    fullrs: oregon:full
-    find: premis:hasOriginalName
+    fullrs: oregon:full  # some items in collection PDF, so no data in this field
+    find: SKIP
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord: 
+      method: replace  #dmrecord has CDM number used in old CDM URL dct:replaces
   #
   # sheet music
   #
   sheetmusic:
     title: dct:title
-    subjec: dct:subject
-    data:
-      method: dc_date
-    date:
-      method: dc_date
-    dmcreated:
-      method: dc_created
-    dmmodified:
-      method: dc_modified
-    captio: dct:alternative # 
-    other: dct:alternative  # do we want to merge captio and other properties? waiting to hear from music cataloger
+    captio: oregon:caption # subproperty of dct:alternative, schema.org has caption for images and video only, not in sheetmusic dd
+    other: dct:alternative
     composer: marcrel:cmp
     lyrici: marcrel:lyr
     arrang: marcrel:arr
-    dmcreated:
-      method: dc_created
-    dmmodified:
-      method: dc_modified
     origib: marcrel:pup # geonamesify this!
-    publis: dct:publisher
+    publis: dct:publisher # or to use marcrel:pbl to match publisher location?
     origin: marcrel:cpc
     date: dct:issued
     physic: modsrdf:physicalExtent
-    descri: dct:description
     perfor: oregon:sheetmusic/instrumentation
-    topic: 
-      method: subject  #uses LCHS and LC Names 
-    genre: vra:workType #use AAT, always "sheet music" for this collection
-    cover: 
-      method: cover  #create a method to move into dct:description and predicate value with "Cover depicts:" or parse and map to subject terms and put in oregon:sheetmusic/coverSubject.
+    descri: dct:description
+    subjec:
+      method: subject  # uses LCHS and LC Names 
+    genre: 
+      method: workType # vra:workType class, use AAT, always "sheet music" for this collection
+    cover: oregon:coverDescription # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
     illust: marcrel:ill 
     lithog: marcrel:prm
-    sourca: vra:workType #add as second workType entry if present (e.g. lithographs)
+    sourca:
+      method: workType #vra:workType, new VRA may have workType as class, add as second workType entry if present (e.g. lithographs)
     first: oregon:sheetmusic/firstLine
     firsa: oregon:sheetmusic/firsLineChorus
     relati: oregon:sheetmusic/largerWork
     publia: oregon:sheetmusic/hostItem
-    reposi: modsrdf:locationPhysical
-    digita: oregon:isPartOf/collection
-    accession_or_call_number: modsrdf:locationShelfLocator
+    theme: oregon:exhibit # curated set, terms LC Subject, different from oregon:set?
+    source: 
+      modsrdf:locationPhysical #need to split out on '-', so first part is modsrdf:locationPhyscal and second is mods:locationCopySublocation 
+    reposi: aat:collection
+    identi: modsrdf:locationCopyShelfLocator  #blank node for locationCopy? 
     rights:
       method: rights
     contac: SKIP
@@ -143,21 +142,64 @@ mappings:
       method: type
     format:
       method: mime
-    digitization_specficiations: oregon:conversionSpecifications
+    digiti: SKIP
+    data: oregon:dateDigitized
     image: SKIP
     metada: SKIP
-    catalo: SKIP
-    date_of_digitization: oregon:dateDigitized
-    digital_collection: oregon:set
-    #    oregon:full #will need to be scripted, CDM doesn't track file paths for PDF files
-    item_ur: dct:replaces
-    fullrs: oregon:full
-    find: premis:hasOriginalName
-    dmrecord: SKIP
-    dmimage: SKIP
-    dmaccess: SKIP
+    digita: oregon:set
+    fullrs: SKIP
+    #    oregon:full will need to be scripted, CDM doesn't track file paths for PDF files 
     dmoclcno: SKIP
-    theme: SKIP
-    source: oregon:set 
-    digiti: oregon:conversionSpecifications
+    dmaccess: SKIP
+    find: SKIP  # coordinating file in CDM
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord:
+      method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
+  # 
+  # folklore
+  #
+  folklore:
+    collec: aat:collections # need to add to dc:isPartOfi
+    collea: modsrdf:locationCopyShelfLocator  #blank node for locationCopy?    
+    title: dct:title
+    photo: dct:identifier
+    photoa: dc:date # date for photograph not object creation or digitization, need more thought
+    colleb: aat:collectors
+    contri: dct:contributor
+    descri: dct:description
+    inscri: vra:inscription
+    langua: 
+      method: language
+    notes: modsrdf:note
+    subjec: 
+      method: subject
+    subjea:
+      method: subject
+    contra: dct:spatial
+    subjed: vra:culture
+    subjee: vra:technique
+    subjef: SKIP
+    sebjeg: oregon:ethnot
+    segjeh: oregon:keywords
+    resour: vra:workType
+    relati: SKIP
+    subjeb: SKIP
+    reposi: marcrel:rps
+    source: SKIP
+    rights:
+      method: rights
+    record:
+    type:
+      method: type
+    format:
+      method: format
+    catalo: # admin metadata. store or SKIP?
     identi: dct:identifier
+    digita: oregon:set
+    fullrs: SKIP # didn't work for this collection
+    find: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord: 
+      method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
