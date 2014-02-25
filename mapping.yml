@@ -164,12 +164,13 @@ mappings:
   # folklore
   #
   folklore:
-    collec: aat:collections # need to add to dc:isPartOfis
-    collea: modsrdf:locationCopyShelfLocator  #blank node for locationCopy?    
+    collec: 
+      method: collection  # need to add to dc:isPartOfis
+    collea: modsrdf:locationCopyShelfLocator    
     title: dct:title
     photo: dct:identifier
     photoa: dc:date # date for photograph not object creation or digitization, need more thought
-    colleb: aat:collectors
+    colleb: aat:collectors # aat concept of type of agent
     contri: dct:contributor
     descri: dct:description
     inscri: vra:inscription
@@ -193,7 +194,7 @@ mappings:
     source: SKIP
     rights:
       method: rights
-    record:
+    record: SKIP
     type:
       method: type
     format:
