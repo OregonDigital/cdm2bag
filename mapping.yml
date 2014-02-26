@@ -123,7 +123,7 @@ mappings:
     subjec:
       method: dc_subject_lc  # uses LCSH and LC Names 
     genre: 
-      method: aat # vra:workType class, use AAT, always "sheet music" for this collection
+      method: aat_sheetmusic # vra:workType class, use AAT, always "sheet music" for this collection
     cover: 
       method: cover # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
     illust: marcrel:ill 
