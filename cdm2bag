@@ -3,6 +3,7 @@
 require 'linkeddata'
 require 'yaml'
 require 'bagit'
+require 'logger'
 require 'docopt'
 require './mapping_methods.rb'
 
@@ -33,7 +34,9 @@ DOCOPT
 end
 @skip = ['unknown', 'n/a']
 
-def create_graphs(file)
+@log = Logger.new('logfile.log')
+
+def create_graphs(file, collection)
   graphs = []
   graph = RDF::Graph.new
   File.readlines(file).each do |ln|
@@ -47,7 +50,7 @@ def create_graphs(file)
     bnode = RDF::Node.new
 
     if tag.to_s == 'dmrecord'
-      graph << RDF::Statement.new(bnode, RDF::URI('http://oregondigital.org/oldid'), ln) unless @skip.include? ln.downcase
+      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::Literal("https://oregondigital.org/u?#{collection},#{ln}"))
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new
@@ -98,31 +101,24 @@ end
 
 def add_content_file(graph, bag, dir)
   begin
-    if dir.include? 'sheetmusic'  
-      query = RDF::Query.new do
-        pattern [:subject, RDF::URI('http://oregondigital.org/oldid'), :full]
-      end
-    else
-      query = RDF::Query.new do
-        pattern [:subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
-      end
+    query = RDF::Query.new do
+      pattern [:subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
     end
     results = query.execute(graph)
+    fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
+    fname = fname.split(/\\/).last
     if results.empty?
       puts 'no full'
       return nil
     end
-    fname = results.first[:full] 
-    if dir.include? 'sheetmusic'
-      file = File.join('/home', 'tjohnson', 'sheetmusic_bags', fname.to_s.split('.')[0], 'data', 'content.pdf') 
-    else
-      file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, ''))
+    file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, '')) 
+    require 'find'
+    Find.find(dir) do |path|
+      file = path if path.include? fname
     end
-    puts file
-    bag.add_file('content.pdf', file)
-  rescue => e
-    puts e
-    puts fname if fname
+    bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
+  rescue Errno::ENOENT => e
+    @log.warn("#{fname}: No File Found.")
   end
 end
 
@@ -135,11 +131,12 @@ def make_bag(dir, graph, subject, source_dir)
 end
 
 def make_coll_bags(dir, target, collection, *args)
-  file = File.join(dir, collection, 'index', 'description', 'desc.all')
+  # file = File.join(dir, collection, 'index', 'description', 'desc.all')
+  file = File.join(dir, collection, 'desc.all')
   col_dir = FileUtils.mkdir_p(File.join(target, collection))
   @collection_mappings = @mappings['mappings'][collection]
 
-  graphs = create_graphs(file)
+  graphs = create_graphs(file, collection)
   if @missing_fields.empty? or @opts['--skip']
     puts 'making bags'
     graphs.each do |graph|
