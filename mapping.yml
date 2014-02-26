@@ -90,6 +90,7 @@ mappings:
     digiti: oregon:conversionSpecifications
     digita: oregon:isPartOf/set
     full: oregon:fullText
+    contri: oregon:contributingInstitution
     fullrs: oregon:full  # some items in collection PDF, so no data in this field
     find: SKIP
     dmaccess: SKIP
@@ -135,8 +136,7 @@ mappings:
     relati: oregon:sheetmusic/largerWork
     publia: oregon:sheetmusic/hostItem
     theme: oregon:exhibit # curated set, terms LC Subject, different from oregon:set?
-    source: 
-      method: location  # need to split out on '-', so first part is modsrdf:locationPhyscal and second is mods:locationCopySublocation 
+    source: mods:locationCopySublocation 
     reposi: 
       method: collection # use aat:collections concept as dc:isPartof
     identi: modsrdf:locationCopyShelfLocator  
@@ -152,6 +152,7 @@ mappings:
     image: SKIP
     metada: SKIP
     digita: oregon:set
+    contri: oregon:contributingInstitution
     fullrs: SKIP
     #    oregon:full will need to be scripted, CDM doesn't track file paths for PDF files 
     dmoclcno: SKIP
@@ -203,6 +204,7 @@ mappings:
     catalo: SKIP # admin metadata. store or SKIP?
     identi: dct:identifier
     digita: oregon:set
+    contri: oregon:contributingInstitution
     fullrs: SKIP # didn't work for this collection
     find: SKIP
     dmcreated: SKIP
