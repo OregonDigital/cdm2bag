@@ -18,10 +18,6 @@ module MappingMethods
       licenses
     end
 
-    def publicDomainMark(data)
-
-    end
-
     def rights(subject, data)
       graph = RDF::Graph.new
       licenses = findCCLicenses(data)

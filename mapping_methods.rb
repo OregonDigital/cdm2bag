@@ -8,6 +8,8 @@ module MappingMethods
   include MappingMethods::XSDDate
   include MappingMethods::Language
   include MappingMethods::Type
+  include MappingMethods::AAT
+  include MappingMethods::Replace
 
   DC_ELEM = RDF::Vocabulary.new('http://purl.org/dc/elements/1.1/')
 end

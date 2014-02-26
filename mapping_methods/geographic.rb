@@ -59,8 +59,8 @@ module MappingMethods
       end
     end
     
-    def pup_geographic(subject, data)
-      geographic(subject, data, RDF::URI("http://id.loc.gov/vocabulary/relators/pup"))
+    def geopup(subject, data)
+      geographic(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/pup"), data)
     end
   end
 end
