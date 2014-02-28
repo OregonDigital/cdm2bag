@@ -36,7 +36,7 @@ namespaces:
 # *dc_subject_lc -
 # *cover - 
 # *collection - 
-#
+#  *dc_subject_lcna -
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
 
 mappings:
@@ -193,10 +193,10 @@ mappings:
   folklore:
     collec: 
       method: collection  # need to add to dc:isPartOfis
-    collea: modsrdf:locationCopyShelfLocator    
+    collea: SKIP 
     title: dct:title
-    photo: dct:identifier
-    photoa: dc:date # date for photograph not object creation or digitization, need more thought
+    photo: modsrdf:locationCopyShelfLocator   
+    photoa: dc:date 
     colleb: aat:collectors # aat concept of type of agent
     contri: dct:contributor
     descri: dct:description
@@ -205,16 +205,17 @@ mappings:
       method: language
     notes: modsrdf:note
     subjec: 
-      method: subject
+      method: dc_subject_lcna
     subjea:
-      method: subject
+      method: dc_subject_lcna
     contra: dct:spatial
     subjed: vra:culture
-    subjee: vra:technique
+    subjee: SKIP
     subjef: SKIP
     sebjeg: oregon:ethnot
     segjeh: oregon:keywords
-    resour: vra:workType
+    resour: 
+      method: aat #workType, some might not be in AAT and may need to be changed
     relati: SKIP
     subjeb: SKIP
     reposi: marcrel:rps
@@ -226,8 +227,8 @@ mappings:
       method: type
     format:
       method: format
-    catalo: SKIP # admin metadata. store or SKIP?
-    identi: dct:identifier
+    catalo: SKIP 
+    identi: dct:identifier #use to match file names in directories
     digita: oregon:set
     contri: oregon:contributingInstitution
     fullrs: SKIP # didn't work for this collection
