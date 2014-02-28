@@ -16,6 +16,28 @@ namespaces:
   oregon: "http://opaquenamespace.org/ns/"
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
+##
+# METHODS:
+#
+# *xsd_date - converts date to yyyy-mm-dd format and serializes it as a literal of type xsd:date 
+# *dc_date - uses dcterms:date and a string value
+# *dc_created - uses dcterms:created and a string value
+# *dc_modified - uses dcterms:modified and a string value
+# *iso_lanugage - converts two and three letter language codes (;-delimited) into LoC ISO 639 URIs.
+# *rights - tries to identify EU rights, CC Licenses, and OregonDigital (opaque namespace) rights statements.
+# *type - splits ;-delimited types and identifies dcmitype for each.
+# *mime - converts string mimetype into a purl.org/NET/mediatypes uri
+# *geographic - attempts to identify a geonames URI locations in field. Will strip "(Ore.)" from string before searching. (probably needs honing, check data in bags before ingest).
+# *geopup - 
+# *aat -
+# *att_sheetmusic - ignores data, adds rdf:type of 'sheet music' uri from aat.
+# *att_format - matches data to either 'silver gelatin print', 'film negative', or ... in aat; adds appropriate rdf:type statement
+# *lc_subject -
+# *dc_subject_lc -
+# *cover - 
+# *collection - 
+#
+# *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
 
 mappings:
   #
@@ -23,36 +45,39 @@ mappings:
   #
   bracero: 
     title: dct:title
-    digita: dct:isPartOf
     creato: marcrel:pht
     date:
       method: dc_date
-    date_of_publication:
-      method: dc_date
+    descri: dct:description
+    subjec: 
+      method: lc_subject
+    covera:
+      method: geographic
+    object:
+      method: type
+    type:
+      method: aat_format
+    source: 
+      method: collection 
+    relate: SKIP
+    identi: dct:identifier
+    other: # what?
+    rights: 
+      method: rights
+    format: oregon:conversionSpecifications 
+    file: SKIP
+    dmaccess: SKIP
+    dmimage: SKIP
     dmcreated:
       method: dc_created
     dmmodified:
       method: dc_modified
-    rights:
-      method: rights
-    descri: dct:description
-    subjec: dct:subject
-    #  type: mads:physicalDescription # What's going on here?!
-    object:
-      method: type
-    type:
-      method: type
-    source: mads:Collection # this can't be right mads:Collection is a Class, not a property; ke says use aat:collection
-    identi: dct:identifier
-    format:
-      method: mime
-    covera:
-      method: geographic
-    restrictions: dce:rights
-    transmission_data: oregon:conversionSpecifications #what is the short tag for this?
-    item_url: dct:replaces #what is the short tag for this?
     fullrs: oregon:full
-    find: premis:hasOriginalName # domain is the union of premis:File and premis:Representation; range is xsd:string (ignoring this, using plain literals)
+    date_of_publication:
+      method: dc_date
+    dmrecord: 
+      method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
+    # find: premis:hasOriginalName # domain is the union of premis:File and premis:Representation; range is xsd:string (ignoring this, using plain literals)
   #
   # afpep
   #
@@ -211,3 +236,25 @@ mappings:
     dmmodified: SKIP
     dmrecord: 
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
+  #
+  # siuslaw
+  #
+  siuslaw:
+    identi: dct:identifier
+    title: dct:title
+    creato: marcrel:pht
+    date:
+      method: dc_date
+    descri: dct:description
+    subjec: 
+      method: lc_subject
+  #
+  # baseball
+  #
+  baseball:
+    title: dct:title
+  academ: dct:date
+  type: 
+    method: type
+  format:
+    method: aat_format

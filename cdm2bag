@@ -50,7 +50,7 @@ def create_graphs(file, collection)
     bnode = RDF::Node.new
 
     if tag.to_s == 'dmrecord'
-      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::Literal("https://oregondigital.org/u?#{collection},#{ln}"))
+      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("https://oregondigital.org/u?#{collection},#{ln}"))
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new
@@ -63,21 +63,11 @@ def create_graphs(file, collection)
       else
         next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
         ns, term = @collection_mappings[tag.to_s].split(':') 
-        
-        # puts 'nil' if @namespaces[ns].to_s == ''
-        # puts @collection_mappings[tag.to_s].split(':') if ns.to_s == ''
         graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
-        # graph.each_statement do |s|
-        #   puts s
-        # end
       end
     rescue NoMethodError => e
       @missing_fields << tag unless @missing_fields.include? tag
-      # puts "#{e}: #{tag}"
-      # puts ns
-      # puts e.backtrace
     end
-
   end
   graphs
 end
