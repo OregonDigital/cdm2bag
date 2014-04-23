@@ -1,0 +1,214 @@
+namespaces:
+  rdf: "http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  rdfs: "http://www.w3.org/2000/01/rdf-schema#"
+  owl: "http://www.w3.org/2002/07/owl#"
+  skos: "http://www.w3.org/2004/02/skos/core#"
+  dct: "http://purl.org/dc/terms/"
+  dce: "http://purl.org/dc/elements/1.1/"
+  bibo: "http://purl.org/ontology/bibo/"
+  foaf: "http://xmlns.com/foaf/0.1/"
+  geo: "http://www.w3.org/2003/01/geo/wgs84_pos#"
+  frbr: "http://iflastandards.info/ns/fr/frbr/frbrer/"
+  mads: "http://www.loc.gov/mads/rdf/v1#"
+  marcrel: "http://id.loc.gov/vocabulary/relators/"
+  modsrdf: "http://www.loc.gov/standards/mods/modsrdf/v1/"
+  premis: "http://www.loc.gov/premis/rdf/v1#"
+  oregon: "http://opaquenamespace.org/ns/"
+  vra: "http://www.loc.gov/standards/vracore/vocab/"
+  aat: "http://vocab.getty.edu/resource/aat/"
+##
+# METHODS:
+#
+# *xsd_date - converts date to yyyy-mm-dd format and serializes it as a literal of type xsd:date 
+# *dc_date - uses dcterms:date and a string value
+# *dc_created - uses dcterms:created and a string value
+# *dc_modified - uses dcterms:modified and a string value
+# *iso_lanugage - converts two and three letter language codes (;-delimited) into LoC ISO 639 URIs.
+# *rights - tries to identify EU rights, CC Licenses, and OregonDigital (opaque namespace) rights statements.
+# *type - splits ;-delimited types and identifies dcmitype for each.
+# *mime - converts string mimetype into a purl.org/NET/mediatypes uri
+# *geographic - attempts to identify a geonames URI locations in field. Will strip "(Ore.)" from string before searching. (probably needs honing, check data in bags before ingest).
+# *geopup - 
+# *aat -
+# *att_sheetmusic - ignores data, adds rdf:type of 'sheet music' uri from aat.
+# *att_format - matches data to either 'silver gelatin print', 'film negative', or ... in aat; adds appropriate rdf:type statement
+# *lc_subject -
+# *dc_subject_lc -
+# *lcnaf - 
+# *cover - 
+# *collection - 
+#  *dc_subject_lcna -
+# *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
+
+mappings:
+  #
+  # UO collections only
+  #
+  # afpep
+  #
+  afpep:
+    work: 
+      method: aat # vra:workType class not a property; uses Getty AAT cv in rdf:type
+    title: dct:title  
+    view: oregon:cco/viewDescription
+    creato: dct:creator
+    politi: dct:contributor
+    date: 
+      method: dc_date
+    earlie: vra:earliestDate
+    latest: vra:latestDate
+    subject: 
+      method: dc_subject_lc #  field also contains lc names as subjects and lcsh
+    cultur: vra:culturalContext
+    countr:
+      method: geographic
+    region: dct:coverage
+    locati: dct:provenance
+    measur: vra:measurements
+    descri: dct:description
+    inscri: vra:inscription
+    langua:
+      method: iso_language
+    relati: dct:hasPart
+    type:
+      method: type
+    format:
+      method: mime
+    identi: dct:identifier
+    rights:
+      method: rights # cc licenses for all  by-nc-nd , later look at lc.rightsbasis
+    digiti: oregon:conversionSpecifications
+    digita: oregon:isPartOf/set
+    full: oregon:fullText
+    contri: oregon:contributingInstitution
+    fullrs: oregon:full  # some items in collection PDF, so no data in this field
+    find: SKIP
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord: 
+      method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
+  #
+  # sheet music
+  #
+  sheetmusic:
+    title: dct:title
+    creato: 
+      method: lcnaf #dct:creator
+    captio: oregon:captionTitle # subproperty of dct:alternative, schema.org has caption for images and video only, not in sheetmusic dd
+    other: dct:alternative
+    composer: 
+      method: lcnaf #marcrel:cmp
+    lyrici: 
+      method: lcnaf #marcrel:lyr
+    arrang: 
+      method: lcnaf #marcrel:arr
+    origib: 
+      method: geopup # marcrel:pup, street-level info., geonamesify this!
+    publis: dct:publisher 
+    origin: marcrel:cpc
+    date: dct:issued
+    physic: modsrdf:physicalExtent
+    perfor: oregon:sheetmusic/instrumentation
+    descri: dct:description
+    subjec:
+      method: dc_subject_lc  # uses LCSH and LC Names 
+    genre: 
+      method: aat_sheetmusic # vra:workType class, use AAT, always "sheet music" for this collection
+    cover: 
+      method: cover # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
+    illust: marcrel:ill 
+    lithog: marcrel:prm
+    sourca:
+      method: aat # vra:workType, new VRA may have workType as class, add as second workType entry if present (e.g. lithographs)
+    first: oregon:sheetmusic/firstLine
+    firsa: oregon:sheetmusic/firsLineChorus
+    relati: oregon:sheetmusic/largerWork
+    publia: oregon:sheetmusic/hostItem
+    theme: oregon:exhibit # curated set, terms LC Subject, different from oregon:set?
+    source: mods:locationCopySublocation 
+    reposi: 
+      method: collection # use aat:collections concept as dc:isPartof
+    identi: modsrdf:locationCopyShelfLocator  
+    rights:
+      method: rights
+    contac: SKIP
+    type:
+      method: type
+    format:
+      method: mime
+    digiti: SKIP
+    data: oregon:dateDigitized
+    image: SKIP
+    metada: SKIP
+    digita: oregon:set
+    contri: oregon:contributingInstitution
+    fullrs: SKIP
+    #    oregon:full will need to be scripted, CDM doesn't track file paths for PDF files 
+    dmoclcno: SKIP
+    dmaccess: SKIP
+    find: oregon:full # coordinating file in CDM
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord:
+      method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
+  # 
+  # folklore
+  #
+  folklore:
+    collec: 
+      method: collection  # need to add to dc:isPartOfis
+    collea: SKIP 
+    title: dct:title
+    photo: modsrdf:locationCopyShelfLocator   
+    photoa: dc:date 
+    colleb: 
+      method: lcnaf #aat:collectors ,  aat concept of type of agent
+    contri: 
+      method: lcnaf #dct:contributor
+    descri: dct:description
+    inscri: vra:inscription
+    langua: 
+      method: language
+    notes: modsrdf:note
+    subjec: 
+      method: lcnaf #dct:subject
+    subjea:
+      method: lcnaf #dct:subject
+    contra: 
+      method: geographic  #dct:spatial
+    subjed: 
+      method: lc_subject #vra:culture, very short list of lcsh terms are used
+    subjee: SKIP
+    subjef: SKIP
+    sebjeg: 
+      method:ethnot #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
+    segjeh: oregon:keywords
+    resour: 
+      method: aat #workType, some might not be in AAT and may need to be changed
+    relati: SKIP
+    subjeb: SKIP
+    reposi: marcrel:rps
+    source: SKIP
+    rights:
+      method: rights
+    copyri: marcrel:cph
+    record: SKIP
+    type:
+      method: type
+    format:
+      method: format
+    catalo: SKIP 
+    identi: dct:identifier #use to match file names in directories
+    digita: oregon:set
+    contri: oregon:contributingInstitution
+    fullrs: SKIP # didn't work for this collection
+    find: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord: 
+      method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
