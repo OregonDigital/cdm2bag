@@ -196,7 +196,7 @@ mappings:
     source: SKIP
     rights:
       method: rights
-    copyri: marcrel:cph
+    copyri: dct:rightsHolder
     record: SKIP
     type:
       method: type
