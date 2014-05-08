@@ -38,6 +38,7 @@ namespaces:
 # *cover - 
 # *collection - 
 #  *dc_subject_lcna -
+# *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
 
 mappings:
@@ -186,7 +187,7 @@ mappings:
     subjee: SKIP
     subjef: SKIP
     sebjeg: 
-      method:ethnot #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
+      method: ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
     segjeh: oregon:keywords
     resour: 
       method: aat #workType, some might not be in AAT and may need to be changed
