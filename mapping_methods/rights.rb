@@ -17,6 +17,9 @@ module MappingMethods
       licenses << RDF::URI("http://creativecommons.org/publicdomain/mark/1.0/") if data.downcase.include? 'public domain'
       licenses
     end
+    
+    def generateRights(data)
+    end
 
     def rights(subject, data)
       graph = RDF::Graph.new
