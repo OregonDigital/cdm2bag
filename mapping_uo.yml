@@ -34,6 +34,7 @@ namespaces:
 # *att_format - matches data to either 'silver gelatin print', 'film negative', or ... in aat; adds appropriate rdf:type statement
 # *lc_subject -
 # *dc_subject_lc -
+# *lcnaf - 
 # *cover - 
 # *collection - 
 #  *dc_subject_lcna -
@@ -41,43 +42,7 @@ namespaces:
 
 mappings:
   #
-  # braceros
-  #
-  bracero: 
-    title: dct:title
-    creato: marcrel:pht
-    date:
-      method: dc_date
-    descri: dct:description
-    subjec: 
-      method: lc_subject
-    covera:
-      method: geographic
-    object:
-      method: type
-    type:
-      method: aat_format
-    source: 
-      method: collection 
-    relate: SKIP
-    identi: dct:identifier
-    other: # what?
-    rights: 
-      method: rights
-    format: oregon:conversionSpecifications 
-    file: SKIP
-    dmaccess: SKIP
-    dmimage: SKIP
-    dmcreated:
-      method: dc_created
-    dmmodified:
-      method: dc_modified
-    fullrs: oregon:full
-    date_of_publication:
-      method: dc_date
-    dmrecord: 
-      method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
-    # find: premis:hasOriginalName # domain is the union of premis:File and premis:Representation; range is xsd:string (ignoring this, using plain literals)
+  # UO collections only
   #
   # afpep
   #
@@ -132,12 +97,16 @@ mappings:
   #
   sheetmusic:
     title: dct:title
-    creato: dct:creator
+    creato: 
+      method: lcnaf #dct:creator
     captio: oregon:captionTitle # subproperty of dct:alternative, schema.org has caption for images and video only, not in sheetmusic dd
     other: dct:alternative
-    composer: marcrel:cmp
-    lyrici: marcrel:lyr
-    arrang: marcrel:arr
+    composer: 
+      method: lcnaf #marcrel:cmp
+    lyrici: 
+      method: lcnaf #marcrel:lyr
+    arrang: 
+      method: lcnaf #marcrel:arr
     origib: 
       method: geopup # marcrel:pup, street-level info., geonamesify this!
     publis: dct:publisher 
@@ -197,22 +166,27 @@ mappings:
     title: dct:title
     photo: modsrdf:locationCopyShelfLocator   
     photoa: dc:date 
-    colleb: aat:collectors # aat concept of type of agent
-    contri: dct:contributor
+    colleb: 
+      method: lcnaf #aat:collectors ,  aat concept of type of agent
+    contri: 
+      method: lcnaf #dct:contributor
     descri: dct:description
     inscri: vra:inscription
     langua: 
       method: language
     notes: modsrdf:note
     subjec: 
-      method: dc_subject_lcna
+      method: lcnaf #dct:subject
     subjea:
-      method: dc_subject_lcna
-    contra: dct:spatial
-    subjed: vra:culture
+      method: lcnaf #dct:subject
+    contra: 
+      method: geographic  #dct:spatial
+    subjed: 
+      method: lc_subject #vra:culture, very short list of lcsh terms are used
     subjee: SKIP
     subjef: SKIP
-    sebjeg: oregon:ethnot
+    sebjeg: 
+      method:ethnot #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
     segjeh: oregon:keywords
     resour: 
       method: aat #workType, some might not be in AAT and may need to be changed
@@ -222,6 +196,7 @@ mappings:
     source: SKIP
     rights:
       method: rights
+    copyri: dct:rightsHolder
     record: SKIP
     type:
       method: type
@@ -237,25 +212,3 @@ mappings:
     dmmodified: SKIP
     dmrecord: 
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
-  #
-  # siuslaw
-  #
-  siuslaw:
-    identi: dct:identifier
-    title: dct:title
-    creato: marcrel:pht
-    date:
-      method: dc_date
-    descri: dct:description
-    subjec: 
-      method: lc_subject
-  #
-  # baseball
-  #
-  baseball:
-    title: dct:title
-  academ: dct:date
-  type: 
-    method: type
-  format:
-    method: aat_format
