@@ -10,6 +10,7 @@ module MappingMethods
   include MappingMethods::Type
   include MappingMethods::AAT
   include MappingMethods::Replace
+  include MappingMethods::Ethnographic
 
   DC_ELEM = RDF::Vocabulary.new('http://purl.org/dc/elements/1.1/')
 end
