@@ -16,25 +16,16 @@ Consumes a directory of ContentDM collections and converts them into
 bags.
 
 Usage:
-  #{__FILE__} [--skip] DIR [TARGET]
+  #{__FILE__} [--skip] [--map-file=<file>] DIR [TARGET]
   #{__FILE__} -h | --version
 
 Options:
-  -s --skip     Skip missing fields.
-  -h --help      Show this help screen.
-  -v --version   Show version.
+  -s --skip             Skip missing fields.
+  -m --map-file=<file>  Mapping file. [default: mapping.yml]
+  -h --help             Show this help screen.
+  -v --version          Show version.
 
 DOCOPT
-
-@missing_fields = []
-@mappings = YAML.load_file('mapping.yml')
-@namespaces = {}
-@mappings['namespaces'].each do |ns, base_uri|
-  @namespaces[ns] = RDF::Vocabulary.new(base_uri)
-end
-@skip = ['unknown', 'n/a']
-
-@log = Logger.new('logfile.log')
 
 def create_graphs(file, collection)
   graphs = []
@@ -154,6 +145,17 @@ end
 
 begin
   @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.2')
+
+  @missing_fields = []
+  @mappings = YAML.load_file(@opts['--map-file'])
+  @namespaces = {}
+  @mappings['namespaces'].each do |ns, base_uri|
+    @namespaces[ns] = RDF::Vocabulary.new(base_uri)
+  end
+  @skip = ['unknown', 'n/a']
+
+  @log = Logger.new('logfile.log')
+
   make_all_bags(@opts['DIR'], @opts['TARGET'] || 'bags')
   puts @missing_fields unless @missing_fields.empty?
 rescue Docopt::Exit => e
