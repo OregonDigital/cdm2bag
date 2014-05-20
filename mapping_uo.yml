@@ -40,6 +40,7 @@ namespaces:
 #  *dc_subject_lcna -
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
+# *folkrights - separates rights statement from copyright holder for OAC rights
 
 mappings:
   #
@@ -196,8 +197,8 @@ mappings:
     reposi: marcrel:rps
     source: SKIP
     rights:
-      method: rights
-    copyri: dct:rightsHolder
+      method: folkrights
+    copyri: oregon:rightsHolder
     record: SKIP
     type:
       method: type
