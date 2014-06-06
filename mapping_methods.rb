@@ -8,7 +8,9 @@ module MappingMethods
   include MappingMethods::XSDDate
   include MappingMethods::Language
   include MappingMethods::Type
+  include MappingMethods::Premis
   include MappingMethods::AAT
+  include MappingMethods::Collection
   include MappingMethods::Replace
   include MappingMethods::Ethnographic
 

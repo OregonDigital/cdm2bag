@@ -15,6 +15,10 @@ module MappingMethods
       
     end
 
+    def aat_gelatin(subject, data)
+      RDF::Graph.new << RDF::Statement.new(subject, RDF.type, RDF::URI('http://vocab.getty.edu/aat/300128695'))
+    end
+
     def aat_sheetmusic(subject, data)
       RDF::Graph.new << RDF::Statement.new(subject, RDF.type, RDF::URI('http://vocab.getty.edu/resource/aat/300026430'))
     end

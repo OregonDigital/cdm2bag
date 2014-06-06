@@ -21,6 +21,28 @@ module MappingMethods
     def generateRights(data)
     end
 
+    def folkrights(subject, data)
+      graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://opaquenamespace.org/rights/educational'))
+      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'Oregon Arts Commission') if data.include 'Oregon Arts Commission'
+      graph
+    end
+
+    def siuslaw_rights(subject, data)
+      graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://www.europeana.eu/rights/rr-r/'))
+      if data.include? 'Siuslaw National Forest'
+        graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'Siuslaw National Forest')
+      elsif data.include? 'Cronk'
+        graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'Cronk Family')
+      end
+      graph
+    end
+
+    def osu_archive_rights(subject, data)
+      graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://www.europeana.eu/rights/rr-r/'))
+      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'OSU Archives')
+      graph
+    end
+
     def rights(subject, data)
       graph = RDF::Graph.new
       licenses = findCCLicenses(data)

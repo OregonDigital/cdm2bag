@@ -213,3 +213,50 @@ mappings:
     dmmodified: SKIP
     dmrecord: 
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
+
+  # 
+  # archpnw
+  #
+  archpnw:
+    title:  dct:title
+    view:   oregon:cco/viewDescription
+    varian: dct:alternative
+    relate: dct:isPartOf
+    creato: oregon:cco/creatorDisplay
+    creata: dct:creator
+    date:   
+      method: date
+    covra:   dct:temporal
+    city: 
+      method: geographic
+    county: 
+      method: geographic
+    state: 
+      method: geographic
+    countr: 
+      method: geographic
+    site:   madsrdf:streetAddress
+    photog: SKIP # photo or slide date
+    photoa: marcrel:pht
+    catalo: SKIP
+    object: vra:workType
+    period: vra:stylePeriod
+    materi: vra:materials
+    measur: vra:measurements
+    signif: dct:description
+    refere: schema:citation
+    notes:  modsref:note
+    creatb: modsref:note
+    metada: SKIP
+    digita: oregon:set
+    sourca: dct:provenance # source of slide, look for repository/collection
+    source: dct:source #source and sourcea are used interchangably Merge? 
+    sourcb: daia:label
+    publis: dct:publisher
+    rights: 
+      method: rights
+    type:   mime:type
+    format: dct:format
+    identi: dct:identifier
+    techni: oregon:conversionSpecifications
+    contri: oregon:contributingInstitution

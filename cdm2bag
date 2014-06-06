@@ -41,7 +41,7 @@ def create_graphs(file, collection)
     bnode = RDF::Node.new
 
     if tag.to_s == 'dmrecord'
-      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("https://oregondigital.org/u?#{collection},#{ln}"))
+      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new

@@ -17,21 +17,7 @@ module MappingMethods
     def dcmitype(subject, data)
       data = data.capitalize.to_sym
       return nil unless DCMITYPES.include? data
-      graph = RDF::Graph.new
-      graph << RDF::Statement.new(subject, RDF::DC.type, DCMITYPE_NS[data])
-      unless dcmitype_cache.include? data
-        type_graph = RDF::Graph.load(DCMITYPE_NS[data])
-        q = RDF::Query.new do
-          pattern [DCMITYPE_NS[data], RDF::RDFS.label, :label]
-          pattern [DCMITYPE_NS[data], RDF.type, :type]
-        end
-        q.execute(type_graph).each do |solution|
-          dcmitype_cache[data] = RDF::Graph.new
-          dcmitype_cache[data] << RDF::Statement.new(DCMITYPE_NS[data], RDF::RDFS.label, solution[:label])
-          dcmitype_cache[data] << RDF::Statement.new(DCMITYPE_NS[data], RDF.type, solution[:type])
-        end
-      end
-      graph << dcmitype_cache[data]
+      return RDF::Graph.new << RDF::Statement.new(subject, RDF::DC.type, DCMITYPE_NS[data])
     end
 
     def type(subject, data)
