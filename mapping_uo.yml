@@ -16,20 +16,18 @@ namespaces:
   oregon: "http://opaquenamespace.org/ns/"
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
-  dwc: "http://rs.tdwg.org/dwc/terms/"					
-  exif: "http://www.w3.org/2003/12/exif/ns"					
-  holding: "http://purl.org/ontology/holding#"					
-  schema: "http://schema.org/"					
-  oad: "http://lod.xdams.org/reload/oad/"					
-  ov: "http://open.vocab.org/terms/"					
+  dwc: "http://rs.tdwg.org/dwc/terms/" 
+  exif: "http://www.w3.org/2003/12/exif/ns" 
+  holding: "http://purl.org/ontology/holding#" 
+  schema: "http://schema.org/" 
+  oad: "http://lod.xdams.org/reload/oad/" 
   swpo: "http://sw-portal.deri.org/ontologies/swportal#"
-  rdag1: "http://rdvocab.info/Elements/"					
-  rdarel: "http://rdvocab.info/RDARelationshipsWEMI/"
-  rdaw: "http://rdaregistry.info/Elements/w/"
   rdam: "http://rdaregistry.info/Elements/m/"
+  rdaw: "http://rdaregistry.info/Elements/w/"
   rdae: "http://rdaregistry.info/Elements/e/"
+  rdai: "http://rdaregistry.info/Elements/i/"
   rdaa: "http://rdaregistry.info/Elements/a/"
-
+  
 ##
 # METHODS:
 #
