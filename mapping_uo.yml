@@ -16,6 +16,15 @@ namespaces:
   oregon: "http://opaquenamespace.org/ns/"
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
+  dwc: "http://rs.tdwg.org/dwc/terms/"					
+  exif: "http://www.w3.org/2003/12/exif/ns"					
+  holding: "http://purl.org/ontology/holding#"					
+  schema: "http://schema.org/"					
+  oad: "http://lod.xdams.org/reload/oad/"					
+  ov: "http://open.vocab.org/terms/"					
+  rdag1: "http://rdvocab.info/Elements/"					
+  rdarel: "http://rdvocab.info/RDARelationshipsWEMI/"					
+  swpo: "http://sw-portal.deri.org/ontologies/swportal#"
 ##
 # METHODS:
 #
