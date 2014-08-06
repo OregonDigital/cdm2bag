@@ -1262,7 +1262,7 @@ mappings:
       method: processing_history 
     links: #SKIP
     addito: dct:hasVersion
-    additi: dct:HasFormat
+    additi: dct:hasFormat
     metada: #SKIP
     imagc: #SKIP
     imagd: #SKIP
