@@ -227,1254 +227,1122 @@ mappings:
     dmrecord: 
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
 
-    #
-    # archpnw
-    #
-    title: dct:title
-    view: oregon:cco/viewDescription
-    varian: dct:alternative
-    relate: dct:isPartOf
-    creato: oregon:cco/creatorDisplay
-    creata: dct:creator
-    date: dct:date
-    covra: dct:temporal
-    city: 
-      method: geographic
-    county: 
-      method: geographic
-    state: 
-      method: geographic
-    countr: 
-      method: geographic
-    site: madsrdf:streetAddress
-    photog: oregon: cco/viewDate
-    photoa: marcrel: pht
-    catalo: SKIP
-    object: vra:workType
-    period: vra:stylePeriod
-    materi: vra:material
-    measur: vra:measurements
-    signif: dct:description
-    refere: schema:citation
-    notes: modsref:note
-    creatb: modsref:note
-    metada: modsref:note # are these important for public?
-    digita: dct:isPartOf
-    sourca: dct:provenance # source of slide, look for repository/collection
-    source: dct:source
-    souceb: holding:label
-    publis: dct:source
-    rights: 
-      method: rights
-    type: 
-      method: type
-    format: 
-      method: format
-    identi: dct:identifier
-    techni: oregon:conversionSpecifications
-    contri: oregon:contributingInstitution
+  #
+  # archpnw
+  #
+archpnw:
+ title: dct:title
+ view: oregon:cco/viewDescription
+ varian: dct:alternative
+ relate: dct:isPartOf
+ creato: oregon:cco/creatorDisplay
+ creata: dct:creator
+ date: dct:date
+ covra: dct:temporal
+ city: method: geographic
+ county: method: geographic
+ state: method: geographic
+ countr: method: geographic
+ site: madsrdf:streetAddress
+ photog: oregon: cco/viewDate
+ photoa: marcrel: pht
+ catalo: SKIP
+ object: vra:workType
+ period: vra:stylePeriod
+ materi: vra:material
+ measur: vra:measurements
+ signif: dct:description
+ refere: schema:citation
+ notes: modsref:note
+ creatb: modsref:note
+ metada: modsref:note # are these important for public?
+ digita: dct:isPartOf
+ sourca: dct:provenance # source of slide, look for repository/collection
+ source: dct:source
+ souceb: holding:label
+ publis: dct:source
+ rights: method:rights
+ type: method:type
+ format: method:format
+ identi: dct:identifier
+ techni: oregon:conversionSpecifications
+ contri: oregon:contributingInstitution
 
-    #
-    # Bestof
-    #
-    title: dct:title
-    additb: dct:alternative
-    descra: dct:alternative
-    descri: dct:description
-    subjec: dct:subject
-    names: dct:subject
-    corpor: dct:subject
-    covera: dct:subject
-    sub: dct:subject
-    temp: dct:subject
-    creato: dct:creator
-    data: oregon:cco/viewDate
-    rights: 
-      method: rights
-    reposi: marcrel:rps
-    relati: oregon:archives/collectionTitle
-    collec: oregon:archives/collectionIdentifier
-    collea: oad:has_findingAid
-    sourca: dct:extent
-    source: dct:hasFormat
-    sourcb: oregon:sourceCondition
-    type: 
-      method: type
-    image: dct:extent
-    format: 
-      method: format
-    imagd: exif:width
-    imagc: exif:height
-    color: exif:colorSpace
-    date: oregon:dateDigitized
-    captur: oregon:conversionSpecifications
-    resolu: exif:resolution
-    ditigi: 
-      method: processing_history  
-    additi: dct:hasVersion
-    publis: dct:source
-    digita: oregon:set
-    digitb: # SKIP
-    contri: oregon:contributingInstitution
+  #
+  # Bestof
+  #
+Bestof:
+ title: dct:title
+ additb: dct:alternative
+ descra: dct:alternative
+ descri: dct:description
+ subjec: dct:subject
+ names: dct:subject
+ corpor: dct:subject
+ covera: dct:subject
+ sub: dct:subject
+ temp: dct:subject
+ creato: dct:creator
+ data: oregon:cco/viewDate
+ rights: method:rights
+ reposi: marcrel:rps
+ relati: oregon:localCollectionName
+ collec: oregon:localCollectionID
+ collea: oad:has_findingAid
+ sourca: dct:extent
+ source: dct:hasFormat
+ sourcb: oregon:sourceCondition
+ type: method:type
+ image: dct:extent
+ format: method:format
+ imagd: exif:width
+ imagc: exif:height
+ color: exif:colorSpace
+ date: oregon:dateDigitized
+ captur: oregon:conversionSpecifications
+ resolu: exif:resolution
+ ditigi: method:processing_history  
+ additi: dct:hasVersion
+ publis: dct:source
+ digita: oregon:set
+ digitb: # SKIP
+ contri: oregon:contributingInstitution
 
-    #
-    # Ulmann2
-    #
-    identi: dct:identifier
-    title: dct:title
-    sourca: # SKIP
-    old: dct:alternative
-    descri: dct:description
-    series: dct:subject
-    names: dct:subject
-    corpor: dct:subject
-    covera: 
-      method: geographic
-    lc: dct:subject
-    subjec: dct:subject
-    photog: dct:creator
-    date: 
-      method: date
-    reposi: marcrel:rps
-    collec: oregon:archives/collectionIdentifier
-    source: oregon:archives/collectionTitle
-    album: dct:isPartOf
-    admin: dct:source
-    type: 
-      method: type
-    format: dct:hasFormat
-    scan: oregon:conversionSpecifications
-    metada: # SKIP
-    catala: # SKIP
-    catalo: # SKIP
-    rights: 
-      method: rights
-    proven: dct:provenance
-    relate: dct:isVersionOf
-    bandin: # SKIP
-    publis: dct:source
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  #
+  # Ulmann2
+  #
+Ulmann2:
+ identi: dct:identifier
+ title: dct:title
+ sourca: # SKIP
+ old: dct:alternative
+ descri: dct:description
+ series: dct:subject
+ names: dct:subject
+ corpor: dct:subject
+ covera: method:geographic
+ lc: dct:subject
+ subjec: dct:subject
+ photog: dct:creator
+ date: method:date
+ reposi: marcrel:rps
+ collec: oregon:localCollectionID
+ source: oregon:localCollectionName
+ album: dct:isPartOf
+ admin: dct:source
+ type: method:type
+ format: dct:hasFormat
+ scan: oregon:conversionSpecifications
+ metada: # SKIP
+ catala: # SKIP
+ catalo: # SKIP
+ rights: method:rights	
+ proven: dct:provenance
+ relate: dct:isVersionOf
+ bandin: # SKIP
+ publis: dct:source
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
-    #
-    # diss
-    #
-    title: dct:title #some French titles
-    creato: dct:subject #lcnaf for author
-    subjec: dct:subject #lc and MeSH
-    descri: dct:description
-    subjea: dct:subject #French
-    descra: dct:description  #French
-    journa: swpo:containedInJournal  #some French titles
-    relati: schema:citation   #some French titles
-    publis: dct:source
-    contri: dct:contributor
-    date: dct:issued
-    type: 
-      method: type
-    format: method:format
-    identi: dct:identifier
-    data: oregon:dateDigitized
-    source: holding:label
-    langua: 
-      method: language
-    rights: 
-      method: rights
-    proces: oregon:conversionSpecifications
-    notes: modsref:note
-    metada: # SKIP
-    image: # SKIP
-    ambros: # SKIP
-    catalo: # SKIP
-    digita: oregon:set
-    full: oregon:fullText
-    contra: oregon:contributingInstitution
+  #
+  # diss
+  #
+diss:
+ title: dct:title #some French titles
+ creato: dct:subject #lcnaf for author
+ subjec: dct:subject #lc and MeSH
+ descri: dct:description
+ subjea: dct:subject #French
+ descra: dct:description  #French
+ journa: swpo:containedInJournal  #some French titles
+ relati: schema:citation   #some French titles
+ publis: dct:source
+ contri: dct:contributor
+ date: dct:issued
+ type: method:type
+ format: method:format
+ identi: dct:identifier
+ data: oregon:dateDigitized
+ source: holding:label
+ langua: method:language
+ rights: method:rights
+ proces: oregon:conversionSpecifications
+ notes: modsref:note
+ metada: # SKIP
+ image: # SKIP
+ ambros: # SKIP
+ catalo: # SKIP
+ digita: oregon:set
+ full: oregon:fullText
+ contra: oregon:contributingInstitution
 
 
 
-    #
-    # jasr
-    #
-    title: dct:title
-    covera: dct:temporal
-    datea: # SKIP
-    subjec: dct:subject
-    corpor: dct:subject
-    creato: dct:creator
-    publis: dct:source
-    date: 
-      method: date
-    type: 
-      method: type
-    format: 
-      method: format
-    identi: dct:identifier
-    source: holding:label
-    langua: 
-      method: language
-    collec: oregon:archives/collectionTitle
-    collea: oregon:archives/collectionIdentifier
-    colleb: oad:has_findingAid
-    box: # SKIP
-    folder: # SKIP
-    rights: 
-      method: rights
-    full: oregon:fullText
-    datedi: oregon:dateDigitized
-    proces: oregon:conversionSpecifications
-    metada: # SKIP
-    imagb: # SKIP
-    catalo: # SKIP
-    ambros: # SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
-    fulla: oregon:  #TBD; full PDFs download, in jasr folder ready to go
+  #
+  # jasr
+  #
+jasr:
+ title: dct:title
+ covera: dct:temporal
+ datea: # SKIP
+ subjec: dct:subject
+ corpor: dct:subject
+ creato: dct:creator
+ publis: dct:source
+ date: method:date
+ type: method:type
+ format: method:format
+ identi: dct:identifier
+ source: holding:label
+ langua: method:language
+ collec: oregon:localCollectionName
+ collea: oregon:localCollectionID
+ colleb: oad:has_findingAid
+ box: # SKIP
+ folder: # SKIP
+ rights: method:rights
+ full: oregon:fullText
+ datedi: oregon:dateDigitized
+ proces: oregon:conversionSpecifications
+ metada: # SKIP
+ imagb: # SKIP
+ catalo: # SKIP
+ ambros: # SKIP
+ digita: oregon:set
+ contri: oregon:contributingInstitution
+ fulla: oregon:  #TBD; full PDFs download, in jasr folder ready to go
 
-    #
-    # jsma
-    #
-    title: dct:title
-    creato: dct:creator
-    creata: oregon:cco/creatorDisplay
-    cultur: vra:culture
-    subjec: vra:stylePeriod
-    date: 
-      method: date
-    materi: vra:material
-    measur: vra:measurements
-    catego: vra:workType
-    descri: dct:description
-    notes: modsref:note
-    type: 
-      method: type
-    format:
-      method: format
-    rights:
-      method: rights	
-    collec: oregon:archives/collectionTitle
-    source: marcrel:rps
-    identi: dct:identifier
-    museum: # SKIP
-    digita: oregon:set
-    catalo: # SKIP
+  #
+  # jsma
+  #
+jsma:
+ title: dct:title
+ creato: dct:creator
+ creata: oregon:cco/creatorDisplay
+ cultur: vra:culture
+ subjec: vra:stylePeriod
+ date: method:date
+ materi: vra:material
+ measur: vra:measurements
+ catego: vra:workType
+ descri: dct:description
+ notes: modsref:note
+ type: method:type
+ format: method:format
+ rights: method:rights	
+ collec: oregon:localCollectionName
+ source: marcrel:rps
+ identi: dct:identifier
+ museum: # SKIP
+ digita: oregon:set
+ catalo: # SKIP
 
 
-    #
-    # ode
-    #
-    title: dct:title
-    date: date:issued
-    volume: swpo:isVolume
-    issue: swpo:hasNumber
-    editio: dct:title
-    notes: modsref:note
-    descri: dct:description
-    contri: schema:editor
-    type:
-      method: type
-    format:
-      method: format
-    identi: dct:identifier
-    langua:
-      method: language
-    relati: dct:relation
-    rights:
-      method: rights
-    full: oregon:fullText
-    metada: # SKIP
-    digita: oregon:set
-    ambros: # SKIP
-    contri: oregon:contributingInstitution
+  #
+  # ode
+  #
+ode:
+ title: dct:title
+ date: date:issued
+ volume: swpo:isVolume
+ issue: swpo:hasNumber
+ editio: dct:title
+ notes: modsref:note
+ descri: dct:description
+ contri: schema:editor
+ type: method:type
+ format: method:format
+ identi: dct:identifier
+ langua: method:language
+ relati: dct:relation
+ rights: method:rights
+ full: oregon:fullText
+ metada: # SKIP
+ digita: oregon:set
+ ambros: # SKIP
+ contri: oregon:contributingInstitution
 
-    #
-    # oimb
-    #
+#
+# oimb
+#
+oimb:
+ title: dct:identifier
+ source: holding:label
+ subjec: dct:subject # ITIS, uBio, LC
+ sub: dct:subject # ITIS, uBio, Geonames, LC
+ phlyum:	dwc:phlyum 	# ITIS and uBio
+ class: dwc:class	# ITIS
+ suba: dwc:genus  #for genusSpecies
+ common: dwc:vernacularName
+ descri: dct:description
+ covra: dct:spatial
+ creato: dct:creator
+ id: dwc:identificationVerificationStatus
+ slide: # SKIP
+ date: method:date
+ catalo: # SKIP
+ local: oregon:localCollectionName
+ type: method:type
+ format: method:format
+ identi: dct:identifier
+ rights: method:rights
+ digita: oregon:set
+ sourca: # SKIP
+ contri: oregon:contributingInstitution
 
-    title: dct:identifier
-    source: holding:label
-    subjec: dct:subject # ITIS, uBio, LC
-    sub: dct:subject # ITIS, uBio, Geonames, LC
-    phlyum:	dwc:phlyum 	# ITIS and uBio
-    class: dwc:class	# ITIS
-    suba: dwc:genus  #for genusSpecies
-    common: dwc:vernacularName
-    descri: dct:description
-    covra: dct:spatial
-    creato: dct:creator
-    id: dwc:identificationVerificationStatus
-    slide: # SKIP
-    date:
-      method: date
-    catalo: # SKIP
-    local: dct:isPartOf
-    type:
-      method: type
-    format:
-      method: format
-    identi: dct:identifier
-    rights:
-      method: rights
-    digita: oregon:set
-    sourca: # SKIP
-    contri: oregon:contributingInstitution
+  #
+  # tlegacies
+  #
+tlegacies:
+ title: dct:title
+ altern: dct:alternative
+ creato: dct:creator
+ cultur: vra:culture
+ organi: dct:description
+ date: method:date
+ time: method:date
+ langua: method:language
+ lc: dct:subject
+ subjec: dct:subject
+ descri: dct:description
+ descra: dct:description
+ geogra: method:geographic
+ work: vra:workType      
+ type: method:type
+ format: method:format
+ reposi: marcrel:rps
+ identi: oregon:localCollectionID
+ size: dct:description
+ number: dct:description
+ nwda: oad:has_findingAid
+ additi: # SKIP
+ rights: method:rights
+ catala: # SKIP
+ repres: # SKIP
+ publis: dct:source
+ catalo: # SKIP
+ metada: # SKIP
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
-    #
-    # tlegacies
-    #
-    title: dct:title
-    altern: dct:alternative
-    creato: dct:creator
-    cultur: vra:culture
-    organi: dct:description
-    date:
-      method: date
-    time:
-      method: date
-    langua:
-      method: language
-    lc: dct:subject
-    subjec: dct:subject
-    descri: dct:description
-    descra: dct:description
-    geogra:
-      method: geographic
-    work: vra:workType      
-    type:
-      method: type
-    format:
-      method: format
-    reposi: marcrel:rps
-    identi: oregon:archives/collectionIdentifier
-    size: dct:description
-    number: dct:description
-    nwda: oad:has_findingAid
-    additi: # SKIP
-    rights:
-      method: rights
-    catala: # SKIP
-    repres: # SKIP
-    publis: dct:source
-    catalo: # SKIP
-    metada: # SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
-
-    #
-    # wwdl
-    #
-    identi: dct:identifier
-    title: dct:title
-    book: dct:isPartOf
-    titla: dct:alternative
-    descri: dct:description
-    pagina: schema:numberOfPages
-    citati: schema:citation
-    subjec: dct:subject
-    lc: dct:subject
-    people: dct:subject
-    corpor: dct:subject 
-    place:
-      method: geographic
-    genre: rdaw:formOfWork.en
-    author: marcrel:aut
-    photog: marcrel:pht
-    cartog: marcrel:ctg
-    illust: marcrel:ill
-    creato: dct:contributor
-    previo: # SKIP (in the citation)
-    date: dct:issued
-    covera: dct:temporal
-    publis: dct:source
-    datedi: oregon:dateDigitized
-    rights:
-      method: rights
-    reposi: marcrel:rps
-    relati: oregon:archives/collectionTitle
-    collec: oregon:archives/collectionIdentifier
-    additi: dct:hasVersion
-    addita: dct:hasVersion
-    langua:
-      method: language
-    type:
-      method: type
-    format:
-      method: format
-    captur: oregon:conversionSpecifications
-    file: rdam:fileSize.en
-    image: exif:width
-    imaga: exif:height
-    color: exif:colorSpace
-    resolu: exif:resolution
-    digita: # SKIP
-    metada: # SKIP
-    imagb: # SKIP
-    imagc: # SKIP
-    full: oregon:fullText
-    link: dct:relation
-    contra: oregon:contributingInstitution
-    catalo: # SKIP
-    load: # SKIP
-    digitb: oregon:set
-    fulla: oregon:  #TBD; full PDFs download
+  #
+  # wwdl
+  #
+wwdl:
+ identi: dct:identifier
+ title: dct:title
+ book: dct:isPartOf
+ titla: dct:alternative
+ descri: dct:description
+ pagina: schema:numberOfPages
+ citati: schema:citation
+ subjec: dct:subject
+ lc: dct:subject
+ people: dct:subject
+ corpor: dct:subject 
+ place: method:geographic
+ genre: rdaw:formOfWork.en
+ author: marcrel:aut
+ photog: marcrel:pht
+ cartog: marcrel:ctg
+ illust: marcrel:ill
+ creato: dct:contributor
+ previo: # SKIP (in the citation)
+ date: dct:issued
+ covera: dct:temporal
+ publis: dct:source
+ datedi: oregon:dateDigitized
+ rights: method:rights
+ reposi: marcrel:rps
+ relati: oregon:localCollectionName
+ collec: oregon:localCollectionID
+ additi: dct:hasVersion
+ addita: dct:hasVersion
+ langua: method:language
+ type: method:type
+ format: method:format
+ captur: oregon:conversionSpecifications
+ file: rdam:fileSize.en
+ image: exif:width
+ imaga: exif:height
+ color: exif:colorSpace
+ resolu: exif:resolution
+ digita: # SKIP
+ metada: # SKIP
+ imagb: # SKIP
+ imagc: # SKIP
+ full: oregon:fullText
+ link: dct:relation
+ contra: oregon:contributingInstitution
+ catalo: # SKIP
+ load: # SKIP
+ digitb: oregon:set
+ fulla: oregon:  #TBD; full PDFs download
 
 
-    #
-    # comm
-    #
-    title: dct:identifier
-    titlb: dct:title
-    descri: dct:description
-    identi: dct:alternative
-    date:
-      method: date
-    covera:
-      method: geographic
-    creato: dct:creator
-    person: dct:subject #lcnaf
-    subjec: dct:subject
-    relati: oregon:archives/collectionTitle
-    collec: oregon:archives/collectionIdentifier
-    sourca: holding:label
-    source: dct:hasFormat
-    type:
-      method: type
-    publis: dct:source
-    donor: dct:contributor
-    rights:
-      method: rights
-    format:
-      method: format
-    date: oregon:dateDigitized 
-    captur: oregon:conversionSpecifications
-    metadata: # SKIP
-    imaga: # SKIP
-    catalo: # SKIP
-    digita: oregon:set
-    catala: # SKIP
-    contri: oregon:contributingInstitution
+  #
+  # comm
+  #
+comm:
+ title: dct:identifier
+ titlb: dct:title
+ descri: dct:description
+ identi: dct:alternative
+ date: method:date
+ covera: method:geographic
+ creato: dct:creator
+ person: dct:subject #lcnaf
+ subjec: dct:subject
+ relati: oregon:localCollectionName
+ collec: oregon:localCollectionID
+ sourca: holding:label
+ source: dct:hasFormat
+ type: method:type
+ publis: dct:source
+ donor: dct:contributor
+ rights: method:rights
+ format: method:format
+ date: oregon:dateDigitized 
+ captur: oregon:conversionSpecifications
+ metadata: # SKIP
+ imaga: # SKIP
+ catalo: # SKIP
+ digita: oregon:set
+ catala: # SKIP
+ contri: oregon:contributingInstitution
 
-    #
-    # latinoherit
-    #
-    title: dct:title
-    descri: dct:description
-    subjec: dct:subject # merge for lc, getty, tgm
-    creato: dct:creator # empty field
-    photog: # SKIP empty field, merge with creator
-    covera: 
-      method: geographic
-    date: 
-      method: date
-    contri: dct:contributor
-    relate: dct:hasVersion
-    source: # SKIP (empty field, merge with collec- title of collection)
-    reposi: marcrel:rps
-    collec: oregon:archives/collectionTitle
-    collea: oregon:archives/collectionIdentifier
-    relati: dct:isPartOf
-    identi: dct:identifier
-    donor: marcrel:dnr
-    format: 
-      method: format
-    type: 
-      method: type
-    langua: 
-      method: language
-    rights: 
-      method: rights
-    publis: dct:source
-    digiti: oregon:conversionSpecifications
-    digita: oregon:set
-    contra: oregon:contributingInstitution
+  #
+  # latinoherit
+  #
+latinoherit:
+ title: dct:title
+ descri: dct:description
+ subjec: dct:subject # merge for lc, getty, tgm
+ creato: dct:creator # empty field
+ photog: # SKIP empty field, merge with creator
+ covera: method:geographic
+ date: method:date
+ contri: dct:contributor
+ relate: dct:hasVersion
+ source: # SKIP (empty field, merge with collec- title of collection)
+ reposi: marcrel:rps
+ collec: oregon:localCollectionName
+ collea: oregon:localCollectionID
+ relati: oregon:seriesName
+ identi: dct:identifier
+ donor: marcrel:dnr
+ format: method:format
+ type: method:type
+ langua: method:language
+ rights: method:rights
+ publis: dct:source
+ digiti: oregon:conversionSpecifications
+ digita: oregon:set
+ contra: oregon:contributingInstitution
 
-    #
-    # univ
-    #
-    
-    title: dct:title
-    creato: dct:creator
-    subjec: dct:subject
-    lc: dct:subject
-    buildi: dct:subject
-    place: 
-      method: geographic
-    people: dct:subject
-    names: #SKIP
-    corpor: dct:subject
-    event: schema:event
-    descri: dct:description
-    notesa: dct:description
-    peopla: dct:description 
-    publis: dct:source
-    date: 
-      method: date
-    type: 
-      method: type
-    format: 
-      method: format
-    identi: dct:identifier
-    source: dct:description
-    relati: dct:relation
-    issuin: dct:source
-    collec: oregon:archives/collectionTitle
-    collea: oregon:archives/collectionIdentifier
-    box: oregon:archives/boxNumber
-    folder: oregon:archives/folderNumber
-    proces: 
-      method: processing_history
-    datea: oregon:dateDigitized
-    rights: 
-      method: rights
-    notes: # SKIP
-    metada: # SKIP
-    imagin: # SKIP
-    catalo: # SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
-    
-    
-    #
-    # uopres
-    #
-    
-    identi: dct:identifier
-    title: dct: title
-    altern: dct:alternative
-    docume: dct:isPartOf
-    descri: dct:description
-    number: schema:numberOfPages
-    subjec: dct:subject
-    tgm: dct:subject
-    theme: dct:subject 
-    people: dct:subject
-    corpor: dct:subject
-    place: 
-      method: geographic
-    creato: dct:creator
-    contri: dct:contributor
-    date: 
-      method: date
-    rights: 
-      method: rights
-    reposi: marcrel:rps
-    collec: oregon:archives/collectionTitle
-    collea: oregon:archives/collectionIdentifier
-    box: oregon:archives/boxNumber
-    folder: oregon:archives/folderNumber
-    ambros: # SKIP
-    type: 
-      method: type
-    format: 
-      method: format
-    langua: 
-      method: language
-    full: oregon:fullText
-    addita: dct:hasVersion
-    datedi: oregon:dateDigitized
-    captur: oregon:conversionSpecifications
-    file: rdam:fileSize.en
-    image: exif:width
-    imaga: exif:height
-    color: exif:colorSpace
-    resolu: exif:resolution
-    proces: 
-      method: processing_history
-    metada: # SKIP
-    imagb: # SKIP
-    imagc: # SKIP
-    catalo: # SKIP
-    catala: # SKIP
-    load: # SKIP
-    publis: dct:source
-    digita: oregon:set
-    contra: oregon:contributingInstitution
-    
-    #
-    # uostock
-    #
-    title: dct: title
-    creato: dct: creator
-    subjec: dct:subject
-    buildi: dct:subject 
-    event: schema:events
-    descri: dct:description
-    season: dct:subject
-    genre:  dct:subject
-    note: modsref:note
-    people: dct:description
-    publis: dct:source
-    date: 
-      method: date
-    type: 
-      method: type
-    format: 
-      method: format
-    photo:  exif:orientation
-    phota: rdae:colourContent.ed
-    identi: dct:identifier
-    source: dct:hasFormat
-    relati: dct:description
-    donor: dct:source
-    proces: oregon:conversionSpecifications
-    data: oregon:dateDigitized 
-    rights: 
-      method: rights
-    metada: # SKIP
-    scanni: # SKIP
-    catalo: # SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  #
+  # univ
+  #
+univ:  
+ title: dct:title
+ creato: dct:creator
+ subjec: dct:subject
+ lc: dct:subject
+ buildi: dct:subject
+ place: method:geographic
+ people: dct:subject
+ names: #SKIP
+ corpor: dct:subject
+ event: schema:event
+ descri: dct:description
+ notesa: dct:description
+ peopla: dct:description 
+ publis: dct:source
+ date: method:date
+ type: method:type
+ format: method:format
+ identi: dct:identifier
+ source: dct:description
+ relati: dct:relation
+ issuin: dct:source
+ collec: oregon:localCollectionName
+ collea: oregon:localCollectionID
+ box: oregon:archives/boxNumber
+ folder: oregon:archives/folderNumber
+ proces: method:processing_history
+ datea: oregon:dateDigitized
+ rights: method:rights
+ notes: # SKIP
+ metada: # SKIP
+ imagin: # SKIP
+ catalo: # SKIP
+ digita: oregon:set
+ contri: oregon:contributingInstitution
+ 
+ 
+  #
+  # uopres
+  #
+uopres:
+  identi: dct:identifier
+  title: dct: title
+  altern: dct:alternative
+  docume: dct:isPartOf
+  descri: dct:description
+  number: schema:numberOfPages
+  subjec: dct:subject
+  tgm: dct:subject
+  theme: dct:subject 
+  people: dct:subject
+  corpor: dct:subject
+  place: method:geographic
+  creato: dct:creator
+  contri: dct:contributor
+  date: method:date
+  rights: method:rights
+  reposi: marcrel:rps
+  collec: oregon:localCollectionName
+  collea: oregon:localCollectionID
+  box: oregon:archives/boxNumber
+  folder: oregon:folderName
+  ambros: # SKIP
+  type: method:type
+  format: method:format
+  langua: method:language
+  full: oregon:fullText
+  addita: dct:hasVersion
+  datedi: oregon:dateDigitized
+  captur: oregon:conversionSpecifications
+  file: rdam:fileSize.en
+  image: exif:width
+  imaga: exif:height
+  color: exif:colorSpace
+  resolu: exif:resolution
+  proces: method:processing_history
+  metada: # SKIP
+  imagb: # SKIP
+  imagc: # SKIP
+  catalo: # SKIP
+  catala: # SKIP
+  load: # SKIP
+  publis: dct:source
+  digita: oregon:set
+  contra: oregon:contributingInstitution
+  
+  #
+  # uostock
+  #
+uostock:
+ title: dct: title
+ creato: dct: creator
+ subjec: dct:subject
+ buildi: dct:subject 
+ event: schema:events
+ descri: dct:description
+ season: dct:subject
+ genre:  dct:subject
+ note: modsref:note
+ people: dct:description
+ publis: dct:source
+ date: method:date
+ type: method:type
+ format: method:format
+ photo:  exif:orientation
+ phota: rdae:colourContent.ed
+ identi: dct:identifier
+ source: dct:hasFormat
+ relati: dct:description
+ donor: dct:source
+ proces: oregon:conversionSpecifications
+ data: oregon:dateDigitized 
+ rights: method:rights
+ metada: # SKIP
+ scanni: # SKIP
+ catalo: # SKIP
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
 
-    #
-    # percent
-    #
-    projea:  rdam:containedInManifestation.en
-    projec:  dct:identifier
-    identi: dct:identifier
-    oac: dct:identifier
-    title: dct:title
-    altern: dct:alternative
-    series: dct:isPartOf
-    descrb: dct:description
-    descra: dct:description
-    dscri: dct:description
-    artist: rdaa:biographicalInformation.en
-    lc: dct:subject
-    aat: dct:subject
-    place: 
-      method: geographic
-    people: dct:subject
-    creato: dct:creator #lcnaf and ulan
-    artisb: dct:description
-    artisa: dct:description
-    artisc: dct:description
-    region: dct:description
-    data: 
-      method: date
-    commis: dct:description
-    datb: 
-      method: date
-    instal: vra:material
-    format: vra:material
-    artwor: vra:measurements
-    materi: vra:material
-    source: dct:hasVersion
-    sourcb:  # SKIP
-    artwob: 
-      method: geographic #artwork site
-    locati: 
-      method: geographic #extact site
-    covera: 
-      method: geographic #address
-    artwoc: 
-      method: geographic #county
-    artwod: dct:relation
-    langua: 
-      method: language
-    titla: oregon:cco/viewDescription
-    digita: oregon:dateDigitized
-    captur: oregon:conversionSpecifications
-    type: 
-      method: type
-    formaa: 
-      method: format
-    digitb: dct:extent
-    color: exif:colorSpace
-    imaga: 
-      method: processing_history
-    missin: #SKIP (missing items?)
-    full:  oregon:fullText
-    metada: #SKIP (metadata creator)
-    image: #SKIP (image scanner)
-    catalo: #SKIP (cataloging status)
-    load: #SKIP (load date)
-    rights: 
-      method: rights
-    contri: dct:contributor
-    publis: dct:source
-    collec: oregon:set
-    contra: oregon:contributingInstitution
+  #
+  # percent
+  #
+ percent:
+  projea:  rdam:containedInManifestation.en
+  projec:  dct:identifier
+  identi: dct:identifier
+  oac: dct:identifier
+  title: dct:title
+  altern: dct:alternative
+  series: dct:isPartOf
+  descrb: dct:description
+  descra: dct:description
+  dscri: dct:description
+  artist: rdaa:biographicalInformation.en
+  lc: dct:subject
+  aat: dct:subject
+  place: method:geographic
+  people: dct:subject
+  creato: dct:creator #lcnaf and ulan
+  artisb: dct:description
+  artisa: dct:description
+  artisc: dct:description
+  region: dct:description
+  data: method:date
+  commis: dct:description
+  datb: method:date
+  instal: vra:material
+  format: vra:material
+  artwor: vra:measurements
+  materi: vra:material
+  source: dct:hasVersion
+  sourcb:  # SKIP
+  artwob: method:geographic #artwork site
+  locati: method:geographic #extact site
+  covera: method:geographic #address
+  artwoc: method:geographic #county
+  artwod: dct:relation
+  langua: method:language
+  titla: oregon:cco/viewDescription
+  digita: oregon:dateDigitized
+  captur: oregon:conversionSpecifications
+  type: method:type
+  formaa: method:format
+  digitb: dct:extent
+  color: exif:colorSpace
+  imaga: method:processing_history
+  missin: #SKIP (missing items?)
+  full:  oregon:fullText
+  metada: #SKIP (metadata creator)
+  image: #SKIP (image scanner)
+  catalo: #SKIP (cataloging status)
+  load: #SKIP (load date)
+  rights: method:rights
+  contri: dct:contributor
+  publis: dct:source
+  collec: oregon:set
+  contra: oregon:contributingInstitution
 
-    
-    #
-    # archivision
-    #
-    title: dct:title
-    view: oregon:cco/viewDescription
-    agent: oregon:cco/creatorDisplay
-    creato: dct:creator
-    creata: dct:creator
-    date: dct:date
-    earlie: vra:earliestDate
-    latest: vra:latestDate
-    materi: vra:material
-    measur: vra:measurements
-    style: vra:stylePeriod
-    cultur: vra:culture
-    reposi: marcrel:rps
-    reposa: vra:idCurrentRepository
-    city: 
-      method: geographic
-    countr: 
-      method: geographic
-    site: dct:spatial
-    work: vra:workType
-    inscri: vra:inscription
-    subjec: dct:subject
-    notes: dct:description
-    descri: dct:description
-    state: vra:stateEdition
-    relati: dct:relation
-    larger: dct:isPartOf
-    source: dct:source
-    sourca: #SKIP source caption
-    sourcb: oregon:archives/collectionTitle
-    sourcc: #SKIP, same as identifier
-    vrc: holding:label
-    rights: 
-      method: rights
-    record: #SKIP
-    type: 
-      method: type
-    identi: dct:identifier
-    vrca: holding:label
-    course: modsrdf:note  #or skip
-    sessio: #SKIP
-    projec: #SKIP
-    projea: #SKIP
-    catalo: #SKIP
-    metada: #SKIP
-    keywor: dct:subject
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  
+  #
+  # archivision
+  #
+archivision:
+ title: dct:title
+ view: oregon:cco/viewDescription
+ agent: oregon:cco/creatorDisplay
+ creato: dct:creator
+ creata: dct:creator
+ date: dct:date
+ earlie: vra:earliestDate
+ latest: vra:latestDate
+ materi: vra:material
+ measur: vra:measurements
+ style: vra:stylePeriod
+ cultur: vra:culture
+ reposi: marcrel:rps
+ reposa: vra:idCurrentRepository
+ city: method:geographic
+ countr: method:geographic
+ site: dct:spatial
+ work: vra:workType
+ inscri: vra:inscription
+ subjec: dct:subject
+ notes: dct:description
+ descri: dct:description
+ state: vra:stateEdition
+ relati: dct:relation
+ larger: dct:isPartOf
+ source: dct:source
+ sourca: #SKIP source caption
+ sourcb: oregon:localCollectionName
+ sourcc: #SKIP, same as identifier
+ vrc: holding:label
+ rights: method:rights
+ record: #SKIP
+ type: method:type
+ identi: dct:identifier
+ vrca: holding:label
+ course: modsrdf:note  #or skip
+ sessio: #SKIP
+ projec: #SKIP
+ projea: #SKIP
+ catalo: #SKIP
+ metada: #SKIP
+ keywor: dct:subject
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
-    #
-    # artimages
-    #
-    title: dct:title
-    view: oregon:cco/viewDescription
-    agent: oregon:cco/creatorDisplay
-    creato: dct:creator
-    creata: dct:creator
-    date: dct:date
-    earlie: vra:earliestDate
-    latest: vra:latestDate
-    materi: vra:material
-    measur: vra:measurements
-    style: vra:stylePeriod
-    cultur: vra:culture
-    reposi: marcrel:rps
-    reposa: vra:idCurrentRepository
-    city: 
-      method: geographic
-    country: 
-      method: geographic
-    site: dct:spatial
-    work: vra:workType
-    inscri: vra:inscription
-    subjec: dct:subject
-    notes: dct:description
-    descri: dct:description
-    state: vra:stateEdition
-    relati: dct:relation
-    larger: dct:isPartOf
-    source: dct:source
-    sourca: #SKIP source caption
-    sourcb: oregon:archives/collectionTitle
-    sourcc: #SKIP source id, only useful for Meggs set of >50 images
-    vrc: holding:label
-    rights: 
-      method: rights
-    record: #SKIP
-    type: 
-      method: type
-    identi: dct:identifier
-    vrca: holding:label
-    course: modsrdf:note #or skip
-    sessio: #SKIP
-    projec: #SKIP
-    projea: #SKIP
-    catalo: #SKIP
-    metada: #SKIP
-    keywor: dct:subject
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  #
+  # artimages
+  #
+artimages:
+ title: dct:title
+ view: oregon:cco/viewDescription
+ agent: oregon:cco/creatorDisplay
+ creato: dct:creator
+ creata: dct:creator
+ date: dct:date
+ earlie: vra:earliestDate
+ latest: vra:latestDate
+ materi: vra:material
+ measur: vra:measurements
+ style: vra:stylePeriod
+ cultur: vra:culture
+ reposi: marcrel:rps
+ reposa: vra:idCurrentRepository
+ city: method:geographic
+ country: method:geographic
+ site: dct:spatial
+ work: vra:workType
+ inscri: vra:inscription
+ subjec: dct:subject
+ notes: dct:description
+ descri: dct:description
+ state: vra:stateEdition
+ relati: dct:relation
+ larger: dct:isPartOf
+ source: dct:source
+ sourca: #SKIP source caption
+ sourcb: oregon:localCollectionName
+ sourcc: #SKIP source id, only useful for Meggs set of >50 images
+ vrc: holding:label
+ rights: method:rights
+ record: #SKIP
+ type: method:type
+ identi: dct:identifier
+ vrca: holding:label
+ course: modsrdf:note #or skip
+ sessio: #SKIP
+ projec: #SKIP
+ projea: #SKIP
+ catalo: #SKIP
+ metada: #SKIP
+ keywor: dct:subject
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
 
-    #
-    # artlicensed
-    #
-    title: dct:title
-    view: oregon:cco/viewDescription
-    agent: oregon:cco/creatorDisplay
-    creato: dct:creator
-    creata: dct:creator
-    date: dct:date
-    earlie: vra:earliestDate
-    latest: vra:latestDate
-    materi: vra:material
-    measur: vra:measurements
-    style: vra:stylePeriod
-    cultur: vra:culture
-    reposi: marcrel:rps
-    reposa: vra:idCurrentRepository
-    city: 
-      method: geographic
-    countr: 
-      method: geographic
-    site: dct:spatial
-    work: vra:workType
-    inscri: vra:inscription
-    subjec: dct:subject
-    notes: dct:description
-    descri: dct:description
-    state: vra:stateEdition
-    relati: dct:relation
-    larger: dct:isPartOf
-    source: dct:source
-    sourca: #SKIP source caption
-    sourcb: oregon:archives/collectionTitle
-    sourcc: dct:identifier   #not necessarily the same as identifier
-    vrc: holding:label
-    rights: 
-      method: rights
-    record: #SKIP
-    type: 
-      method: type
-    identi: dct:identifier
-    vrca: holding:label
-    course: modsrdf:note  #or skip
-    sessio: #SKIP
-    projec: #SKIP
-    projea: #SKIP
-    catalo: #SKIP
-    metada: #SKIP
-    keywor: dct:subject
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  #
+  # artlicensed
+  #
+artlicensed:
+ title: dct:title
+ view: oregon:cco/viewDescription
+ agent: oregon:cco/creatorDisplay
+ creato: dct:creator
+ creata: dct:creator
+ date: dct:date
+ earlie: vra:earliestDate
+ latest: vra:latestDate
+ materi: vra:material
+ measur: vra:measurements
+ style: vra:stylePeriod
+ cultur: vra:culture
+ reposi: marcrel:rps
+ reposa: vra:idCurrentRepository
+ city: method:geographic
+ countr: method:geographic
+ site: dct:spatial
+ work: vra:workType
+ inscri: vra:inscription
+ subjec: dct:subject
+ notes: dct:description
+ descri: dct:description
+ state: vra:stateEdition
+ relati: dct:relation
+ larger: dct:isPartOf
+ source: dct:source
+ sourca: #SKIP source caption
+ sourcb: oregon:localCollectionName
+ sourcc: dct:identifier   #not necessarily the same as identifier
+ vrc: holding:label
+ rights: method:rights
+ record: #SKIP
+ type: method:type
+ identi: dct:identifier
+ vrca: holding:label
+ course: modsrdf:note  #or skip
+ sessio: #SKIP
+ projec: #SKIP
+ projea: #SKIP
+ catalo: #SKIP
+ metada: #SKIP
+ keywor: dct:subject
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
 
-    #
-    # lowenstam
-    #
-    title: dct:title
-    worka: dct:Alternate
-    view: oregon:cco/viewDescription
-    agent: dct:creator
-    agenta: oregon:cco/creatorDisplay
-    date: dct:date
-    materi: vra:material
-    measur: vra:measurements
-    style: vra:stylePeriod
-    cultur: vra:culture
-    work: vra:workType
-    locati: 
-      method: geographic
-    reposa: vra:idCurrentRepository
-    inscri: vra:inscription
-    descri: dct:description
-    state: dct:description
-    relati: dct:relation
-    text: dct:description
-    collec: oregon:archives/collectionTitle
-    photog: marcrel:pht
-    photo: oregon:cco/viewDate
-    box: holding:label
-    boxa: dct:subject
-    sectio: dct:subject
-    identi: dct:identifier
-    rights: 
-      method: rights
-    record: #SKIP
-    type: 
-      method: type
-    metada: #SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  #
+  # lowenstam
+  #
+lowenstam:
+ title: dct:title
+ worka: dct:Alternate
+ view: oregon:cco/viewDescription
+ agent: dct:creator
+ agenta: oregon:cco/creatorDisplay
+ date: dct:date
+ materi: vra:material
+ measur: vra:measurements
+ style: vra:stylePeriod
+ cultur: vra:culture
+ work: vra:workType
+ locati: method:geographic
+ reposa: vra:idCurrentRepository
+ inscri: vra:inscription
+ descri: dct:description
+ state: dct:description
+ relati: dct:relation
+ text: dct:description
+ collec: oregon:localCollectionName
+ photog: marcrel:pht
+ photo: oregon:cco/viewDate
+ box: holding:label
+ boxa: dct:subject
+ sectio: dct:subject
+ identi: dct:identifier
+ rights: method:rights
+ record: #SKIP
+ type: method:type
+ metada: #SKIP
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
-    #
-    # Manuscripts
-    #
-    
-    title: dct:title
-    identi: dct:identifier
-    shelfm: holding:label
-    descri: dct:description
-    conten: dct:tableOfContents
-    titla: dct:alternative
-    altern: dct:alternative
-    subjec: dct:subject
-    keywor: dct:subject
-    genre: dct:subject
-    part: dct:hasPart
-    creato: dct:creator
-    scribe: marcrel:scr
-    artist: marcrel:art
-    contri: dct:contributor
-    datc: 
-      method: date
-    datb: 
-      method: date
-    date: oregon:dateDigitized
-    publis: dct:source
-    langua: 
-      method: language
-    reposi: marcrel:rps
-    sourcb:  schema:numberOfPages
-    sourcc: dct:extent
-    sourcd: vra:support
-    source: dct:alternative
-    collec: oregon:archives/collectionTitle
-    collea: oregon:archives/collectionIdentifier
-    notes: modsref:note
-    layout: rdam:layout.en
-    illust: dct:description
-    decora: dct:description
-    bindin: dct:description
-    waterm: dct:description
-    condit: oregon:sourceCondition
-    restor: dct:description
-    proven: dct:provenance
-    contra: #SKIP
-    prefer: schema:citation
-    rights: 
-      method: rights
-    acknow: #SKIP
-    type: 
-      method: type
-    format: 
-      method: format
-    captur: #SKIP
-    datd: #SKIP
-    imagb: #SKIP
-    imagc: #SKIP
-    metada: #SKIP
-    metadb: #SKIP
-    digita: oregon:set
-    full: oregon:fullText
-    
+  #
+  # Manuscripts
+  #
+Manuscripts:  
+  title: dct:title
+  identi: dct:identifier
+  shelfm: holding:label
+  descri: dct:description
+  conten: dct:tableOfContents
+  titla: dct:alternative
+  altern: dct:alternative
+  subjec: dct:subject
+  keywor: dct:subject
+  genre: dct:subject
+  part: dct:hasPart
+  creato: dct:creator
+  scribe: marcrel:scr
+  artist: marcrel:art
+  contri: dct:contributor
+  datc: method:date
+  datb: method:date
+  date: oregon:dateDigitized
+  publis: dct:source
+  langua: method:language
+  reposi: marcrel:rps
+  sourcb:  schema:numberOfPages
+  sourcc: dct:extent
+  sourcd: vra:support
+  source: dct:alternative
+  collec: oregon:localCollectionName
+  collea: oregon:localCollectionID
+  notes: modsref:note
+  layout: rdam:layout.en
+  illust: dct:description
+  decora: dct:description
+  bindin: dct:description
+  waterm: dct:description
+  condit: oregon:sourceCondition
+  restor: dct:description
+  proven: dct:provenance
+  contra: #SKIP
+  prefer: schema:citation
+  rights: method:rights
+  acknow: #SKIP
+  type: method:type
+  format: method:format
+  captur: #SKIP
+  datd: #SKIP
+  imagb: #SKIP
+  imagc: #SKIP
+  metada: #SKIP
+  metadb: #SKIP
+  digita: oregon:set
+  full: oregon:fullText
+  
 
-    #
-    # uovets
-    #
-    
-    identi: dct:identifier
-    title: dct: title
-    interv: dct:creator
-    intera: dct:contributor
-    subjec: dct:subject
-    descri: dct:description
-    branch: dct:subject
-    occupa: dct:description
-    highes: dct:description
-    places: dct:description
-    interb: 
-      method: geographic
-    date: 
-      method: date
-    type: 
-      method: type
-    format: 
-      method: format
-    langua: 
-      method: language
-    audio: 
-      method: rights
-    transc: 
-      method: rights
-    publis: dct:source
-    notes: modsref:notes
-    metada: #SKIP
-    catalo: #SKIP
-    digiti: oregon:conversionSpecifications
-    relati: oregon:set
-    contri: oregon:contributingInstitution
-    
-    
-    
-    #
-    # uo-athletics
-    #
-    
-    title: dct:title
-    descra: dct:alternative
-    sourca: dct:description
-    descri: dct:description
-    collec: oregon:archives/collectionTitle
-    collea: oregon:archives/collectionIdentifier
-    folder: oregon:archives/folderNumber
-    box: oregon:archives/boxNumber
-    photo: dct:identifier
-    titla: dct:alternative
-    publia: dct:alternative
-    notes: dct:description
-    photog: marcrel:pht
-    author: marcrel:aut
-    publis: dct:source
-    data: 
-      method: date 
-    datb: 
-      method: date
-    catalo: #SKIP
-    exhibi: dct:subject
-    names: dct:subject
-    namea: dct:subject
-    subjec: dct:subject
-    tgm: dct:subject
-    corpor: dct:subject
-    corpoa: dct:subject
-    place: 
-      method: geographic
-    date: 
-      method: date
-    genre: dct:subject
-    type: 
-      method: type
-    format: 
-      method: format
-    source: dct:source
-    langua: 
-      method: language
-    relati: dct:hasVersion
-    covera: dct:coverage
-    rights: 
-      method: rights
-    proven: dct:provenance
-    sourcb: dct:extent
-    sourcc: oregon:sourceCondition
-    sourcd: dct:hasFormat
-    number: schema:numberOfPages
-    donor: marcrel:dnr 
-    citati: schema:citation
-    origin: dct:publisher
-    reposi: marcrel:rps
-    image: rdam:fileSize.en
-    imaga: exif:width
-    imagb: exif:height
-    color: exif:colorSpace
-    sourcf: #SKIP
-    sourcg: #SKIP
-    captur: oregon:dateDigitized
-    captua: oregon:conversionSpecifications
-    resolu: exif:resolution
-    proces: 
-      method: processing_history 
-    links: #SKIP
-    addito: dct:hasVersion
-    additi: dct:HasFormat
-    metada: #SKIP
-    imagc: #SKIP
-    imagd: #SKIP
-    scanni: #SKIP
-    other: dct:identifier
-    catala: #SKIP
-    full: #SKIP
-    load: #SKIP
-    ambros: #SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
-    
-    
-    #
-    # misc
-    #
-    
-    title: dct:title
-    subjec: dct:subject
-    descri: dct:description
-    creato: dct:creator
-    publis: dct:publisher
-    contri: dct:contributor
-    date: 
-      method: date
-    type: 
-      method: type
-    format: 
-      method: format
-    identi: dct:identifier
-    source: dct:source
-    langua: 
-      method: language
-    relati: #SKIP
-    covera: 
-      method: date
-    rights: 
-      method: rights
-    audien: #SKIP
-    full: #SKIP
-    fulla: oregon:fullText
-    contra: oregon:contributingInstitution
-    
-    
-    #
-    # petrarch
-    #
-    
-    title: dct:title
-    poems: dct:hasPart
-    subjec: dct:subject
-    descri: dct:description
-    creato: dct:creator
-    publis: dct:publisher
-    contri: dct:contributor
-    date: 
-      method: date
-    type: 
-      method: type
-    format: 
-      method: format
-    identi: dct:identifier
-    source: dct:source
-    langua: 
-      method: language
-    relati: dct:isPartOf
-    covera: dct:coverage
-    rights: 
-      method: rights
-    fulla: oregon:fullText
-    full: #SKIP
-    digita: oregon:set
-    contra: oregon:contributingInstitution
-    
-    
-    #
-    # maic
-    #
-    
-    title: dct:title
-    identi: dct:identifier
-    work: vra:workType
-    altern: dct:alternative
-    subjec: dct:subject
-    descri: dct:description
-    proces: vra:technique
-    point: dct:hasVersion
-    measur: vra:measurements
-    object: oregon:compassDirection
-    primar: 
-      method: geographic
-    second: 
-      method: geographic
-    availa: dct:description
-    period: vra:stylePeriod
-    perioa: vra:stylePeriod
-    relati: dct:relation
-    orient: oregon:compassDirection
-    rights: marcrel:pht
-    date: oregon:cco/viewDate
-    righta: 
-      method: rights
-    publis: dct:source
-    source: holding:label
-    data: oregon:dateDigitized
-    digiti: oregon:conversionSpecifications
-    image: #SKIP
-    type: 
-      method: type
-    format: 
-      method: format
-    metada: #SKIP
-    batch: #SKIP
-    digita: oregon:set
-    contri: oregon:contributingInstitution
-    
-    
-    
-    #
-    # Moorhouse-wk
-    #
-    
-    title: dct:identifier
-    identi: dct:title
-    titla: dct:alternative
-    descra: dct:alternative
-    tribad: dct:alternative
-    descri: dct:description
-    tribac: dct:description
-    tribal: dct:subject
-    tribaa: dct:subject
-    tci: # SKIP checklist
-    subjec: dct:subject
-    names: dct:subject
-    covera: 
-      method: geographic
-    creato: marcrel:pht
-    data: dct:date
-    rights: 
-      method: rights
-    reposi: marcrel:rps
-    relati: oregon:archives/collectionTitle
-    collec: oregon:archives/collectionIdentifier
-    source: dct:hasFormat
-    sourca: dct:extent
-    sourceb: oregon:sourceCondition
-    type: 
-      method: type
-    sub: dct:subject
-    format: 
-      method: format
-    image: rdam:fileSize.en
-    imagd: exif:width
-    imagc: exif:height
-    color: exif:colorSpace
-    date: oregon:dateDigitized
-    captur: oregon:conversionSpecifications
-    resolu: exif:resolution
-    digiti: 
-      method: processing_history
-    scanni: # SKIP scanning pass
-    additi: dct:hasVersion
-    imaga:  # SKIP scanner
-    imagb: # SKIP editor
-    metada: # SKIP cataloger
-    cata: modsref:note # cataloger notes
-    publis: dct:description # statement of joint project
-    digita: oregon:set
-    contri: oregon:contributingInstitution
+  #
+  # uovets
+  #
+uovets:  
+  identi: dct:identifier
+  title: dct: title
+  interv: dct:creator
+  intera: dct:contributor
+  subjec: dct:subject
+  descri: dct:description
+  branch: dct:subject
+  occupa: dct:description
+  highes: dct:description
+  places: dct:description
+  interb: method:geographic
+  date: method:date
+  type: method:type
+  format: method:format
+  langua: method:language
+  audio: method:rights
+  transc: method:rights
+  publis: dct:source
+  notes: modsref:notes
+  metada: #SKIP
+  catalo: #SKIP
+  digiti: oregon:conversionSpecifications
+  relati: oregon:set
+  contri: oregon:contributingInstitution
+  
+  
+  
+  #
+  # uo-athletics
+  #
+uo-athletics:  
+  title: dct:title
+  descra: dct:alternative
+  sourca: dct:description
+  descri: dct:description
+  collec: oregon:localCollectionName
+  collea: oregon:localCollectionID
+  folder: oregon:folderName
+  box: oregon:archives/boxNumber
+  photo: dct:identifier
+  titla: dct:alternative
+  publia: dct:alternative
+  notes: dct:description
+  photog: marcrel:pht
+  author: marcrel:aut
+  publis: dct:source
+  data: method:date 
+  datb: method:date
+  catalo: #SKIP
+  exhibi: dct:subject
+  names: dct:subject
+  namea: dct:subject
+  subjec: dct:subject
+  tgm: dct:subject
+  corpor: dct:subject
+  corpoa: dct:subject
+  place: method:geographic
+  date: method:date
+  genre: dct:subject
+  type: method:type
+  format: method:format
+  source: dct:source
+  langua: method:language
+  relati: dct:hasVersion
+  covera: dct:coverage
+  rights: method:rights
+  proven: dct:provenance
+  sourcb: dct:extent
+  sourcc: oregon:sourceCondition
+  sourcd: dct:hasFormat
+  number: schema:numberOfPages
+  donor: marcrel:dnr 
+  citati: schema:citation
+  origin: dct:publisher
+  reposi: marcrel:rps
+  image: rdam:fileSize.en
+  imaga: exif:width
+  imagb: exif:height
+  color: exif:colorSpace
+  sourcf: #SKIP
+  sourcg: #SKIP
+  captur: oregon:dateDigitized
+  captua: oregon:conversionSpecifications
+  resolu: exif:resolution
+  proces: method:processing_history 
+  links: #SKIP
+  addito: dct:hasVersion
+  additi: dct:hasFormat
+  metada: #SKIP
+  imagc: #SKIP
+  imagd: #SKIP
+  scanni: #SKIP
+  other: dct:identifier
+  catala: #SKIP
+  full: #SKIP
+  load: #SKIP
+  ambros: #SKIP
+  digita: oregon:set
+  contri: oregon:contributingInstitution
+  
+  
+  #
+  # misc
+  #
+misc: 
+  title: dct:title
+  subjec: dct:subject
+  descri: dct:description
+  creato: dct:creator
+  publis: dct:publisher
+  contri: dct:contributor
+  date: method:date
+  type: method:type
+  format: method:format
+  identi: dct:identifier
+  source: dct:source
+  langua: method:language
+  relati: #SKIP
+  covera: method:date
+  rights: method:rights
+  audien: #SKIP
+  full: #SKIP
+  fulla: oregon:fullText
+  contra: oregon:contributingInstitution
+  
+  
+  #
+  # petrarch
+  #
+ petrarch: 
+  title: dct:title
+  poems: oregon:canzonierePoems
+  subjec: dct:subject
+  descri: dct:description
+  creato: dct:creator
+  publis: dct:publisher
+  contri: dct:contributor
+  date: method:date
+  type: method:type
+  format: method:format
+  identi: dct:identifier
+  source: dct:source
+  langua: method:language
+  relati: dct:isPartOf
+  covera: dct:coverage
+  rights: method:rights
+  fulla: oregon:fullText
+  full: #SKIP
+  digita: oregon:set
+  contra: oregon:contributingInstitution
+  
+  
+  #
+  # maic
+  #
+maic:  
+  title: dct:title
+  identi: dct:identifier
+  work: vra:workType
+  altern: dct:alternative
+  subjec: dct:subject
+  descri: dct:description
+  proces: vra:technique
+  point: dct:hasVersion
+  measur: vra:measurements
+  object: oregon:compassDirection
+  primar: method:geographic
+  second: method:geographic
+  availa: dct:description
+  period: vra:stylePeriod
+  perioa: vra:stylePeriod
+  relati: dct:relation
+  orient: oregon:compassDirection
+  rights: marcrel:pht
+  date: oregon:cco/viewDate
+  righta: method:rights
+  publis: dct:source
+  source: holding:label
+  data: oregon:dateDigitized
+  digiti: oregon:conversionSpecifications
+  image: #SKIP
+  type: method:type
+  format: method:format
+  metada: #SKIP
+  batch: #SKIP
+  digita: oregon:set
+  contri: oregon:contributingInstitution
+  
+  
+  
+  #
+  # Moorhouse-wk
+  #
+Moorhouse-wk: 
+ title: dct:identifier
+ identi: dct:title
+ titla: dct:alternative
+ descra: dct:alternative
+ tribad: dct:alternative
+ descri: dct:description
+ tribac: dct:description
+ tribal: dct:subject
+ tribaa: dct:subject
+ tci: # SKIP checklist
+ subjec: dct:subject
+ names: dct:subject
+ covera: method:geographic
+ creato: marcrel:pht
+ data: dct:date
+ rights: method:rights
+ reposi: marcrel:rps
+ relati: oregon:localCollectionName
+ collec: oregon:localCollectionID
+ source: dct:hasFormat
+ sourca: dct:extent
+ sourceb: oregon:sourceCondition
+ type: method:type
+ sub: dct:subject
+ format: method:format
+ image: rdam:fileSize.en
+ imagd: exif:width
+ imagc: exif:height
+ color: exif:colorSpace
+ date: oregon:dateDigitized
+ captur: oregon:conversionSpecifications
+ resolu: exif:resolution
+ digiti: method:processing_history
+ scanni: # SKIP scanning pass
+ additi: dct:hasVersion
+ imaga:  # SKIP scanner
+ imagb: # SKIP editor
+ metada: # SKIP cataloger
+ cata: modsref:note # cataloger notes
+ publis: dct:description # statement of joint project
+ digita: oregon:set
+ contri: oregon:contributingInstitution
 
-    #
-    # bookarts
-    #
-    identi: dct:identifier
-    call: holding:label
-    title: dct:title
-    altern: dct:alternative
-    creato: dct:creator
-    uo: # SKIP
-    author: dct:contributor
-    contri: dct:contributor
-    editio: vra:stateEdition
-    object: vra:measurements
-    descri: dct:description
-    coloph: rdam:descriptionOfManifestation.en
-    relati: dct:isPartOf
-    langua: 
-      method: language
-    date: dct:issued
-    publis: dct:publisher
-    place: rdam:placeOfProduction.en
-    subjec: dct:subject
-    bindin: vra:technique
-    prinit: vra:technique
-    produc: rdam:modeOfIssuance.en
-    struct: vra:workType
-    litera: rdaw:formOfWork.en
-    materi: vra:material
-    format: 
-      method: format
-    type: 
-      method: type
-    digiti: oregon:conversionSpecifications 
-    rights: 
-      method: rights
-    local: modsref:note
-    librar: # SKIP
-    datea: oregon:dateDigitized
-    photog: marcrel:pht
-    catalo: # SKIP
-    catala: # SKIP
-    source: marcrel:rps
-    digita: oregon:set
-    contra: oregon:contributingInstitution
-
+  #
+  # bookarts
+  #
+bookarts:
+ identi: dct:identifier
+ call: holding:label
+ title: dct:title
+ altern: dct:alternative
+ creato: dct:creator
+ uo: # SKIP
+ author: dct:contributor
+ contri: dct:contributor
+ editio: vra:stateEdition
+ object: vra:measurements
+ descri: dct:description
+ coloph: rdam:descriptionOfManifestation.en
+ relati: dct:isPartOf
+ langua: method:language
+ date: dct:issued
+ publis: dct:publisher
+ place: rdam:placeOfProduction.en
+ subjec: dct:subject
+ bindin: vra:technique
+ prinit: vra:technique
+ produc: rdam:modeOfIssuance.en
+ struct: vra:workType
+ litera: rdaw:formOfWork.en
+ materi: vra:material
+ format: method:format
+ type: method:type
+ digiti: oregon:conversionSpecifications 
+ rights: method:rights
+ local: modsref:note
+ librar: # SKIP
+ datea: oregon:dateDigitized
+ photog: marcrel:pht
+ catalo: # SKIP
+ catala: # SKIP
+ source: marcrel:rps
+ digita: oregon:set
+ contra: oregon:contributingInstitution
