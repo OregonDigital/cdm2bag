@@ -737,7 +737,7 @@ uostock:
  creato: dct: creator
  subjec: dct:subject
  buildi: dct:subject 
- event: schema:events
+ event: schema:event
  descri: dct:description
  season: dct:subject
  genre:  dct:subject
