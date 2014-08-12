@@ -253,9 +253,9 @@ archpnw:
  measur: vra:measurements
  signif: dct:description
  refere: schema:citation
- notes: modsref:note
- creatb: modsref:note
- metada: modsref:note # are these important for public?
+ notes: modsrdf:note
+ creatb: modsrdf:note
+ metada: modsrdf:note # are these important for public?
  digita: dct:isPartOf
  sourca: dct:provenance # source of slide, look for repository/collection
  source: dct:source
@@ -367,7 +367,7 @@ diss:
  langua: method:language
  rights: method:rights
  proces: oregon:conversionSpecifications
- notes: modsref:note
+ notes: modsrdf:note
  metada: # SKIP
  image: # SKIP
  ambros: # SKIP
@@ -426,7 +426,7 @@ jsma:
  measur: vra:measurements
  catego: vra:workType
  descri: dct:description
- notes: modsref:note
+ notes: modsrdf:note
  type: method:type
  format: method:format
  rights: method:rights	
@@ -447,7 +447,7 @@ ode:
  volume: swpo:isVolume
  issue: swpo:hasNumber
  editio: dct:title
- notes: modsref:note
+ notes: modsrdf:note
  descri: dct:description
  contri: schema:editor
  type: method:type
@@ -741,7 +741,7 @@ uostock:
  descri: dct:description
  season: dct:subject
  genre:  dct:subject
- note: modsref:note
+ note: modsrdf:note
  people: dct:description
  publis: dct:source
  date: method:date
@@ -1039,7 +1039,7 @@ Manuscripts:
   source: dct:alternative
   collec: oregon:localCollectionName
   collea: oregon:localCollectionID
-  notes: modsref:note
+  notes: modsrdf:note
   layout: rdam:layout.en
   illust: dct:description
   decora: dct:description
@@ -1086,7 +1086,7 @@ uovets:
   audio: method:rights
   transc: method:rights
   publis: dct:source
-  notes: modsref:notes
+  notes: modsrdf:notes
   metada: #SKIP
   catalo: #SKIP
   digiti: oregon:conversionSpecifications
@@ -1300,7 +1300,7 @@ Moorhouse-wk:
  imaga:  # SKIP scanner
  imagb: # SKIP editor
  metada: # SKIP cataloger
- cata: modsref:note # cataloger notes
+ cata: modsrdf:note # cataloger notes
  publis: dct:description # statement of joint project
  digita: oregon:set
  contri: oregon:contributingInstitution
@@ -1337,7 +1337,7 @@ bookarts:
  type: method:type
  digiti: oregon:conversionSpecifications 
  rights: method:rights
- local: modsref:note
+ local: modsrdf:note
  librar: # SKIP
  datea: oregon:dateDigitized
  photog: marcrel:pht
