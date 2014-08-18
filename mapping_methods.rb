@@ -7,7 +7,7 @@ module MappingMethods
   include MappingMethods::MediaType
   include MappingMethods::XSDDate
   include MappingMethods::Language
-  include MappingMethods::Type
+  include MappingMethods::Types
   include MappingMethods::Premis
   include MappingMethods::AAT
   include MappingMethods::Collection
