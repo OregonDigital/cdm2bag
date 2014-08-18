@@ -152,7 +152,7 @@ mappings:
       method: rights
     contac: SKIP
     type:
-      method: type
+      method: types
     format:
       method: mime
     digiti: SKIP
@@ -262,7 +262,7 @@ archpnw:
  souceb: holding:label
  publis: dct:source
  rights: method:rights
- type: method:type
+ type: method:types
  format: method:format
  identi: dct:identifier
  techni: oregon:conversionSpecifications
@@ -330,7 +330,7 @@ Ulmann2:
  source: oregon:localCollectionName
  album: dct:isPartOf
  admin: dct:source
- type: method:type
+ type: method:types
  format: dct:hasFormat
  scan: oregon:conversionSpecifications
  metada: # SKIP
