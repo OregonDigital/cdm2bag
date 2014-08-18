@@ -2,7 +2,7 @@ require 'rdf'
 require 'rdf/raptor'
 
 module MappingMethods
-  module Type
+  module Types
     DCMITYPE_NS = RDF::Vocabulary.new('http://purl.org/dc/dcmitype/')
     DCMITYPES = [:Collection, :Dataset, :Event,
                  :Image, :InteractiveReource, :MovingImage,
@@ -20,7 +20,7 @@ module MappingMethods
       return RDF::Graph.new << RDF::Statement.new(subject, RDF::DC.type, DCMITYPE_NS[data])
     end
 
-    def type(subject, data)
+    def types(subject, data)
       graph = RDF::Graph.new
       data.split(';').each do |part|
         part.strip!
