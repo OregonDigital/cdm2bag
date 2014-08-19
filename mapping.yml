@@ -246,16 +246,22 @@ mappings:
     creato: marcrel:pht
     date:
       method: dc_date
-    subjec: dce:subject
+    subjec: 
+      method: lcsubject
     descri: dct:description
     relati: dce:relation
+    #covera:
+    #  method: siuslaw_geographic
     source:
       method: collection 
     rights: 
       method: siuslaw_rights
     format:
-      method: format
+      method: aat_siuslaw
     audien: 
+      method: aat_siuslaw_colorcontent
+    publis:
+      method: geographic
     size: SKIP
     inscri: vra:inscription
     storag: modsrdf:note
@@ -269,6 +275,8 @@ mappings:
       method: dc_modified
     dmrecord:
       method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
+    dmimage: SKIP
+    langua: SKIP
 
   #
   # oe_explorer
@@ -397,11 +405,37 @@ mappings:
   #
   baseball:
     title: dct:title
-  academ: dct:date
-  type: 
-    method: type
-  format:
-    method: aat_format
+    academ: dct:date
+    creato: marcrel:pht
+    publis: dce:publisher 
+    descri: dct:description
+    subjec: 
+      method: lcsubject
+    covera:
+      method: baseball_geographic
+    contri: SKIP
+    type: 
+      method: types
+    format:
+      method: aat_from_search
+    identi: SKIP
+    rights: 
+      method: baseball_rights
+    fullrs: oregon:full
+    transm: oregon:conversionSpecifications
+    all: SKIP
+    find: SKIP
+    dmaccess: SKIP
+    dmcreated: dct:created
+    dmmodified: dct:modified
+    dmrecord:
+      method: replace
+    date:
+      method: xsd_date
+    public: dce:source
+    p: SKIP
+    notes: SKIP
+    time: SKIP
 
   #
   # corflood64
@@ -479,7 +513,7 @@ mappings:
     status: modsrdf:note
     compou: SKIP # what is this?
     relate: SKIP # same as above (compou)?
-    fullrs: fullrs: oregon:full
+    fullrs: oregon:full
     find: premis:hasOriginalName
     dmaccess: SKIP
     dmimage: SKIP

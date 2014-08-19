@@ -13,6 +13,7 @@ module MappingMethods
   include MappingMethods::Collection
   include MappingMethods::Replace
   include MappingMethods::Ethnographic
+  include MappingMethods::Lcsh
 
   DC_ELEM = RDF::Vocabulary.new('http://purl.org/dc/elements/1.1/')
 end

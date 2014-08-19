@@ -7,7 +7,7 @@ module MappingMethods
     }
 
     def collection(subject, data)
-      collection = COLLECTION_URIS[data.to_sym]
+      collection = COLLECTION_URIS[data.to_sym] || data
       graph = RDF::Graph.new << RDF::Statement.new(subject, RDF::DC.isPartOf, collection)
       graph
     end

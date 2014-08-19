@@ -138,7 +138,7 @@ end
 def make_all_bags(dir, target)
   target = FileUtils.mkdir_p(target)
   Dir.foreach(dir) do |collection|
-    next if collection == '.' or collection == '..'
+    next if collection.start_with?(".")
     make_coll_bags(dir, target, collection)
   end
 end
