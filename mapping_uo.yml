@@ -1129,7 +1129,7 @@ uo-athletics:
   genre: dct:subject
   type: method:types
   format: method:format
-  source: dct:source
+  source: #SKIP
   langua: method:language
   relati: dct:hasVersion
   covera: dct:coverage
