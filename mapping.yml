@@ -247,7 +247,7 @@ mappings:
     date:
       method: dc_date
     subjec: 
-      method: lcsubject
+      method: lcsubject_siuslaw
     descri: dct:description
     relati: dce:relation
     #covera:
@@ -287,28 +287,29 @@ mappings:
     creato: dce:creator
     date: 
       method: xsd_date
-    description: dct:description
+    descri: dct:description
     fullte: oregon:fullText
-    subjec: lc_subject # heavy use of keyword fallback.
+    subjec:  # heavy use of keyword fallback.
+      method: lcsubject
     geogra:       
-      method: geographic  
+      method: geographic_oe
     geogrb: 
-      method: geographic # Rivers & Streams. Are these consistently in Geonames? Do they need a special field?
+      method: geographic_oe # Rivers & Streams. Are these consistently in Geonames? Do they need a special field?
     huc: oregon:hydrologicUnitCode
     llid: oregon:llid
     object:
-      method: type
+      method: types
     type:
-      method: aat_format # also Gelatin Silver Prints, Color..., Postcards, Negatives, Albumen prints, Silent Films
+      method: aat_from_search # also Gelatin Silver Prints, Color..., Postcards, Negatives, Albumen prints, Silent Films
       # get full list of types
     origin:
       method: collection
     source: dct:isPartOf
     identi: dct:identifier
     langua: 
-      method: aat_format # also Gelatin Silver Prints, Color..., Postcards, Negatives, Albumen prints, Silent Films
+      method: aat_from_search # also Gelatin Silver Prints, Color..., Postcards, Negatives, Albumen prints, Silent Films
     rights:
-      method: osu_archive_rights
+      method: oe_rights
     relati: SKIP
     format: oregon:conversionSpecifications
     covera: SKIP
@@ -316,7 +317,7 @@ mappings:
     find: premis:hasOriginalName
     contra: 
       method: institution_osu
-    contri: modsrdf:note
+    contri: SKIP
     fullrs: oregon:full
     find: premis:hasOriginalName
     dmoclcno: SKIP
@@ -336,12 +337,13 @@ mappings:
     identi: dct:identifier
     title: marcrel:art 
     subjec: dct:title
-    descri: SKIP # Woodcut, Etching, Engraving, Drypoint
-    media1: SKIP # Prints
-    media2: SKIP # specific printing methods
-    descrip: dct:description
+    #descri: SKIP # Woodcut, Etching, Engraving, Drypoint
+    #media1: SKIP # Prints
+    #media2: SKIP # specific printing methods
+    descrp: dct:description
     format: modsrdf:physicalExtent # 'size'
-    datepe: dc:date
+    datepe: 
+      method: xsd_date
     date: SKIP # century
     condit: SKIP # physical condition
     invent: oregon:accessionNumber # inventory number
