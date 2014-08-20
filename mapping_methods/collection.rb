@@ -56,7 +56,7 @@ module MappingMethods
       :'Fred Deininger Luse Photograph Album' => RDF::URI('http://data.library.oregonstate.edu/collection/p_228'),
       :'Paul Andresen Photographs' => RDF::URI('http://data.library.oregonstate.edu/collection/p_262'),
      # :'Orange and Black' => RDF::URI(''),
-      :'Continuing Higher Education' => RDF::URI('http://data.library.oregonstate.edu/collection/p_048'),
+      :'Continuing Higher Education' => RDF::URI('http://data.library.oregonstate.edu/collection/p_048')
     }
 
     def collection(subject, data)
