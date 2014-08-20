@@ -414,6 +414,7 @@ mappings:
     creato: marcrel:pht
     publis: dce:publisher 
     descri: dct:description
+    homeaw: dct:description
     subjec: 
       method: lcsubject
     covera:
@@ -423,7 +424,7 @@ mappings:
       method: types
     format:
       method: aat_from_search
-    identi: SKIP
+    identi: dct:identifier
     rights: 
       method: baseball_rights
     fullrs: oregon:full
@@ -441,6 +442,8 @@ mappings:
     p: SKIP
     notes: SKIP
     time: SKIP
+    owner:
+      method: baseball_rights_owner
 
   #
   # corflood64
