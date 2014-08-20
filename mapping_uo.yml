@@ -174,11 +174,10 @@ mappings:
   # folklore
   #
   folklore:
-    collec: 
-      method: collection  # need to add to dc:isPartOfis
+    collec: oregon:localCollectionName
     collea: SKIP 
     title: dct:title
-    photo: holding:label   
+    photo: holding:label 
     photoa: dc:date 
     colleb: 
       method: lcnaf #aat:collectors ,  aat concept of type of agent
