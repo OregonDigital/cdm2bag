@@ -9,7 +9,7 @@ module MappingMethods
       authority = Qa::Authorities::Loc.new
       graph = RDF::Graph.new
       @lcsubject_cache ||= {}
-      Array(data.split(/[;,]/)).each do |subject_name|
+      Array(data.split(';')).each do |subject_name|
         subject_name.strip!
         subject_name.gsub!('"', "")
         next if subject_name.gsub("-","") == ""
@@ -29,6 +29,10 @@ module MappingMethods
         @lcsubject_cache[subject_name.downcase] ||= uri
       end
       graph
+    end
+
+    def lcsubject_siuslaw(subject, data)
+      lcsubject(subject, data.gsub(",",";"))
     end
   end
 end

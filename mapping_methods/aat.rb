@@ -39,7 +39,8 @@ module MappingMethods
         "book illustrations" => "illustrations (layout features)",
         "programs" => "programs (documents)",
         "letters" => "letters (correspondence)",
-        "cyanotypes" => "cyanotypes (photographic prints)"
+        "cyanotypes" => "cyanotypes (photographic prints)",
+        "fillms" => "films"
       }
     end
 

@@ -11,10 +11,10 @@ module MappingMethods
       @geocache ||= {}
     end
 
-    def geonames_search(str)
+    def geonames_search(str, extra_params={})
       str.slice! '(Ore.)'
       str.slice! '(Ore)'
-      response = RestClient.get 'http://api.geonames.org/searchJSON', {:params => {:username => 'johnson_tom', :q => str, :maxRows => 1, :style => 'short'}}
+      response = RestClient.get 'http://api.geonames.org/searchJSON', {:params => {:username => 'johnson_tom', :q => str, :maxRows => 1, :style => 'short'}.merge(extra_params)}
       response = JSON.parse(response)
       if response["totalResultsCount"] != 0
         uri = "http://sws.geonames.org/#{response['geonames'][0]['geonameId']}/"
@@ -24,12 +24,16 @@ module MappingMethods
       end
     end
 
+    def geographic_oe(subject, data)
+      geographic(subject, data, RDF::DC[:spatial], {:adminCode1 => "OR"})
+    end
+
     def siuslaw_geographic(subject, data)
       graph = RDF::Graph.new
       return graph if data == "" || data.nil?
       Array(data.split("/")).each do |str|
         str = siuslaw_mapping[str] || str
-        graph << geographic(subject, str)
+        graph << geographic(subject, str, RDF::DC[:spatial], {:adminCode1 => "OR"})
       end
       return graph
     end
@@ -84,12 +88,12 @@ module MappingMethods
     #   @geocache[str][:graph] = graph
     # end
 
-    def geographic(subject, data, predicate=RDF::DC[:spatial])
+    def geographic(subject, data, predicate=RDF::DC[:spatial], extra_params={})
       data.slice!(';')
       data.strip!
       unless geocache.include? data
         begin
-          geonames_search(data)
+          geonames_search(data, extra_params)
         rescue => e
           puts subject, data, e.backtrace
         end
