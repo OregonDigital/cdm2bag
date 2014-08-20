@@ -11,12 +11,59 @@ module MappingMethods
       @geocache ||= {}
     end
 
-    def geonames_search(str)
+    def geonames_search(str, extra_params={})
       str.slice! '(Ore.)'
       str.slice! '(Ore)'
-      response = RestClient.get 'http://api.geonames.org/searchJSON', {:params => {:username => 'johnson_tom', :q => str, :maxRows => 1, :style => 'short'}}
-      uri = "http://sws.geonames.org/#{JSON.parse(response)['geonames'][0]['geonameId']}/"
-      geocache[str] = {:uri => RDF::URI(uri)}
+      response = RestClient.get 'http://api.geonames.org/searchJSON', {:params => {:username => 'johnson_tom', :q => str, :maxRows => 1, :style => 'short'}.merge(extra_params)}
+      response = JSON.parse(response)
+      if response["totalResultsCount"] != 0
+        uri = "http://sws.geonames.org/#{response['geonames'][0]['geonameId']}/"
+        geocache[str] = {:uri => RDF::URI(uri)}
+      else
+        geocache[str] = {:uri => str}
+      end
+    end
+
+    def geographic_oe(subject, data)
+      geographic(subject, data, RDF::DC[:spatial], {:adminCode1 => "OR"})
+    end
+
+    def siuslaw_geographic(subject, data)
+      graph = RDF::Graph.new
+      return graph if data == "" || data.nil?
+      Array(data.split("/")).each do |str|
+        str = siuslaw_mapping[str] || str
+        graph << geographic(subject, str, RDF::DC[:spatial], {:adminCode1 => "OR"})
+      end
+      return graph
+    end
+
+    def siuslaw_mapping
+      {
+        "Alsea" => "Alsea Place",
+        "ODNRA" => "Oregon Dunes National Recreation Area",
+        "Smith River" => "Smith River, Oregon",
+        "Mapleton" => "Mapleton, OR",
+        "Waldpot" => "Waldport",
+        "Hebo?" => "Hebo, OR Place",
+        "Hebo" => "Hebo, OR Place"
+      }
+    end
+
+    def baseball_geographic(subject, data)
+      graph = RDF::Graph.new
+      data = data.strip
+      return graph if data == "" || data.nil?
+      str = baseball_mapping[str] || data
+      graph << geographic(subject, str)
+      return graph
+    end
+
+    def baseball_mapping
+      {
+        "Corvallis (ORE.)" => "Corvallis, OR",
+        "Peoria, (Ariz.)" => "Peoria, AZ"
+      }
     end
 
     # def geonames_graph(uri, str)
@@ -41,12 +88,12 @@ module MappingMethods
     #   @geocache[str][:graph] = graph
     # end
 
-    def geographic(subject, data, predicate=RDF::DC[:spatial])
+    def geographic(subject, data, predicate=RDF::DC[:spatial], extra_params={})
       data.slice!(';')
       data.strip!
       unless geocache.include? data
         begin
-          geonames_search(data)
+          geonames_search(data, extra_params)
         rescue => e
           puts subject, data, e.backtrace
         end

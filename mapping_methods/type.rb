@@ -22,6 +22,7 @@ module MappingMethods
 
     def types(subject, data)
       graph = RDF::Graph.new
+      data = map_types[data] || data
       data.split(';').each do |part|
         part.strip!
         type = dcmitype(subject, part)
@@ -29,6 +30,13 @@ module MappingMethods
         graph << type
       end
       graph
+    end
+
+
+    def map_types
+      {
+        'Moving image' => 'MovingImage'
+      }
     end
   end
 end
