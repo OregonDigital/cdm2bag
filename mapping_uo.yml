@@ -178,7 +178,7 @@ mappings:
       method: collection  # need to add to dc:isPartOfis
     collea: SKIP 
     title: dct:title
-    photo: modsrdf:locationCopyShelfLocator   
+    photo: holding:label   
     photoa: dc:date 
     colleb: 
       method: lcnaf #aat:collectors ,  aat concept of type of agent
