@@ -377,7 +377,9 @@ mappings:
   rockshore93:
     title: dct:title
     creato: dce:creator
-    pushlis: dce:publisher
+    publis: dce:publisher
+    covera:
+      method: siuslaw_geographic
     latitu: SKIP
     longit: SKIP
     scale: modsrdf:physicalExtent
@@ -390,7 +392,8 @@ mappings:
       method: aat_gelatin
     assess: SKIP
     relati: oregon:conversionSpecifications
-    color: SKIP #RGB, Color, B/W
+    color:
+      method: aat_siuslaw_colorcontent #RGB, Color, B/W
     rights: 
       method: rockshore_public_domain
     identi: SKIP
