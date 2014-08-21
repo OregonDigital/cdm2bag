@@ -1063,7 +1063,7 @@ Manuscripts:
   full: oregon:fullText
   
 
-#
+  #
   # uovets
   #
 uovets:  
@@ -1072,11 +1072,11 @@ uovets:
   interv: dct:creator
   intera: dct:contributor
   subjec: dct:subject
-  descri: dct:subject
-  branch: dct:subject
-  occupa: dct:description
-  highes: dct:description
-  places: dct:description
+  descri: dct:description
+  branch: oregon:militaryBranch
+  occupa: oregon:militaryOccupation
+  highes: oregon:militaryHighestrank
+  places: oregon:militaryServiceplaces
   interb: method:geographic
   date: method:date
   type: method:types
