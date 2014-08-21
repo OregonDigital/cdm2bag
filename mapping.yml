@@ -384,10 +384,11 @@ mappings:
     longit: SKIP
     scale: modsrdf:physicalExtent
     descri: SKIP # duplicates 'photog'
+    photog: dct:identifier
     date:
       method: xsd_date
     type:
-      method: type
+      method: types
     format:
       method: aat_gelatin
     assess: SKIP
@@ -407,6 +408,11 @@ mappings:
     dmmodified: dct:modified
     dmrecord: 
       method: replace 
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    contri: marcrel:rps 
+    dmimage: SKIP
     
   #
   # baseball

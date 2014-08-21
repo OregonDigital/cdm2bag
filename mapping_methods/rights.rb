@@ -75,6 +75,17 @@ module MappingMethods
       graph
     end
 
+    def rockshore_public_domain(subject, data)
+      graph = RDF::Graph.new
+      licenses = findCCLicenses(data)
+
+      licenses.each do |license|
+        graph << RDF::Statement.new(subject, RDF::URI('http://creativecommons.org/ns#license'), license)
+        graph << RDF::Statement.new(subject, RDF::URI('http://purl.org/dc/terms/rights'), license)
+      end
+      graph
+    end
+
     def rights(subject, data)
       graph = RDF::Graph.new
       licenses = findCCLicenses(data)
