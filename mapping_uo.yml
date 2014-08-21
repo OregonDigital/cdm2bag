@@ -95,7 +95,7 @@ mappings:
     digita: oregon:isPartOf/set
     full: oregon:fullText
     contri: oregon:contributingInstitution
-    fullrs: oregon:full  # some items in collection PDF, so no data in this field
+    fullrs: oregon:fullText  # some items in collection PDF, so no data in this field
     find: SKIP
     dmaccess: SKIP
     dmimage: SKIP
@@ -162,10 +162,10 @@ mappings:
     digita: oregon:set
     contri: oregon:contributingInstitution
     fullrs: SKIP
-    #    oregon:full will need to be scripted, CDM doesn't track file paths for PDF files 
+    #    oregon:fullText will need to be scripted, CDM doesn't track file paths for PDF files 
     dmoclcno: SKIP
     dmaccess: SKIP
-    find: oregon:full # coordinating file in CDM
+    find: oregon:fullText # coordinating file in CDM
     dmcreated: SKIP
     dmmodified: SKIP
     dmrecord:
@@ -279,7 +279,7 @@ Bestof:
  names: dct:subject
  corpor: dct:subject
  covera: dct:subject
- sub: dct:subject
+ sub: oregon:tgm
  temp: dct:subject
  creato: dct:creator
  data: oregon:cco/viewDate
@@ -649,7 +649,7 @@ univ:
  lc: dct:subject
  buildi: dct:subject
  place: method:geographic
- people: dct:subject
+ people: oregon:uoNames
  names: #SKIP
  corpor: dct:subject
  event: schema:event
@@ -666,8 +666,8 @@ univ:
  issuin: dct:source
  collec: oregon:localCollectionName
  collea: oregon:localCollectionID
- box: oregon:archives/boxNumber
- folder: oregon:archives/folderNumber
+ box: oregon:boxNumber
+ folder: oregon:folderNumber
  proces: method:processing_history
  datea: oregon:dateDigitized
  rights: method:rights
@@ -690,9 +690,9 @@ uopres:
   descri: dct:description
   number: schema:numberOfPages
   subjec: dct:subject
-  tgm: dct:subject
+  tgm: oregon:tgm
   theme: dct:subject 
-  people: dct:subject
+  people: oregon:uoNames
   corpor: dct:subject
   place: method:geographic
   creato: dct:creator
@@ -702,7 +702,7 @@ uopres:
   reposi: marcrel:rps
   collec: oregon:localCollectionName
   collea: oregon:localCollectionID
-  box: oregon:archives/boxNumber
+  box: oregon:boxNumber
   folder: oregon:folderName
   ambros: # SKIP
   type: method:types
@@ -1077,7 +1077,7 @@ uovets:
   occupa: oregon:militaryOccupation
   highes: oregon:militaryHighestrank
   places: oregon:militaryServiceplaces
-  interb: method:geographic
+  interb: method:geographic #make dct:description ??
   date: method:date
   type: method:types
   format: method:format
@@ -1105,7 +1105,7 @@ uo-athletics:
   collec: oregon:localCollectionName
   collea: oregon:localCollectionID
   folder: oregon:folderName
-  box: oregon:archives/boxNumber
+  box: oregon:boxNumber
   photo: dct:identifier
   titla: dct:alternative
   publia: dct:alternative
@@ -1117,10 +1117,10 @@ uo-athletics:
   datb: method:date
   catalo: #SKIP
   exhibi: dct:subject
-  names: dct:subject
-  namea: dct:subject
+  names: oregon:uoNames
+  namea: oregon:uoNames
   subjec: dct:subject
-  tgm: dct:subject
+  tgm: oregon:tgm
   corpor: dct:subject
   corpoa: dct:subject
   place: method:geographic
