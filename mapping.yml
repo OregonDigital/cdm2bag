@@ -261,8 +261,8 @@ mappings:
     audien: 
       method: aat_siuslaw_colorcontent
     publis:
-      method: geographic
-    size: SKIP
+      method: siuslaw_geographic
+    size: modsrdf:physicalExtent 
     inscri: vra:inscription
     storag: modsrdf:note
     fullrs: oregon:full
@@ -277,6 +277,8 @@ mappings:
       method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
     dmimage: SKIP
     langua: SKIP
+    covera:
+      method: ranger_district
 
   #
   # oe_explorer
@@ -328,6 +330,7 @@ mappings:
     dmmodified: dct:modified
     dmrecord: 
       method: replace 
+    contra: marcrel:rps 
 
   #
   # fairbanks

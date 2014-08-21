@@ -4,7 +4,7 @@ module MappingMethods
   module XSDDate
     def xsd_date(subject, data)
       predicate = RDF::DC.date
-      if /^\d{4}(-\d{2})*$/.match(data)
+      if /^\d{4}(-[0-9]{2})*$/.match(data) && !data.include?("-00")
         RDF::Statement.new(subject, predicate, RDF::Literal(data, :datatype => RDF::XSD.date))
       else
         string_date(subject, predicate, data)

@@ -42,6 +42,7 @@ def create_graphs(file, collection)
 
     if tag.to_s == 'dmrecord'
       graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
+      add_set(collection, graph, bnode)
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new
@@ -61,6 +62,20 @@ def create_graphs(file, collection)
     end
   end
   graphs
+end
+
+def add_set(collection, graph, subject)
+  set = map_set[collection.downcase]
+  if set
+    graph << RDF::Statement(subject, @namespaces["oregon"]["set"], RDF::URI("http://oregondigital.org/resource/oregondigital:#{set}"))
+  end
+end
+
+def map_set
+  {
+    "oe_explorer" => "oregon-explorer",
+    "siuslaw" => "siuslaw"
+  }
 end
 
 def set_subject(graph, subject)
@@ -86,12 +101,12 @@ def add_content_file(graph, bag, dir)
       pattern [:subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
     end
     results = query.execute(graph)
-    fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
-    fname = fname.split(/\\/).last
     if results.empty?
       puts 'no full'
       return nil
     end
+    fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
+    fname = fname.split(/\\/).last
     file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, '')) 
     require 'find'
     Find.find(dir) do |path|
