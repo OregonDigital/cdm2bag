@@ -74,7 +74,9 @@ end
 def map_set
   {
     "oe_explorer" => "oregon-explorer",
-    "siuslaw" => "siuslaw"
+    "siuslaw" => "siuslaw",
+    "rockshore93" => "rockyshore93",
+    "baseball" => "osu-baseball"
   }
 end
 
