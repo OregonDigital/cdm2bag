@@ -134,7 +134,7 @@ mappings:
     genre: 
       method: aat_sheetmusic # vra:workType class, use AAT, always "sheet music" for this collection
     cover: 
-      method: cover # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
+      oregon: coverDescription
     illust: marcrel:ill 
     lithog: marcrel:prm
     sourca:
@@ -199,8 +199,8 @@ mappings:
     subjee: SKIP
     subjef: SKIP
     sebjeg: 
-      method: ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
-    segjeh: oregon:keywords
+      oregon:ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
+    segjeh: dce:subject
     resour: 
       method: aat #workType, some might not be in AAT and may need to be changed
     relati: SKIP
@@ -1077,7 +1077,7 @@ uovets:
   occupa: oregon:militaryOccupation
   highes: oregon:militaryHighestrank
   places: oregon:militaryServiceplaces
-  interb: method:geographic #make dct:description ??
+  interb: dct:description #merge with descri
   date: method:date
   type: method:types
   format: method:format
