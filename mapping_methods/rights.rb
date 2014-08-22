@@ -62,7 +62,7 @@ module MappingMethods
     def oe_rights(subject, data)
       graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://www.europeana.eu/rights/rr-r/'))
       if data.include? ("OSU Archives")
-        graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'OSU Archives')
+        graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'OSU Special Collections & Archives Research Center')
       elsif data.include? ("Benton County Historical Museum")
         graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'Benton County Historical Museum')
       end
@@ -71,7 +71,7 @@ module MappingMethods
 
     def osu_archive_rights(subject, data)
       graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://www.europeana.eu/rights/rr-r/'))
-      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'OSU Archives')
+      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'OSU Special Collections & Archives Research Center')
       graph
     end
 

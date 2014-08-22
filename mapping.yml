@@ -400,7 +400,8 @@ mappings:
     identi: SKIP
     checks: premis:hasFixity
     datea: SKIP
-    media: SKIP
+    media:
+      method: mime_extension
     fullrs: oregon:full
     find: premis:hasOriginalName
     dmaccess: SKIP
@@ -422,8 +423,10 @@ mappings:
     academ: dct:date
     creato: marcrel:pht
     publis: dce:publisher 
-    descri: dct:description
-    homeaw: dct:description
+    descri: 
+      method: baseball_description
+    homeaw: 
+      method: baseball_homeaw
     subjec: 
       method: lcsubject
     covera:
@@ -446,13 +449,17 @@ mappings:
     dmrecord:
       method: replace
     date:
-      method: xsd_date
+      method: baseball_date
     public: dce:source
     p: SKIP
     notes: SKIP
     time: SKIP
     owner:
       method: baseball_rights_owner
+    game:
+      method: sports_team
+    origin:
+      method: collection
 
   #
   # corflood64
@@ -503,15 +510,16 @@ mappings:
   #
   gifford:
     title: dct:title
-    digita: SKIP # will add to collection manually
+    digita: SKIP
     creato: dce:creator
-    date: dc:date
-    covera: dc:date
+    date: 
+      method: xsd_date
+    covera: SKIP
     descri: dc:description
     subjec: 
-      method: lc_subject #lcsh semicolon delimited
+      method: lcsubject #lcsh semicolon delimited
     publis: 
-      method: geographic # semicolon delimited
+      method: gifford_geographic # semicolon delimited
     contri:
       method: collection #localCollection
     relati: SKIP # will add to collection manually

@@ -43,6 +43,7 @@ def create_graphs(file, collection)
     if tag.to_s == 'dmrecord'
       graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
       add_set(collection, graph, bnode)
+      send("#{collection}_cleanup", collection, graph, bnode) if respond_to?("#{collection}_cleanup")
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new
@@ -76,7 +77,8 @@ def map_set
     "oe_explorer" => "oregon-explorer",
     "siuslaw" => "siuslaw",
     "rockshore93" => "rockyshore93",
-    "baseball" => "osu-baseball"
+    "baseball" => "osu-baseball",
+    "gifford" => "gifford"
   }
 end
 

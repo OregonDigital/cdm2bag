@@ -60,7 +60,9 @@ module MappingMethods
     }
 
     def collection(subject, data)
+      data = data.gsub(';','')
       collection = COLLECTION_URIS[data.to_sym] || data
+      puts "No URI found for #{data}" unless collection.kind_of? RDF::URI
       graph = RDF::Graph.new << RDF::Statement.new(subject, RDF::DC.isPartOf, collection)
       graph
     end
