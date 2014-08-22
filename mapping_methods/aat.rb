@@ -70,6 +70,8 @@ module MappingMethods
         uri += "300265434"
       elsif data == "Color"
         uri += "300056130"
+      elsif data == "RGB"
+        uri += "300266239"
       else
         raise "Unknown siuslaw color sent: #{data}"
       end

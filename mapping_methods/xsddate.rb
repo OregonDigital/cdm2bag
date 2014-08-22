@@ -11,6 +11,13 @@ module MappingMethods
       end
     end
 
+    def baseball_date(subject, date)
+      date = date.gsub(",",";") || date
+      date = date.split(";").map{|x| x.to_i}
+      date = "#{date.min}-#{date.max}"
+      xsd_date(subject, date)
+    end
+
     def xsd_datetime(subject, predicate, data)
       RDF::Statement.new(subject, predicate, RDF::Literal(data, :datatype => RDF::XSD.datetime))
     end
