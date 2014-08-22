@@ -51,6 +51,16 @@ module MappingMethods
       }
     end
 
+    def gifford_geographic(subject, data)
+      graph = RDF::Graph.new
+      return graph if data == "" || data.nil?
+      Array(data.split(";")).each do |str|
+        next if str.to_s.strip == ""
+        graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :name_startsWith => str, :orderBy => 'relevance', :adminCode1 => "OR"})
+      end
+      graph
+    end
+
     def siuslaw_geographic(subject, data)
       graph = RDF::Graph.new
       return graph if data == "" || data.nil?

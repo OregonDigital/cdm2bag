@@ -377,26 +377,31 @@ mappings:
   rockshore93:
     title: dct:title
     creato: dce:creator
-    pushlis: dce:publisher
+    publis: dce:publisher
+    covera:
+      method: siuslaw_geographic
     latitu: SKIP
     longit: SKIP
     scale: modsrdf:physicalExtent
     descri: SKIP # duplicates 'photog'
+    photog: dct:identifier
     date:
       method: xsd_date
     type:
-      method: type
+      method: types
     format:
       method: aat_gelatin
     assess: SKIP
     relati: oregon:conversionSpecifications
-    color: SKIP #RGB, Color, B/W
+    color:
+      method: aat_siuslaw_colorcontent #RGB, Color, B/W
     rights: 
       method: rockshore_public_domain
     identi: SKIP
     checks: premis:hasFixity
     datea: SKIP
-    media: SKIP
+    media:
+      method: mime_extension
     fullrs: oregon:full
     find: premis:hasOriginalName
     dmaccess: SKIP
@@ -404,6 +409,11 @@ mappings:
     dmmodified: dct:modified
     dmrecord: 
       method: replace 
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    contri: marcrel:rps 
+    dmimage: SKIP
     
   #
   # baseball
@@ -413,7 +423,10 @@ mappings:
     academ: dct:date
     creato: marcrel:pht
     publis: dce:publisher 
-    descri: dct:description
+    descri: 
+      method: baseball_description
+    homeaw: 
+      method: baseball_homeaw
     subjec: 
       method: lcsubject
     covera:
@@ -423,7 +436,7 @@ mappings:
       method: types
     format:
       method: aat_from_search
-    identi: SKIP
+    identi: dct:identifier
     rights: 
       method: baseball_rights
     fullrs: oregon:full
@@ -436,11 +449,17 @@ mappings:
     dmrecord:
       method: replace
     date:
-      method: xsd_date
+      method: baseball_date
     public: dce:source
     p: SKIP
     notes: SKIP
     time: SKIP
+    owner:
+      method: baseball_rights_owner
+    game:
+      method: sports_team
+    origin:
+      method: collection
 
   #
   # corflood64
@@ -491,15 +510,16 @@ mappings:
   #
   gifford:
     title: dct:title
-    digita: SKIP # will add to collection manually
+    digita: SKIP
     creato: dce:creator
-    date: dc:date
-    covera: dc:date
+    date: 
+      method: xsd_date
+    covera: SKIP
     descri: dc:description
     subjec: 
-      method: lc_subject #lcsh semicolon delimited
+      method: lcsubject #lcsh semicolon delimited
     publis: 
-      method: geographic # semicolon delimited
+      method: gifford_geographic # semicolon delimited
     contri:
       method: collection #localCollection
     relati: SKIP # will add to collection manually

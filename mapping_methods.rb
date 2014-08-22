@@ -15,6 +15,9 @@ module MappingMethods
   include MappingMethods::Ethnographic
   include MappingMethods::Lcsh
   include MappingMethods::Institution
+  include MappingMethods::Sports
+  include MappingMethods::Baseball
+  include MappingMethods::Cleanup
 
   DC_ELEM = RDF::Vocabulary.new('http://purl.org/dc/elements/1.1/')
 end

@@ -15,5 +15,10 @@ module MappingMethods
       end
       graph
     end
+    def mime_extension(subject, data)
+      possible_types = MIME::Types.select{|x| x.extensions.include?{data.downcase}}
+      data = possible_types.first.to_s if possible_types.length > 0
+      mime(subject, data)
+    end
   end
 end
