@@ -134,7 +134,7 @@ mappings:
     genre: 
       method: aat_sheetmusic # vra:workType class, use AAT, always "sheet music" for this collection
     cover: 
-      method: cover # create oregon:coverDescription, not in sheetmusic dd, so don't want to put under sheetmusic.
+      oregon: coverDescription
     illust: marcrel:ill 
     lithog: marcrel:prm
     sourca:
@@ -174,7 +174,7 @@ mappings:
   # folklore
   #
   folklore:
-    collec: oregon:localCollectionName
+    collec: method:localCollectionName
     collea: SKIP 
     title: dct:title
     photo: holding:label 
@@ -199,8 +199,8 @@ mappings:
     subjee: SKIP
     subjef: SKIP
     sebjeg: 
-      method: ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
-    segjeh: oregon:keywords
+      oregon:ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
+    segjeh: dce:subject
     resour: 
       method: aat #workType, some might not be in AAT and may need to be changed
     relati: SKIP
@@ -285,7 +285,7 @@ Bestof:
  data: oregon:cco/viewDate
  rights: method:rights
  reposi: marcrel:rps
- relati: oregon:localCollectionName
+ relati: method:localCollectionName
  collec: oregon:localCollectionID
  collea: oad:has_findingAid
  sourca: dct:extent
@@ -326,7 +326,7 @@ Ulmann2:
  date: method:date
  reposi: marcrel:rps
  collec: oregon:localCollectionID
- source: oregon:localCollectionName
+ source: method:localCollectionName
  album: dct:isPartOf
  admin: dct:source
  type: method:types
@@ -394,7 +394,7 @@ jasr:
  identi: dct:identifier
  source: holding:label
  langua: method:language
- collec: oregon:localCollectionName
+ collec: method:localCollectionName
  collea: oregon:localCollectionID
  colleb: oad:has_findingAid
  box: # SKIP
@@ -429,7 +429,7 @@ jsma:
  type: method:types
  format: method:format
  rights: method:rights	
- collec: oregon:localCollectionName
+ collec: method:localCollectionName
  source: marcrel:rps
  identi: dct:identifier
  museum: # SKIP
@@ -480,7 +480,7 @@ oimb:
  slide: # SKIP
  date: method:date
  catalo: # SKIP
- local: oregon:localCollectionName
+ local: method:localCollectionName
  type: method:types
  format: method:format
  identi: dct:identifier
@@ -553,7 +553,7 @@ wwdl:
  datedi: oregon:dateDigitized
  rights: method:rights
  reposi: marcrel:rps
- relati: oregon:localCollectionName
+ relati: method:localCollectionName
  collec: oregon:localCollectionID
  additi: dct:hasVersion
  addita: dct:hasVersion
@@ -592,7 +592,7 @@ comm:
  creato: dct:creator
  person: dct:subject #lcnaf
  subjec: dct:subject
- relati: oregon:localCollectionName
+ relati: method:localCollectionName
  collec: oregon:localCollectionID
  sourca: holding:label
  source: dct:hasFormat
@@ -625,7 +625,7 @@ latinoherit:
  relate: dct:hasVersion
  source: # SKIP (empty field, merge with collec- title of collection)
  reposi: marcrel:rps
- collec: oregon:localCollectionName
+ collec: method:localCollectionName
  collea: oregon:localCollectionID
  relati: oregon:seriesName
  identi: dct:identifier
@@ -664,7 +664,7 @@ univ:
  source: dct:description
  relati: dct:relation
  issuin: dct:source
- collec: oregon:localCollectionName
+ collec: method:localCollectionName
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
@@ -700,7 +700,7 @@ uopres:
   date: method:date
   rights: method:rights
   reposi: marcrel:rps
-  collec: oregon:localCollectionName
+  collec: method:localCollectionName
   collea: oregon:localCollectionID
   box: oregon:boxNumber
   folder: oregon:folderName
@@ -853,7 +853,7 @@ archivision:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: oregon:localCollectionName
+ sourcb: method:localCollectionName
  sourcc: #SKIP, same as identifier
  vrc: holding:label
  rights: method:rights
@@ -902,7 +902,7 @@ artimages:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: oregon:localCollectionName
+ sourcb: method:localCollectionName
  sourcc: #SKIP source id, only useful for Meggs set of >50 images
  vrc: holding:label
  rights: method:rights
@@ -952,7 +952,7 @@ artlicensed:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: oregon:localCollectionName
+ sourcb: method:localCollectionName
  sourcc: dct:identifier   #not necessarily the same as identifier
  vrc: holding:label
  rights: method:rights
@@ -993,7 +993,7 @@ lowenstam:
  state: dct:description
  relati: dct:relation
  text: dct:description
- collec: oregon:localCollectionName
+ collec: method:localCollectionName
  photog: marcrel:pht
  photo: oregon:cco/viewDate
  box: holding:label
@@ -1036,7 +1036,7 @@ Manuscripts:
   sourcc: dct:extent
   sourcd: vra:support
   source: dct:alternative
-  collec: oregon:localCollectionName
+  collec: method:localCollectionName
   collea: oregon:localCollectionID
   notes: modsrdf:note
   layout: rdam:layout.en
@@ -1077,7 +1077,7 @@ uovets:
   occupa: oregon:militaryOccupation
   highes: oregon:militaryHighestrank
   places: oregon:militaryServiceplaces
-  interb: method:geographic #make dct:description ??
+  interb: dct:description #merge with descri
   date: method:date
   type: method:types
   format: method:format
@@ -1102,7 +1102,7 @@ uo-athletics:
   descra: dct:alternative
   sourca: dct:description
   descri: dct:description
-  collec: oregon:localCollectionName
+  collec: method:localCollectionName
   collea: oregon:localCollectionID
   folder: oregon:folderName
   box: oregon:boxNumber
@@ -1278,7 +1278,7 @@ Moorhouse-wk:
  data: dct:date
  rights: method:rights
  reposi: marcrel:rps
- relati: oregon:localCollectionName
+ relati: method:localCollectionName
  collec: oregon:localCollectionID
  source: dct:hasFormat
  sourca: dct:extent
@@ -1333,7 +1333,7 @@ bookarts:
  litera: rdaw:formOfWork.en
  materi: vra:material
  format: method:format
- type: method:types
+ type: method:type
  digiti: oregon:conversionSpecifications 
  rights: method:rights
  local: modsrdf:note
