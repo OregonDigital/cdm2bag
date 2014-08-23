@@ -475,8 +475,7 @@ jsma:
   #
 ode:
  title: dct:title
- date: 
-   method:date
+ date: date:issued
  volume: swpo:isVolume
  issue: swpo:hasNumber
  editio: dct:title
@@ -484,18 +483,18 @@ ode:
  descri: dct:description
  contri: schema:editor
  type: 
-   method:type
+      method:types
  format: 
-   method:format
+      method:format
  identi: dct:identifier
  langua: 
-   method:language
+      method:language
  relati: dct:relation
  rights: 
-   method:rights  # http://europeana.eu/portal/rights/rr-r/ , add rightsHolder "Oregon Daily Emerald Publishing Co., Inc."
+      method:rights
  full: oregon:fullText
  metada: # SKIP
- digita: oregon:set  #daily-emerald
+ digita: oregon:set
  ambros: # SKIP
  contri: oregon:contributingInstitution
 
@@ -1232,7 +1231,7 @@ uovets:
 uo-athletics:  
   title: dct:title
   descra: dct:alternative
-  sourca: #SKIP
+  sourca: dct:description
   descri: dct:description
   collec: 
        method:localCollectionName
@@ -1240,50 +1239,48 @@ uo-athletics:
   folder: oregon:folderName
   box: oregon:boxNumber
   photo: dct:identifier
-  titla: #SKIP
+  titla: dct:alternative
   publia: dct:alternative
-  notes: modsrdf:note
+  notes: dct:description
   photog: marcrel:pht
   author: marcrel:aut
-  publis: #SKIP
+  publis: dct:source
   data: 
        method:date 
-  datb: #SKIP
+  datb: 
+       method:date
   catalo: #SKIP
-  exhibi: #SKIP
-  names: oregon:uoNames #map to cv?
-  namea: oregon:uoNames  #map to cv?
-  subjec: 
-    method:dc_subject_lc
-  tgm: 
-    method: tgm
-  corpor: 
-    method: dc_subject_lc
-  corpoa: 
-    method: dc_subject_lc
+  exhibi: dct:subject
+  names: oregon:uoNames
+  namea: oregon:uoNames
+  subjec: dct:subject
+  tgm: oregon:tgm
+  corpor: dct:subject
+  corpoa: dct:subject
   place: 
-    method:geographic
-  date: #SKIP
-  genre: #SKIP
+        method:geographic
+  date: 
+        method:date
+  genre: dct:subject
   type: 
-   method:type
+        method:types
   format: 
-    method:format
+        method:format
   source: #SKIP
   langua: 
-    method:language
-  relati: #SKIP
-  covera: #SKIP
+        method:language
+  relati: dct:hasVersion
+  covera: dct:coverage
   rights: 
-    method:rights #CC-BY-NC-ND, add rightsHolder for Univ. of Oregon
-  proven: #SKIP
+        method:rights
+  proven: dct:provenance
   sourcb: dct:extent
   sourcc: oregon:sourceCondition
-  sourcd: #SKIP
+  sourcd: dct:hasFormat
   number: schema:numberOfPages
   donor: marcrel:dnr 
   citati: schema:citation
-  origin: #SKIP
+  origin: dct:publisher
   reposi: marcrel:rps
   image: rdam:fileSize.en
   imaga: exif:width
@@ -1294,21 +1291,21 @@ uo-athletics:
   captur: oregon:dateDigitized
   captua: oregon:conversionSpecifications
   resolu: exif:resolution
-  proces: oregon:conversionSpecifications 
+  proces: 
+        method:processing_history 
   links: #SKIP
-  addito: #SKIP
-  additi: #SKIP
+  addito: dct:hasVersion
+  additi: dct:hasFormat
   metada: #SKIP
   imagc: #SKIP
   imagd: #SKIP
   scanni: #SKIP
-  other: #SKIP
+  other: dct:identifier
   catala: #SKIP
   full: #SKIP
   load: #SKIP
   ambros: #SKIP
-  digita: 
-    method:set  #uo-athleics
+  digita: oregon:set
   contri: oregon:contributingInstitution
   
   

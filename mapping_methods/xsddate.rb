@@ -2,13 +2,20 @@ require 'rdf'
 
 module MappingMethods
   module XSDDate
-    def xsd_date(subject, predicate, data)
-      if /^\d{4}(-\d{2})*$/.match(data)
-        puts RDF::Statement.new(subject, predicate, RDF::Literal(data, :datatype => RDF::XSD.date))
+    def xsd_date(subject, data)
+      predicate = RDF::DC.date
+      if /^\d{4}(-[0-9]{2})*$/.match(data) && !data.include?("-00")
         RDF::Statement.new(subject, predicate, RDF::Literal(data, :datatype => RDF::XSD.date))
       else
         string_date(subject, predicate, data)
       end
+    end
+
+    def baseball_date(subject, date)
+      date = date.gsub(",",";") || date
+      date = date.split(";").map{|x| x.to_i}
+      date = "#{date.min}-#{date.max}"
+      xsd_date(subject, date)
     end
 
     def xsd_datetime(subject, predicate, data)

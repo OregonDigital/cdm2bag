@@ -29,7 +29,7 @@ namespaces:
 # *mime - converts string mimetype into a purl.org/NET/mediatypes uri
 # *geographic - attempts to identify a geonames URI locations in field. Will strip "(Ore.)" from string before searching. (probably needs honing, check data in bags before ingest).
 # *geopup - 
-# *aat -
+# *aat - 
 # *att_sheetmusic - ignores data, adds rdf:type of 'sheet music' uri from aat.
 # *att_format - matches data to either 'silver gelatin print', 'film negative', or ... in aat; adds appropriate rdf:type statement
 # *lc_subject -
@@ -161,7 +161,7 @@ mappings:
     relati: oregon:sheetmusic/largerWork
     publia: oregon:sheetmusic/hostItem
     theme: oregon:exhibit # curated set, terms LC Subject, different from oregon:set?
-    source: mods:locationCopySublocation 
+    source: modsrdf:locationCopySublocation 
     reposi: 
       method: collection # use aat:collections concept as dc:isPartof
     identi: modsrdf:locationCopyShelfLocator  
@@ -202,7 +202,7 @@ mappings:
     descri: dct:description
     inscri: vra:inscription
     langua: 
-      method: language
+      method: iso_language
     notes: modsrdf:note
     subjec: 
       method: dc_subject_lcna
@@ -246,16 +246,362 @@ mappings:
     creato: marcrel:pht
     date:
       method: dc_date
-    descri: dct:description
     subjec: 
-      method: lc_subject
+      method: lcsubject_siuslaw
+    descri: dct:description
+    relati: dce:relation
+    #covera:
+    #  method: siuslaw_geographic
+    source:
+      method: collection 
+    rights: 
+      method: siuslaw_rights
+    format:
+      method: aat_siuslaw
+    audien: 
+      method: aat_siuslaw_colorcontent
+    publis:
+      method: siuslaw_geographic
+    size: modsrdf:physicalExtent 
+    inscri: vra:inscription
+    storag: modsrdf:note
+    fullrs: oregon:full
+    find: SKIP
+    dmaccess: SKIP
+    dmoclcno: SKIP
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord:
+      method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
+    dmimage: SKIP
+    langua: SKIP
+    covera:
+      method: ranger_district
+
+  #
+  # oe_explorer
+  #
+  oe_explorer:
+    title: dct:title
+    digita: SKIP # digital collection, always "Oregon Explorer"; convert to set
+    creato: dce:creator
+    date: 
+      method: xsd_date
+    descri: dct:description
+    fullte: oregon:fullText
+    subjec:  # heavy use of keyword fallback.
+      method: lcsubject
+    geogra:       
+      method: geographic_oe
+    geogrb: 
+      method: geographic_oe # Rivers & Streams. Are these consistently in Geonames? Do they need a special field?
+    huc: oregon:hydrologicUnitCode
+    llid: oregon:llid
+    object:
+      method: types
+    type:
+      method: aat_from_search # also Gelatin Silver Prints, Color..., Postcards, Negatives, Albumen prints, Silent Films
+      # get full list of types
+    origin:
+      method: collection
+    source: dct:isPartOf
+    identi: dct:identifier
+    langua: 
+      method: aat_from_search # also Gelatin Silver Prints, Color..., Postcards, Negatives, Albumen prints, Silent Films
+    rights:
+      method: oe_rights
+    relati: SKIP
+    format: oregon:conversionSpecifications
+    covera: SKIP
+    datedi: oregon:dateDigitized
+    find: premis:hasOriginalName
+    contra: 
+      method: institution_osu
+    contri: SKIP
+    fullrs: oregon:full
+    find: premis:hasOriginalName
+    dmoclcno: SKIP
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmaccess: SKIP
+    dmcreated: dct:created
+    dmmodified: dct:modified
+    dmrecord: 
+      method: replace 
+    contra: marcrel:rps 
+
+  #
+  # fairbanks
+  #
+  fairbanks:
+    status: SKIP # ask about this statuses are variations on 'OK' and 'Framed'
+    identi: dct:identifier
+    title: marcrel:art 
+    subjec: dct:title
+    #descri: SKIP # Woodcut, Etching, Engraving, Drypoint
+    #media1: SKIP # Prints
+    #media2: SKIP # specific printing methods
+    descrp: dct:description
+    format: modsrdf:physicalExtent # 'size'
+    datepe: 
+      method: xsd_date
+    date: SKIP # century
+    condit: SKIP # physical condition
+    invent: oregon:accessionNumber # inventory number
+    materi: modsrdf:physicalExtent # 'material size' often conflicts with size in 'format'
+    publis: marcrel:dnr # donor
+    value: SKIP # dollar value
+    type: 
+      method: force_image_type
+    rights:
+      method: osu_archive_rights
+    curato: SKIP #really skip
+    fullrs: oregon:full
+    find: premis:hasOriginalName
+    dmoclcno: SKIP
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmaccess: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    dmcreated: dct:created
+    dmmodified: dct:modified
+    dmrecord: 
+      method: replace
+
+  #
+  # rockshore93
+  #
+  rockshore93:
+    title: dct:title
+    creato: dce:creator
+    publis: dce:publisher
+    covera:
+      method: siuslaw_geographic
+    latitu: SKIP
+    longit: SKIP
+    scale: modsrdf:physicalExtent
+    descri: SKIP # duplicates 'photog'
+    photog: dct:identifier
+    date:
+      method: xsd_date
+    type:
+      method: types
+    format:
+      method: aat_gelatin
+    assess: SKIP
+    relati: oregon:conversionSpecifications
+    color:
+      method: aat_siuslaw_colorcontent #RGB, Color, B/W
+    rights: 
+      method: rockshore_public_domain
+    identi: SKIP
+    checks: premis:hasFixity
+    datea: SKIP
+    media:
+      method: mime_extension
+    fullrs: oregon:full
+    find: premis:hasOriginalName
+    dmaccess: SKIP
+    dmcreated: dct:created
+    dmmodified: dct:modified
+    dmrecord: 
+      method: replace 
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    contri: marcrel:rps 
+    dmimage: SKIP
+    
   #
   # baseball
   #
   baseball:
     title: dct:title
-  academ: dct:date
-  type: 
-    method: type
-  format:
-    method: aat_format
+    academ: dct:date
+    creato: marcrel:pht
+    publis: dce:publisher 
+    descri: 
+      method: baseball_description
+    homeaw: 
+      method: baseball_homeaw
+    subjec: 
+      method: lcsubject
+    covera:
+      method: baseball_geographic
+    contri: SKIP
+    type: 
+      method: types
+    format:
+      method: aat_from_search
+    identi: dct:identifier
+    rights: 
+      method: baseball_rights
+    fullrs: oregon:full
+    transm: oregon:conversionSpecifications
+    all: SKIP
+    find: SKIP
+    dmaccess: SKIP
+    dmcreated: dct:created
+    dmmodified: dct:modified
+    dmrecord:
+      method: replace
+    date:
+      method: baseball_date
+    public: dce:source
+    p: SKIP
+    notes: SKIP
+    time: SKIP
+    owner:
+      method: baseball_rights_owner
+    game:
+      method: sports_team
+    origin:
+      method: collection
+
+  #
+  # corflood64
+  #
+  corflood64:
+    title: dct:title
+    creato: dce:creator
+    publis: dce:publisher 
+    subje: dct:subject
+    covera:
+      method: geographic
+    descri: dct:description
+    date: 
+      method: xsd_date
+    type:
+      method: type
+    origin: 
+      method: collection
+    format:
+      method: aat_gelatin
+    photog: dct:identifier
+    assess: oregon:accessionNumber
+    relati: oregon:conversionSpecifications
+    rights:
+      method: osu_archive_rights
+    coordi: SKIP
+    relate: SKIP
+    color: SKIP
+    media: SKIP
+    identi: SKIP
+    checks: premis:hasFixity
+      # method: fixity
+    find: SKIP
+    map: dct:references
+    fullrs: oregon:full
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmoclcno: SKIP
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord: 
+      method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
+
+  #
+  # gifford
+  #
+  gifford:
+    title: dct:title
+    digita: SKIP
+    creato: dce:creator
+    date: 
+      method: xsd_date
+    covera: SKIP
+    descri: dc:description
+    subjec: 
+      method: lcsubject #lcsh semicolon delimited
+    publis: 
+      method: gifford_geographic # semicolon delimited
+    contri:
+      method: collection #localCollection
+    relati: SKIP # will add to collection manually
+    refere: SKIP # ASK LARRY
+    identi: dc:identifier
+    origin: 
+      method: collection
+    type:
+      method: type
+    format: SKIP #AAT Type
+    source: SKIP # e.g. 'Glass Positives'
+    other:  # same as above (source)? 
+    rights: 
+      method: rights
+    transm: oregon:conversionSpecifications
+    status: modsrdf:note
+    compou: SKIP # what is this?
+    relate: SKIP # same as above (compou)?
+    fullrs: oregon:full
+    find: premis:hasOriginalName
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord: 
+      method: replace
+
+  #
+  # cultural (Oregon Multicultural Archives)
+  #
+  cultural:
+    title: dct:title
+    digita: SKIP # will add to collection manually
+    date:
+      method: xsd_date
+    time: SKIP # time period
+    creato: dc:creator
+    interv: mrel:ive
+    intera: mrel:ivr
+    transc: mrel:trc
+    descri: dc:description
+    subject: dce:subject
+    covera: 
+      method: geographic
+    type: 
+      method: type
+    publis:
+      method: aat_format #"microsoft word"!
+    data: roegon:dateDigitized
+    langua: dc:identifier
+    contri:
+      method: collection
+    relate: SKIP # other collection this item belongs to?
+    format: SKIP # non AAT formats?
+    rights:
+      method: rights
+    source: oregon:conversionSpecifications
+    identi: SKIP
+    file: SKIP
+    durati: SKIP #always blank
+    langub: 
+      method: osu_lang
+    contra: SKIP #always blank
+    full: oregon:fullText
+    status: SKIP # Cataloged/Uncataloged
+    catalo: SKIP # ASK! cataloger id in various domains
+    fullrs: oregon:full
+    find: premis:originalName
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord: 
+      method: replace    
+    

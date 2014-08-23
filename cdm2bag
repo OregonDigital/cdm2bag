@@ -41,7 +41,9 @@ def create_graphs(file, collection)
     bnode = RDF::Node.new
 
     if tag.to_s == 'dmrecord'
-      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("https://oregondigital.org/u?#{collection},#{ln}"))
+      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
+      add_set(collection, graph, bnode)
+      send("#{collection}_cleanup", collection, graph, bnode) if respond_to?("#{collection}_cleanup")
       graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
       graph = RDF::Graph.new
       bnode = RDF::Node.new
@@ -61,6 +63,23 @@ def create_graphs(file, collection)
     end
   end
   graphs
+end
+
+def add_set(collection, graph, subject)
+  set = map_set[collection.downcase]
+  if set
+    graph << RDF::Statement(subject, @namespaces["oregon"]["set"], RDF::URI("http://oregondigital.org/resource/oregondigital:#{set}"))
+  end
+end
+
+def map_set
+  {
+    "oe_explorer" => "oregon-explorer",
+    "siuslaw" => "siuslaw",
+    "rockshore93" => "rockyshore93",
+    "baseball" => "osu-baseball",
+    "gifford" => "gifford"
+  }
 end
 
 def set_subject(graph, subject)
@@ -86,12 +105,12 @@ def add_content_file(graph, bag, dir)
       pattern [:subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
     end
     results = query.execute(graph)
-    fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
-    fname = fname.split(/\\/).last
     if results.empty?
       puts 'no full'
       return nil
     end
+    fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
+    fname = fname.split(/\\/).last
     file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, '')) 
     require 'find'
     Find.find(dir) do |path|
@@ -138,7 +157,7 @@ end
 def make_all_bags(dir, target)
   target = FileUtils.mkdir_p(target)
   Dir.foreach(dir) do |collection|
-    next if collection == '.' or collection == '..'
+    next if collection.start_with?(".")
     make_coll_bags(dir, target, collection)
   end
 end
