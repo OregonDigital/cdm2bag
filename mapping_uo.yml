@@ -475,7 +475,8 @@ jsma:
   #
 ode:
  title: dct:title
- date: date:issued
+ date: 
+   method:date
  volume: swpo:isVolume
  issue: swpo:hasNumber
  editio: dct:title
@@ -483,18 +484,18 @@ ode:
  descri: dct:description
  contri: schema:editor
  type: 
-      method:types
+   method:type
  format: 
-      method:format
+   method:format
  identi: dct:identifier
  langua: 
-      method:language
+   method:language
  relati: dct:relation
  rights: 
-      method:rights
+   method:rights  # http://europeana.eu/portal/rights/rr-r/ , add rightsHolder "Oregon Daily Emerald Publishing Co., Inc."
  full: oregon:fullText
  metada: # SKIP
- digita: oregon:set
+ digita: oregon:set  #daily-emerald
  ambros: # SKIP
  contri: oregon:contributingInstitution
 
