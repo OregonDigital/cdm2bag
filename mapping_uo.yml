@@ -856,9 +856,11 @@ archivision:
  sourcb: method:localCollectionName
  sourcc: #SKIP, same as identifier
  vrc: holding:label
- rights: method:rights
+ rights: 
+      method:rights
  record: #SKIP
- type: method:types
+ type: 
+      method:types
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note  #or skip
@@ -889,8 +891,10 @@ artimages:
  cultur: vra:culture
  reposi: marcrel:rps
  reposa: vra:idCurrentRepository
- city: method:geographic
- country: method:geographic
+ city: 
+      method:geographic
+ country: 
+      method:geographic
  site: dct:spatial
  work: vra:workType
  inscri: vra:inscription
