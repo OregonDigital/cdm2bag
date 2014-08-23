@@ -174,7 +174,8 @@ mappings:
   # folklore
   #
   folklore:
-    collec: method:localCollectionName
+    collec: 
+       method:localCollectionName
     collea: SKIP 
     title: dct:title
     photo: holding:label 
@@ -238,10 +239,14 @@ archpnw:
  creata: dct:creator
  date: dct:date
  covra: dct:temporal
- city: method: geographic
- county: method: geographic
- state: method: geographic
- countr: method: geographic
+ city: 
+      method: geographic
+ county: 
+      method: geographic
+ state: 
+      method: geographic
+ countr: 
+      method: geographic
  site: madsrdf:streetAddress
  photog: oregon: cco/viewDate
  photoa: marcrel: pht
@@ -260,9 +265,12 @@ archpnw:
  source: dct:source
  souceb: holding:label
  publis: dct:source
- rights: method:rights
- type: method:types
- format: method:format
+ rights: 
+      method:rights
+ type: 
+      method:types
+ format: 
+      method:format
  identi: dct:identifier
  techni: oregon:conversionSpecifications
  contri: oregon:contributingInstitution
@@ -283,24 +291,29 @@ Bestof:
  temp: dct:subject
  creato: dct:creator
  data: oregon:cco/viewDate
- rights: method:rights
+ rights: 
+      method:rights
  reposi: marcrel:rps
- relati: method:localCollectionName
+ relati: 
+      method:localCollectionName
  collec: oregon:localCollectionID
  collea: oad:has_findingAid
  sourca: dct:extent
  source: dct:hasFormat
  sourcb: oregon:sourceCondition
- type: method:types
+ type: 
+      method:types
  image: dct:extent
- format: method:format
+ format: 
+      method:format
  imagd: exif:width
  imagc: exif:height
  color: exif:colorSpace
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
  resolu: exif:resolution
- ditigi: method:processing_history  
+ ditigi: 
+      method:processing_history  
  additi: dct:hasVersion
  publis: dct:source
  digita: oregon:set
@@ -319,23 +332,28 @@ Ulmann2:
  series: dct:subject
  names: dct:subject
  corpor: dct:subject
- covera: method:geographic
+ covera: 
+      method:geographic
  lc: dct:subject
  subjec: dct:subject
  photog: dct:creator
- date: method:date
+ date: 
+      method:date
  reposi: marcrel:rps
  collec: oregon:localCollectionID
- source: method:localCollectionName
+ source: 
+       method:localCollectionName
  album: dct:isPartOf
  admin: dct:source
- type: method:types
+ type: 
+      method:types
  format: dct:hasFormat
  scan: oregon:conversionSpecifications
  metada: # SKIP
  catala: # SKIP
  catalo: # SKIP
- rights: method:rights	
+ rights: 
+      method:rights	
  proven: dct:provenance
  relate: dct:isVersionOf
  bandin: # SKIP
@@ -358,13 +376,17 @@ diss:
  publis: dct:source
  contri: dct:contributor
  date: dct:issued
- type: method:types
- format: method:format
+ type: 
+      method:types
+ format: 
+      method:format
  identi: dct:identifier
  data: oregon:dateDigitized
  source: holding:label
- langua: method:language
- rights: method:rights
+ langua: 
+      method:language
+ rights: 
+      method:rights
  proces: oregon:conversionSpecifications
  notes: modsrdf:note
  metada: # SKIP
@@ -388,18 +410,24 @@ jasr:
  corpor: dct:subject
  creato: dct:creator
  publis: dct:source
- date: method:date
- type: method:types
- format: method:format
+ date: 
+      method:date
+ type: 
+      method:types
+ format: 
+      method:format
  identi: dct:identifier
  source: holding:label
- langua: method:language
- collec: method:localCollectionName
+ langua: 
+      method:language
+ collec: 
+      method:localCollectionName
  collea: oregon:localCollectionID
  colleb: oad:has_findingAid
  box: # SKIP
  folder: # SKIP
- rights: method:rights
+ rights: 
+      method:rights
  full: oregon:fullText
  datedi: oregon:dateDigitized
  proces: oregon:conversionSpecifications
@@ -420,16 +448,21 @@ jsma:
  creata: oregon:cco/creatorDisplay
  cultur: vra:culture
  subjec: vra:stylePeriod
- date: method:date
+ date: 
+      method:date
  materi: vra:material
  measur: vra:measurements
  catego: vra:workType
  descri: dct:description
  notes: modsrdf:note
- type: method:types
- format: method:format
- rights: method:rights	
- collec: method:localCollectionName
+ type: 
+      method:types
+ format: 
+      method:format
+ rights: 
+      method:rights	
+ collec: 
+      method:localCollectionName
  source: marcrel:rps
  identi: dct:identifier
  museum: # SKIP
@@ -449,12 +482,16 @@ ode:
  notes: modsrdf:note
  descri: dct:description
  contri: schema:editor
- type: method:types
- format: method:format
+ type: 
+      method:types
+ format: 
+      method:format
  identi: dct:identifier
- langua: method:language
+ langua: 
+      method:language
  relati: dct:relation
- rights: method:rights
+ rights: 
+      method:rights
  full: oregon:fullText
  metada: # SKIP
  digita: oregon:set
@@ -478,13 +515,18 @@ oimb:
  creato: dct:creator
  id: dwc:identificationVerificationStatus
  slide: # SKIP
- date: method:date
+ date: 
+      method:date
  catalo: # SKIP
- local: method:localCollectionName
- type: method:types
- format: method:format
+ local: 
+      method:localCollectionName
+ type: 
+      method:types
+ format: 
+      method:format
  identi: dct:identifier
- rights: method:rights
+ rights: 
+      method:rights
  digita: oregon:set
  sourca: # SKIP
  contri: oregon:contributingInstitution
@@ -498,24 +540,31 @@ tlegacies:
  creato: dct:creator
  cultur: vra:culture
  organi: dct:description
- date: method:date
- time: method:date
- langua: method:language
+ date: 
+      method:date
+ time: 
+      method:date
+ langua: 
+      method:language
  lc: dct:subject
  subjec: dct:subject
  descri: dct:description
  descra: dct:description
- geogra: method:geographic
+ geogra: 
+      method:geographic
  work: vra:workType      
- type: method:types
- format: method:format
+ type: 
+      method:types
+ format: 
+      method:format
  reposi: marcrel:rps
  identi: oregon:localCollectionID
  size: dct:description
  number: dct:description
  nwda: oad:has_findingAid
  additi: # SKIP
- rights: method:rights
+ rights: 
+      method:rights
  catala: # SKIP
  repres: # SKIP
  publis: dct:source
@@ -539,7 +588,8 @@ wwdl:
  lc: dct:subject
  people: dct:subject
  corpor: dct:subject 
- place: method:geographic
+ place: 
+      method:geographic
  genre: rdaw:formOfWork.en
  author: marcrel:aut
  photog: marcrel:pht
@@ -551,15 +601,20 @@ wwdl:
  covera: dct:temporal
  publis: dct:source
  datedi: oregon:dateDigitized
- rights: method:rights
+ rights: 
+      method:rights
  reposi: marcrel:rps
- relati: method:localCollectionName
+ relati: 
+       method:localCollectionName
  collec: oregon:localCollectionID
  additi: dct:hasVersion
  addita: dct:hasVersion
- langua: method:language
- type: method:types
- format: method:format
+ langua: 
+       method:language
+ type: 
+       method:types
+ format: 
+       method:format
  captur: oregon:conversionSpecifications
  file: rdam:fileSize.en
  image: exif:width
@@ -587,20 +642,26 @@ comm:
  titlb: dct:title
  descri: dct:description
  identi: dct:alternative
- date: method:date
- covera: method:geographic
+ date: 
+      method:date
+ covera: 
+      method:geographic
  creato: dct:creator
  person: dct:subject #lcnaf
  subjec: dct:subject
- relati: method:localCollectionName
+ relati: 
+      method:localCollectionName
  collec: oregon:localCollectionID
  sourca: holding:label
  source: dct:hasFormat
- type: method:types
+ type: 
+      method:types
  publis: dct:source
  donor: dct:contributor
- rights: method:rights
- format: method:format
+ rights: 
+       method:rights
+ format: 
+       method:format
  date: oregon:dateDigitized 
  captur: oregon:conversionSpecifications
  metadata: # SKIP
@@ -619,21 +680,28 @@ latinoherit:
  subjec: dct:subject # merge for lc, getty, tgm
  creato: dct:creator # empty field
  photog: # SKIP empty field, merge with creator
- covera: method:geographic
- date: method:date
+ covera: 
+      method:geographic
+ date: 
+      method:date
  contri: dct:contributor
  relate: dct:hasVersion
  source: # SKIP (empty field, merge with collec- title of collection)
  reposi: marcrel:rps
- collec: method:localCollectionName
+ collec: 
+       method:localCollectionName
  collea: oregon:localCollectionID
  relati: oregon:seriesName
  identi: dct:identifier
  donor: marcrel:dnr
- format: method:format
- type: method:types
- langua: method:language
- rights: method:rights
+ format: 
+      method:format
+ type: 
+      method:types
+ langua: 
+      method:language
+ rights: 
+      method:rights
  publis: dct:source
  digiti: oregon:conversionSpecifications
  digita: oregon:set
@@ -648,7 +716,8 @@ univ:
  subjec: dct:subject
  lc: dct:subject
  buildi: dct:subject
- place: method:geographic
+ place: 
+      method:geographic
  people: oregon:uoNames
  names: #SKIP
  corpor: dct:subject
@@ -657,20 +726,26 @@ univ:
  notesa: dct:description
  peopla: dct:description 
  publis: dct:source
- date: method:date
- type: method:types
- format: method:format
+ date: 
+      method:date
+ type: 
+      method:types
+ format: 
+      method:format
  identi: dct:identifier
  source: dct:description
  relati: dct:relation
  issuin: dct:source
- collec: method:localCollectionName
+ collec: 
+      method:localCollectionName
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
- proces: method:processing_history
+ proces: 
+      method:processing_history
  datea: oregon:dateDigitized
- rights: method:rights
+ rights: 
+      method:rights
  notes: # SKIP
  metada: # SKIP
  imagin: # SKIP
@@ -694,20 +769,27 @@ uopres:
   theme: dct:subject 
   people: oregon:uoNames
   corpor: dct:subject
-  place: method:geographic
+  place: 
+       method:geographic
   creato: dct:creator
   contri: dct:contributor
-  date: method:date
-  rights: method:rights
+  date: 
+       method:date
+  rights: 
+       method:rights
   reposi: marcrel:rps
-  collec: method:localCollectionName
+  collec: 
+       method:localCollectionName
   collea: oregon:localCollectionID
   box: oregon:boxNumber
   folder: oregon:folderName
   ambros: # SKIP
-  type: method:types
-  format: method:format
-  langua: method:language
+  type: 
+       method:types
+  format: 
+       method:format
+  langua: 
+       method:language
   full: oregon:fullText
   addita: dct:hasVersion
   datedi: oregon:dateDigitized
@@ -717,7 +799,8 @@ uopres:
   imaga: exif:height
   color: exif:colorSpace
   resolu: exif:resolution
-  proces: method:processing_history
+  proces: 
+       method:processing_history
   metada: # SKIP
   imagb: # SKIP
   imagc: # SKIP
@@ -743,9 +826,12 @@ uostock:
  note: modsrdf:note
  people: dct:description
  publis: dct:source
- date: method:date
- type: method:types
- format: method:format
+ date: 
+      method:date
+ type: 
+      method:types
+ format: 
+      method:format
  photo:  exif:orientation
  phota: rdae:colourContent.ed
  identi: dct:identifier
@@ -754,7 +840,8 @@ uostock:
  donor: dct:source
  proces: oregon:conversionSpecifications
  data: oregon:dateDigitized 
- rights: method:rights
+ rights: 
+      method:rights
  metada: # SKIP
  scanni: # SKIP
  catalo: # SKIP
@@ -779,43 +866,55 @@ uostock:
   artist: rdaa:biographicalInformation.en
   lc: dct:subject
   aat: dct:subject
-  place: method:geographic
+  place: 
+       method:geographic
   people: dct:subject
   creato: dct:creator #lcnaf and ulan
   artisb: dct:description
   artisa: dct:description
   artisc: dct:description
   region: dct:description
-  data: method:date
+  data:
+       method:date
   commis: dct:description
-  datb: method:date
+  datb: 
+       method:date
   instal: vra:material
   format: vra:material
   artwor: vra:measurements
   materi: vra:material
   source: dct:hasVersion
   sourcb:  # SKIP
-  artwob: method:geographic #artwork site
-  locati: method:geographic #extact site
-  covera: method:geographic #address
-  artwoc: method:geographic #county
+  artwob: 
+       method:geographic #artwork site
+  locati: 
+       method:geographic #extact site
+  covera: 
+       method:geographic #address
+  artwoc: 
+       method:geographic #county
   artwod: dct:relation
-  langua: method:language
+  langua:
+       method:language
   titla: oregon:cco/viewDescription
   digita: oregon:dateDigitized
   captur: oregon:conversionSpecifications
-  type: method:types
-  formaa: method:format
+  type: 
+       method:types
+  formaa: 
+       method:format
   digitb: dct:extent
   color: exif:colorSpace
-  imaga: method:processing_history
+  imaga: 
+       method:processing_history
   missin: #SKIP (missing items?)
   full:  oregon:fullText
   metada: #SKIP (metadata creator)
   image: #SKIP (image scanner)
   catalo: #SKIP (cataloging status)
   load: #SKIP (load date)
-  rights: method:rights
+  rights: 
+       method:rights
   contri: dct:contributor
   publis: dct:source
   collec: oregon:set
@@ -840,8 +939,10 @@ archivision:
  cultur: vra:culture
  reposi: marcrel:rps
  reposa: vra:idCurrentRepository
- city: method:geographic
- countr: method:geographic
+ city: 
+      method:geographic
+ countr: 
+      method:geographic
  site: dct:spatial
  work: vra:workType
  inscri: vra:inscription
@@ -853,7 +954,8 @@ archivision:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: method:localCollectionName
+ sourcb: 
+      method:localCollectionName
  sourcc: #SKIP, same as identifier
  vrc: holding:label
  rights: 
@@ -906,12 +1008,15 @@ artimages:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: method:localCollectionName
+ sourcb: 
+      method:localCollectionName
  sourcc: #SKIP source id, only useful for Meggs set of >50 images
  vrc: holding:label
- rights: method:rights
+ rights: 
+      method:rights
  record: #SKIP
- type: method:types
+ type: 
+      method:types
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note #or skip
@@ -943,8 +1048,10 @@ artlicensed:
  cultur: vra:culture
  reposi: marcrel:rps
  reposa: vra:idCurrentRepository
- city: method:geographic
- countr: method:geographic
+ city: 
+      method:geographic
+ countr: 
+      method:geographic
  site: dct:spatial
  work: vra:workType
  inscri: vra:inscription
@@ -956,12 +1063,15 @@ artlicensed:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: method:localCollectionName
+ sourcb: 
+      method:localCollectionName
  sourcc: dct:identifier   #not necessarily the same as identifier
  vrc: holding:label
- rights: method:rights
+ rights: 
+      method:rights
  record: #SKIP
- type: method:types
+ type: 
+      method:types
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note  #or skip
@@ -990,23 +1100,27 @@ lowenstam:
  style: vra:stylePeriod
  cultur: vra:culture
  work: vra:workType
- locati: method:geographic
+ locati: 
+      method:geographic
  reposa: vra:idCurrentRepository
  inscri: vra:inscription
  descri: dct:description
  state: dct:description
  relati: dct:relation
  text: dct:description
- collec: method:localCollectionName
+ collec: 
+      method:localCollectionName
  photog: marcrel:pht
  photo: oregon:cco/viewDate
  box: holding:label
  boxa: dct:subject
  sectio: dct:subject
  identi: dct:identifier
- rights: method:rights
+ rights:
+      method:rights
  record: #SKIP
- type: method:types
+ type: 
+      method:types
  metada: #SKIP
  digita: oregon:set
  contri: oregon:contributingInstitution
@@ -1030,17 +1144,21 @@ Manuscripts:
   scribe: marcrel:scr
   artist: marcrel:art
   contri: dct:contributor
-  datc: method:date
-  datb: method:date
+  datc: 
+       method: date
+  datb: 
+       method:date
   date: oregon:dateDigitized
   publis: dct:source
-  langua: method:language
+  langua: 
+       method:language
   reposi: marcrel:rps
   sourcb:  schema:numberOfPages
   sourcc: dct:extent
   sourcd: vra:support
   source: dct:alternative
-  collec: method:localCollectionName
+  collec: 
+       method:localCollectionName
   collea: oregon:localCollectionID
   notes: modsrdf:note
   layout: rdam:layout.en
@@ -1053,10 +1171,13 @@ Manuscripts:
   proven: dct:provenance
   contra: #SKIP
   prefer: schema:citation
-  rights: method:rights
+  rights: 
+       method:rights
   acknow: #SKIP
-  type: method:types
-  format: method:format
+  type: 
+       method:types
+  format: 
+       method:format
   captur: #SKIP
   datd: #SKIP
   imagb: #SKIP
@@ -1082,12 +1203,18 @@ uovets:
   highes: oregon:militaryHighestrank
   places: oregon:militaryServiceplaces
   interb: dct:description #merge with descri
-  date: method:date
-  type: method:types
-  format: method:format
-  langua: method:language
-  audio: method:rights
-  transc: method:rights
+  date: 
+       method:date
+  type: 
+       method:types
+  format: 
+       method:format
+  langua: 
+       method:language
+  audio: 
+       method:rights
+  transc: 
+       method:rights
   publis: dct:source
   notes: modsrdf:notes
   metada: #SKIP
@@ -1106,7 +1233,8 @@ uo-athletics:
   descra: dct:alternative
   sourca: dct:description
   descri: dct:description
-  collec: method:localCollectionName
+  collec: 
+       method:localCollectionName
   collea: oregon:localCollectionID
   folder: oregon:folderName
   box: oregon:boxNumber
@@ -1117,8 +1245,10 @@ uo-athletics:
   photog: marcrel:pht
   author: marcrel:aut
   publis: dct:source
-  data: method:date 
-  datb: method:date
+  data: 
+       method:date 
+  datb: 
+       method:date
   catalo: #SKIP
   exhibi: dct:subject
   names: oregon:uoNames
@@ -1127,16 +1257,22 @@ uo-athletics:
   tgm: oregon:tgm
   corpor: dct:subject
   corpoa: dct:subject
-  place: method:geographic
-  date: method:date
+  place: 
+        method:geographic
+  date: 
+        method:date
   genre: dct:subject
-  type: method:types
-  format: method:format
+  type: 
+        method:types
+  format: 
+        method:format
   source: #SKIP
-  langua: method:language
+  langua: 
+        method:language
   relati: dct:hasVersion
   covera: dct:coverage
-  rights: method:rights
+  rights: 
+        method:rights
   proven: dct:provenance
   sourcb: dct:extent
   sourcc: oregon:sourceCondition
@@ -1155,7 +1291,8 @@ uo-athletics:
   captur: oregon:dateDigitized
   captua: oregon:conversionSpecifications
   resolu: exif:resolution
-  proces: method:processing_history 
+  proces: 
+        method:processing_history 
   links: #SKIP
   addito: dct:hasVersion
   additi: dct:hasFormat
@@ -1182,15 +1319,21 @@ misc:
   creato: dct:creator
   publis: dct:publisher
   contri: dct:contributor
-  date: method:date
-  type: method:types
-  format: method:format
+  date: 
+       method:date
+  type: 
+       method:types
+  format: 
+       method:format
   identi: dct:identifier
   source: dct:source
-  langua: method:language
+  langua: 
+       method:language
   relati: #SKIP
-  covera: method:date
-  rights: method:rights
+  covera: 
+       method:date
+  rights: 
+       method:rights
   audien: #SKIP
   full: #SKIP
   fulla: oregon:fullText
@@ -1208,15 +1351,20 @@ misc:
   creato: dct:creator
   publis: dct:publisher
   contri: dct:contributor
-  date: method:date
-  type: method:types
-  format: method:format
+  date: 
+       method:date
+  type: 
+       method:types
+  format: 
+       method:format
   identi: dct:identifier
   source: dct:source
-  langua: method:language
+  langua: 
+       method:language
   relati: dct:isPartOf
   covera: dct:coverage
-  rights: method:rights
+  rights: 
+       method:rights
   fulla: oregon:fullText
   full: #SKIP
   digita: oregon:set
@@ -1237,8 +1385,10 @@ maic:
   point: dct:hasVersion
   measur: vra:measurements
   object: oregon:compassDirection
-  primar: method:geographic
-  second: method:geographic
+  primar: 
+       method:geographic
+  second: 
+       method:geographic
   availa: dct:description
   period: vra:stylePeriod
   perioa: vra:stylePeriod
@@ -1246,14 +1396,17 @@ maic:
   orient: oregon:compassDirection
   rights: marcrel:pht
   date: oregon:cco/viewDate
-  righta: method:rights
+  righta: 
+       method:rights
   publis: dct:source
   source: holding:label
   data: oregon:dateDigitized
   digiti: oregon:conversionSpecifications
   image: #SKIP
-  type: method:types
-  format: method:format
+  type: 
+       method:types
+  format: 
+       method:format
   metada: #SKIP
   batch: #SKIP
   digita: oregon:set
@@ -1277,19 +1430,24 @@ Moorhouse-wk:
  tci: # SKIP checklist
  subjec: dct:subject
  names: dct:subject
- covera: method:geographic
+ covera: 
+      method:geographic
  creato: marcrel:pht
  data: dct:date
- rights: method:rights
+ rights: 
+      method:rights
  reposi: marcrel:rps
- relati: method:localCollectionName
+ relati: 
+      method:localCollectionName
  collec: oregon:localCollectionID
  source: dct:hasFormat
  sourca: dct:extent
  sourceb: oregon:sourceCondition
- type: method:types
+ type: 
+      method:types
  sub: dct:subject
- format: method:format
+ format: 
+      method:format
  image: rdam:fileSize.en
  imagd: exif:width
  imagc: exif:height
@@ -1297,7 +1455,8 @@ Moorhouse-wk:
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
  resolu: exif:resolution
- digiti: method:processing_history
+ digiti: 
+      method:processing_history
  scanni: # SKIP scanning pass
  additi: dct:hasVersion
  imaga:  # SKIP scanner
@@ -1325,7 +1484,8 @@ bookarts:
  descri: dct:description
  coloph: rdam:descriptionOfManifestation.en
  relati: dct:isPartOf
- langua: method:language
+ langua: 
+      method: language
  date: dct:issued
  publis: dct:publisher
  place: rdam:placeOfProduction.en
@@ -1336,10 +1496,13 @@ bookarts:
  struct: vra:workType
  litera: rdaw:formOfWork.en
  materi: vra:material
- format: method:format
- type: method:type
+ format: 
+     method: format
+ type: 
+     method: type
  digiti: oregon:conversionSpecifications 
- rights: method:rights
+ rights: 
+     method: rights
  local: modsrdf:note
  librar: # SKIP
  datea: oregon:dateDigitized
