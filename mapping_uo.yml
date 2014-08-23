@@ -53,6 +53,8 @@ namespaces:
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
 # *folkrights - separates rights statement from copyright holder for OAC rights
+# militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
+# set - maps to new set in Oregon Digital Hydra 
 
 mappings:
   #
@@ -1196,33 +1198,34 @@ Manuscripts:
 uovets:  
   identi: dct:identifier
   title: dct: title
-  interv: dct:creator
-  intera: dct:contributor
-  subjec: dct:subject
+  interv: marcrel:ive
+  intera: marcel:ivr
+  subjec: 
+    method: dc_subject_lc
   descri: dct:description
-  branch: oregon:militaryBranch
+  branch: 
+    method: militaryBranch
   occupa: oregon:militaryOccupation
-  highes: oregon:militaryHighestrank
-  places: oregon:militaryServiceplaces
-  interb: dct:description #merge with descri
+  highes: oregon:militaryHighestRank
+  places: oregon:militaryServiceLocations
+  interb: dct:description 
   date: 
-       method:date
+    method:date
   type: 
-       method:types
+    method:types
   format: 
-       method:format
+    method:format
   langua: 
-       method:language
-  audio: 
-       method:rights
-  transc: 
-       method:rights
-  publis: dct:source
-  notes: modsrdf:notes
+    method:language
+  audio: #SKIP
+  transc: #SKIP 
+  publis: #SKIP
+  notes: #SKIP
   metada: #SKIP
   catalo: #SKIP
   digiti: oregon:conversionSpecifications
-  relati: oregon:set
+  relati: 
+     method:set
   contri: oregon:contributingInstitution
   
   
