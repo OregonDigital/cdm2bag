@@ -1231,7 +1231,7 @@ uovets:
 uo-athletics:  
   title: dct:title
   descra: dct:alternative
-  sourca: dct:description
+  sourca: #SKIP
   descri: dct:description
   collec: 
        method:localCollectionName
@@ -1239,48 +1239,50 @@ uo-athletics:
   folder: oregon:folderName
   box: oregon:boxNumber
   photo: dct:identifier
-  titla: dct:alternative
+  titla: #SKIP
   publia: dct:alternative
-  notes: dct:description
+  notes: modsrdf:note
   photog: marcrel:pht
   author: marcrel:aut
-  publis: dct:source
+  publis: #SKIP
   data: 
        method:date 
-  datb: 
-       method:date
+  datb: #SKIP
   catalo: #SKIP
-  exhibi: dct:subject
-  names: oregon:uoNames
-  namea: oregon:uoNames
-  subjec: dct:subject
-  tgm: oregon:tgm
-  corpor: dct:subject
-  corpoa: dct:subject
+  exhibi: #SKIP
+  names: oregon:uoNames #map to cv?
+  namea: oregon:uoNames  #map to cv?
+  subjec: 
+    method:dc_subject_lc
+  tgm: 
+    method: tgm
+  corpor: 
+    method: dc_subject_lc
+  corpoa: 
+    method: dc_subject_lc
   place: 
-        method:geographic
-  date: 
-        method:date
-  genre: dct:subject
+    method:geographic
+  date: #SKIP
+  genre: #SKIP
   type: 
-        method:types
+   method:type
   format: 
-        method:format
+    method:format
   source: #SKIP
   langua: 
-        method:language
-  relati: dct:hasVersion
-  covera: dct:coverage
+    method:language
+  relati: #SKIP
+  covera: #SKIP
   rights: 
-        method:rights
-  proven: dct:provenance
+    method:rights #CC-BY-NC-ND, add rightsHolder for Univ. of Oregon
+  proven: #SKIP
   sourcb: dct:extent
   sourcc: oregon:sourceCondition
-  sourcd: dct:hasFormat
+  sourcd: #SKIP
   number: schema:numberOfPages
   donor: marcrel:dnr 
   citati: schema:citation
-  origin: dct:publisher
+  origin: #SKIP
   reposi: marcrel:rps
   image: rdam:fileSize.en
   imaga: exif:width
@@ -1291,21 +1293,21 @@ uo-athletics:
   captur: oregon:dateDigitized
   captua: oregon:conversionSpecifications
   resolu: exif:resolution
-  proces: 
-        method:processing_history 
+  proces: oregon:conversionSpecifications 
   links: #SKIP
-  addito: dct:hasVersion
-  additi: dct:hasFormat
+  addito: #SKIP
+  additi: #SKIP
   metada: #SKIP
   imagc: #SKIP
   imagd: #SKIP
   scanni: #SKIP
-  other: dct:identifier
+  other: #SKIP
   catala: #SKIP
   full: #SKIP
   load: #SKIP
   ambros: #SKIP
-  digita: oregon:set
+  digita: 
+    method:set  #uo-athleics
   contri: oregon:contributingInstitution
   
   
