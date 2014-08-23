@@ -46,15 +46,19 @@ namespaces:
 # *att_format - matches data to either 'silver gelatin print', 'film negative', or ... in aat; adds appropriate rdf:type statement
 # *lc_subject -
 # *dc_subject_lc -
-# *lcnaf - 
+# *lcnaf -  dct:creator 
 # *cover - 
 # *collection - 
 #  *dc_subject_lcna -
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
 # *folkrights - separates rights statement from copyright holder for OAC rights
-# militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
-# set - maps to new set in Oregon Digital Hydra 
+# *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
+# *set - maps to new set in Oregon Digital Hydra 
+# *lcnaf_ulan - dct:creator uses both lcnag and ulan authorities
+# *dc_issued - used dcterms:issued and converts to dcmi date format if possible
+# *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
+# *percent_rights - http://europeana.eu/portal/rights/rr-r/ and reprint creator in oregon:rightsHolder
 
 mappings:
   #
@@ -857,72 +861,75 @@ uostock:
   # percent
   #
  percent:
-  projea:  rdam:containedInManifestation.en
-  projec:  dct:identifier
-  identi: dct:identifier
-  oac: dct:identifier
+  projea: dct:isPartOf
+  projec: dct:isPartOf
+  identi: oregon:cco/accesionNumber
+  oac: holding:label
   title: dct:title
   altern: dct:alternative
-  series: dct:isPartOf
+  series: oregon:artSeries
   descrb: dct:description
   descra: dct:description
-  dscri: dct:description
+  dscri: modsrdf:note
   artist: rdaa:biographicalInformation.en
-  lc: dct:subject
-  aat: dct:subject
+  lc: 
+    method: dc_subject_lc
+  aat: 
+    method: aat
   place: 
-       method:geographic
-  people: dct:subject
-  creato: dct:creator #lcnaf and ulan
+    method:geographic
+  people: 
+    method: dc_subject_lcna
+  creato: 
+    method:lcnaf_ulan
   artisb: dct:description
   artisa: dct:description
   artisc: dct:description
   region: dct:description
-  data:
-       method:date
-  commis: dct:description
+  data: oregon:awardDate
+  commis: #SKIP
   datb: 
-       method:date
+    method:date_isused
   instal: vra:material
   format: vra:material
   artwor: vra:measurements
   materi: vra:material
   source: dct:hasVersion
-  sourcb:  # SKIP
+  sourcb: #SKIP
   artwob: 
-       method:geographic #artwork site
-  locati: 
-       method:geographic #extact site
-  covera: 
-       method:geographic #address
+    method:geographic
+  locati: modsrdf:note
+  covera: mads:streetAddress
   artwoc: 
-       method:geographic #county
+    method:geographic #dct:spatial
   artwod: dct:relation
   langua:
-       method:language
+    method:language
   titla: oregon:cco/viewDescription
   digita: oregon:dateDigitized
   captur: oregon:conversionSpecifications
   type: 
-       method:types
+    method:type
   formaa: 
-       method:format
+    method:format
   digitb: dct:extent
   color: exif:colorSpace
   imaga: 
-       method:processing_history
-  missin: #SKIP (missing items?)
+    method:processing_history
+  missin: #SKIP
   full:  oregon:fullText
-  metada: #SKIP (metadata creator)
-  image: #SKIP (image scanner)
-  catalo: #SKIP (cataloging status)
-  load: #SKIP (load date)
+  metada: #SKIP
+  image: #SKIP
+  catalo: #SKIP
+  load: #SKIP
   rights: 
-       method:rights
-  contri: dct:contributor
-  publis: dct:source
-  collec: oregon:set
-  contra: oregon:contributingInstitution
+    method:perent_rights  #http://europeana.eu/portal/rights/rr-r/ and reprint creator in oregon:rightsHolder
+  contri: #SKIP
+  publis: #SKIP
+  collec: 
+    method:set
+  contra: 
+    method:percentContributingInstitution  #looks like bad data; need two statements one for University of Oregon and one for Oregon Arts Commission 
 
   
   #
