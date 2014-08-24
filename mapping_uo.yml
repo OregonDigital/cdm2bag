@@ -51,7 +51,7 @@ namespaces:
 # *collection - 
 #  *dc_subject_lcna -
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
-# *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
+# *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not. Not sure why this comment was made uncessary. Need dct:replaces with oldcdmURL
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
 # *set - maps to new set in Oregon Digital Hydra 
@@ -59,6 +59,10 @@ namespaces:
 # *dc_issued - used dcterms:issued and converts to dcmi date format if possible
 # *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
 # *percent_rights - http://europeana.eu/portal/rights/rr-r/ and reprint creator in oregon:rightsHolder
+# *univ_rights - add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
+# *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
+# *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
+# *contributing_Instittuion - map to dbpedia org name, use institution not library for UO and OSU
 
 mappings:
   #
@@ -504,7 +508,19 @@ ode:
  digita: 
    method:set #daily-emerald
  ambros: # SKIP
- contri: oregon:contributingInstitution
+ contra: 
+   method: contributingInstitution
+ fulls: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclccno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method: replace #dct:replaces
 
 #
 # oimb
@@ -592,12 +608,15 @@ wwdl:
  descri: dct:description
  pagina: schema:numberOfPages
  citati: schema:citation
- subjec: dct:subject
- lc: dct:subject
- people: dct:subject
- corpor: dct:subject 
+ subjec: dce:subject
+ lc:
+   method: dc_subject_lc
+ people: 
+   method: dc_subject_lc
+ corpor: 
+   method: dc_subject_lc
  place: 
-      method:geographic
+   method:geographic
  genre: rdaw:formOfWork.en
  author: marcrel:aut
  photog: marcrel:pht
@@ -607,22 +626,22 @@ wwdl:
  previo: # SKIP (in the citation)
  date: dct:issued
  covera: dct:temporal
- publis: dct:source
+ publis: #SKIP
  datedi: oregon:dateDigitized
  rights: 
-      method:rights
+    method:rights
  reposi: marcrel:rps
  relati: 
-       method:localCollectionName
+    method:localCollectionName
  collec: oregon:localCollectionID
  additi: dct:hasVersion
  addita: dct:hasVersion
  langua: 
-       method:language
+    method:language
  type: 
-       method:types
+   method:typee
  format: 
-       method:format
+   method:format
  captur: oregon:conversionSpecifications
  file: rdam:fileSize.en
  image: exif:width
@@ -635,11 +654,21 @@ wwdl:
  imagc: # SKIP
  full: oregon:fullText
  link: dct:relation
- contra: oregon:contributingInstitution
+ contra: 
+    method:contributingInstitution
  catalo: # SKIP
  load: # SKIP
- digitb: oregon:set
- fulla: oregon:  #TBD; full PDFs download
+ digitb: 
+    method:set
+ find: #SKIP
+ dmoclcno: #SKIP
+ dmimage: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord: 
+   method:replace  #dct:replaces
+ fulla: #SKIP
+
 
 
   #
@@ -721,45 +750,61 @@ latinoherit:
 univ:  
  title: dct:title
  creato: dct:creator
- subjec: dct:subject
- lc: dct:subject
- buildi: dct:subject
+ subjec: dce::subject
+ lc: 
+   method: dc_subject_lc
+ buildi: #SKIP
  place: 
-      method:geographic
- people: oregon:uoNames
+   method:geographic
+ people: 
+   method: uoNames
  names: #SKIP
- corpor: dct:subject
+ corpor: 
+   method: dc_subject_lc
  event: schema:event
  descri: dct:description
  notesa: dct:description
- peopla: dct:description 
- publis: dct:source
+ peopla: #SKIP
+ publis: #SKIP
  date: 
-      method:date
+   method:date
  type: 
-      method:types
+   method:type
  format: 
-      method:format
+   method:format
  identi: dct:identifier
- source: dct:description
+ source: #SKIP
  relati: dct:relation
- issuin: dct:source
+ issuin: #SKIP
  collec: 
-      method:localCollectionName
+    method:localCollectionName
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
  proces: 
-      method:processing_history
+   method:processing_history
  datea: oregon:dateDigitized
  rights: 
-      method:rights
+   method:univ_rights  #add rightsholder for "University of Oregon" and map for appropriate rights/license
  notes: # SKIP
  metada: # SKIP
  imagin: # SKIP
  catalo: # SKIP
- digita: oregon:set
- contri: oregon:contributingInstitution
+ digita: 
+   method:set
+ contri:
+   method:contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclcno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method:replace
  
  
   #
@@ -930,7 +975,17 @@ uostock:
     method:set
   contra: 
     method:percentContributingInstitution  #looks like bad data; need two statements one for University of Oregon and one for Oregon Arts Commission 
-
+  fullrs: #SKIP
+  find: #SKIP  any old .cpd file and related pages should be skipped
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmmodified: #SKIP
+  dmrecord: 
+    method:replace
   
   #
   # archivision
@@ -1217,7 +1272,7 @@ uovets:
   places: oregon:militaryServiceLocations
   interb: dct:description 
   date: 
-    method:date
+    method:date #need to convert to yyyy-mm-dd
   type: 
     method:types
   format: 
@@ -1233,7 +1288,19 @@ uovets:
   digiti: oregon:conversionSpecifications
   relati: 
      method:set
-  contri: oregon:contributingInstitution
+  contri: 
+     method:contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
   
   
   
@@ -1317,9 +1384,21 @@ uo-athletics:
   full: #SKIP
   load: #SKIP
   ambros: #SKIP
-  digita: oregon:set
-  contri: oregon:contributingInstitution
-  
+  digita: 
+    method:set
+  contri: 
+    method:contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmiamage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord: 
+    method: replace
   
   #
   # misc
@@ -1391,17 +1470,18 @@ maic:
   identi: dct:identifier
   work: vra:workType
   altern: dct:alternative
-  subjec: dct:subject
+  subjec: dce:subject #not LC?
   descri: dct:description
   proces: vra:technique
   point: dct:hasVersion
   measur: vra:measurements
   object: oregon:compassDirection
   primar: 
-       method:geographic
+    method:geographic
   second: 
-       method:geographic
-  availa: dct:description
+    method:geographic
+  availa: 
+    method:availmap #admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in note
   period: vra:stylePeriod
   perioa: vra:stylePeriod
   relati: dct:relation
@@ -1409,21 +1489,33 @@ maic:
   rights: marcrel:pht
   date: oregon:cco/viewDate
   righta: 
-       method:rights
-  publis: dct:source
+    method:maic_rights
+  publis: #SKIP
   source: holding:label
   data: oregon:dateDigitized
   digiti: oregon:conversionSpecifications
   image: #SKIP
   type: 
-       method:types
+    method:typs
   format: 
-       method:format
+    method:format
   metada: #SKIP
   batch: #SKIP
-  digita: oregon:set
-  contri: oregon:contributingInstitution
-  
+  digita: 
+    method:set
+  contri: 
+    method:contributingInstitution
+  fullrs: #SKIP use to map to full image for ingest
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
   
   
   #
