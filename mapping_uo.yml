@@ -1250,7 +1250,7 @@ uovets:
   places: oregon:militaryServiceLocations
   interb: dct:description 
   date: 
-    method:date
+    method:date #need to convert to yyyy-mm-dd
   type: 
     method:types
   format: 
@@ -1266,7 +1266,19 @@ uovets:
   digiti: oregon:conversionSpecifications
   relati: 
      method:set
-  contri: oregon:contributingInstitution
+  contri: 
+     method:contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
   
   
   
