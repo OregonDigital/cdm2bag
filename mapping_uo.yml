@@ -59,6 +59,7 @@ namespaces:
 # *dc_issued - used dcterms:issued and converts to dcmi date format if possible
 # *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
 # *percent_rights - http://europeana.eu/portal/rights/rr-r/ and reprint creator in oregon:rightsHolder
+# *univ_rights  #add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
 
 mappings:
   #
@@ -721,44 +722,48 @@ latinoherit:
 univ:  
  title: dct:title
  creato: dct:creator
- subjec: dct:subject
- lc: dct:subject
- buildi: dct:subject
+ subjec: dce::subject
+ lc: 
+   method: dc_subject_lc
+ buildi: #SKIP
  place: 
-      method:geographic
- people: oregon:uoNames
+   method:geographic
+ people: 
+   method: uoNames
  names: #SKIP
- corpor: dct:subject
+ corpor: 
+   method: dc_subject_lc
  event: schema:event
  descri: dct:description
  notesa: dct:description
- peopla: dct:description 
- publis: dct:source
+ peopla: #SKIP
+ publis: #SKIP
  date: 
-      method:date
+   method:date
  type: 
-      method:types
+   method:type
  format: 
-      method:format
+   method:format
  identi: dct:identifier
- source: dct:description
+ source: #SKIP
  relati: dct:relation
- issuin: dct:source
+ issuin: #SKIP
  collec: 
-      method:localCollectionName
+    method:localCollectionName
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
  proces: 
-      method:processing_history
+   method:processing_history
  datea: oregon:dateDigitized
  rights: 
-      method:rights
+   method:univ_rights  #add rightsholder for "University of Oregon" and map for appropriate rights/license
  notes: # SKIP
  metada: # SKIP
  imagin: # SKIP
  catalo: # SKIP
- digita: oregon:set
+ digita: 
+   method:set
  contri: oregon:contributingInstitution
  
  
