@@ -51,7 +51,7 @@ namespaces:
 # *collection - 
 #  *dc_subject_lcna -
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
-# *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not.
+# *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not. Not sure why this comment was made uncessary. Need dct:replaces with oldcdmURL
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
 # *set - maps to new set in Oregon Digital Hydra 
@@ -62,6 +62,7 @@ namespaces:
 # *univ_rights - add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 # *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
+# *contributing_Instittuion - map to dbpedia org name, use institution not library for UO and OSU
 
 mappings:
   #
@@ -595,12 +596,15 @@ wwdl:
  descri: dct:description
  pagina: schema:numberOfPages
  citati: schema:citation
- subjec: dct:subject
- lc: dct:subject
- people: dct:subject
- corpor: dct:subject 
+ subjec: dce:subject
+ lc:
+   method: dc_subject_lc
+ people: 
+   method: dc_subject_lc
+ corpor: 
+   method: dc_subject_lc
  place: 
-      method:geographic
+   method:geographic
  genre: rdaw:formOfWork.en
  author: marcrel:aut
  photog: marcrel:pht
@@ -613,19 +617,19 @@ wwdl:
  publis: #SKIP
  datedi: oregon:dateDigitized
  rights: 
-      method:rights
+    method:rights
  reposi: marcrel:rps
  relati: 
-       method:localCollectionName
+    method:localCollectionName
  collec: oregon:localCollectionID
  additi: dct:hasVersion
  addita: dct:hasVersion
  langua: 
-       method:language
+    method:language
  type: 
-       method:types
+   method:typee
  format: 
-       method:format
+   method:format
  captur: oregon:conversionSpecifications
  file: rdam:fileSize.en
  image: exif:width
@@ -638,11 +642,21 @@ wwdl:
  imagc: # SKIP
  full: oregon:fullText
  link: dct:relation
- contra: oregon:contributingInstitution
+ contra: 
+    method:contributingInstitution
  catalo: # SKIP
  load: # SKIP
- digitb: oregon:set
- fulla: oregon:  #TBD; full PDFs download
+ digitb: 
+    method:set
+ find: #SKIP
+ dmoclcno: #SKIP
+ dmimage: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord: 
+   method:replace  #dct:replaces
+ fulla: #SKIP
+
 
 
   #
