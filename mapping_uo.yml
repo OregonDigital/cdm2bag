@@ -1503,8 +1503,19 @@ maic:
   batch: #SKIP
   digita: 
     method:set
-  contri: oregon:contributingInstitution
-  
+  contri: 
+    method:contributingInstitution
+  fullrs: #SKIP use to map to full image for ingest
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
   
   
   #
