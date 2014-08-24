@@ -1362,9 +1362,21 @@ uo-athletics:
   full: #SKIP
   load: #SKIP
   ambros: #SKIP
-  digita: oregon:set
-  contri: oregon:contributingInstitution
-  
+  digita: 
+    method:set
+  contri: 
+    method:contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmiamage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord: 
+    method: replace
   
   #
   # misc
