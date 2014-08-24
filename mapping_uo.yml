@@ -508,7 +508,19 @@ ode:
  digita: 
    method:set #daily-emerald
  ambros: # SKIP
- contri: oregon:contributingInstitution
+ contra: 
+   method: contributingInstitution
+ fulls: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclccno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method: replace #dct:replaces
 
 #
 # oimb
