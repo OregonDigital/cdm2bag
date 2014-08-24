@@ -610,7 +610,7 @@ wwdl:
  previo: # SKIP (in the citation)
  date: dct:issued
  covera: dct:temporal
- publis: dct:source
+ publis: #SKIP
  datedi: oregon:dateDigitized
  rights: 
       method:rights
