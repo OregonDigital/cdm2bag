@@ -975,7 +975,17 @@ uostock:
     method:set
   contra: 
     method:percentContributingInstitution  #looks like bad data; need two statements one for University of Oregon and one for Oregon Arts Commission 
-
+  fullrs: #SKIP
+  find: #SKIP  any old .cpd file and related pages should be skipped
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmmodified: #SKIP
+  dmrecord: 
+    method:replace
   
   #
   # archivision
