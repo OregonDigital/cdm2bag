@@ -542,7 +542,8 @@ ode:
 oimb:
  title: dct:identifier
  source: holding:label
- subjec: dct:subject # ITIS, uBio, LC
+ subjec: 
+   method:subject # ITIS, uBio, LC
  sub: dct:subject # ITIS, uBio, Geonames, LC
  phlyum:	dwc:phlyum 	# ITIS and uBio
  class: dwc:class	# ITIS
