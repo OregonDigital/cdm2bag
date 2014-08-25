@@ -63,6 +63,7 @@ namespaces:
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 # *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
 # *contributing_Instittuion - map to dbpedia org name, use institution not library for UO and OSU
+# *arch_rights - see building_or_rights.txt for mappings
 
 mappings:
   #
@@ -241,49 +242,62 @@ mappings:
   # archpnw
   #
 archpnw:
- title: dct:title
- view: oregon:cco/viewDescription
- varian: dct:alternative
- relate: dct:isPartOf
- creato: oregon:cco/creatorDisplay
- creata: dct:creator
- date: dct:date
- covra: dct:temporal
- city: 
-      method: geographic
- county: 
-      method: geographic
- state: 
-      method: geographic
- countr: 
-      method: geographic
- site: madsrdf:streetAddress
- photog: oregon: cco/viewDate
- photoa: marcrel: pht
- catalo: SKIP
- object: vra:workType
- period: vra:stylePeriod
- materi: vra:material
- measur: vra:measurements
- signif: dct:description
- refere: schema:citation
- notes: modsrdf:note
- creatb: modsrdf:note
- metada: modsrdf:note # are these important for public?
- digita: dct:isPartOf
- sourca: dct:provenance # source of slide, look for repository/collection
- source: dct:source
- souceb: holding:label
- publis: dct:source
- rights: 
-      method:rights
- type: 
-      method:types
- format: 
-      method:format
- identi: dct:identifier
- techni: oregon:conversionSpecifications
- contri: oregon:contributingInstitution
+  title: dct:title
+  view: oregon:cco/viewDescription
+  varian: dct:alternative
+  relate: dct:isPartOf
+  creato: oregon:cco/creatorDisplay
+  creata: dct:creator
+  date: dct:date
+  covra: dct:temporal
+  city: 
+    method: geographic
+  county: 
+    method: geographic
+  state: 
+    method: geographic
+  countr: 
+    method: geographic
+  site: madsrdf:streetAddress
+  photog: oregon: cco/viewDate
+  photoa: marcrel: pht
+  catalo: SKIP
+  object: vra:workType
+  period: vra:stylePeriod
+  materi: vra:material
+  measur: vra:measurements
+  signif: dct:description
+  refere: schema:citation
+  notes: modsrdf:note
+  creatb: modsrdf:note
+  metada: #SKIP
+  digita:
+    method:set
+  sourca: dct:provenance # source of slide, look for repository/collection
+  source: dct:source
+  souceb: holding:label
+  publis: #SKIP
+  rights: 
+    method:arch_rights
+  type: 
+    method:type
+  format: 
+    method:format
+  identi: dct:identifier
+  techni: oregon:conversionSpecifications
+  contri: 
+     method:contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
 
   #
   # Bestof
@@ -906,8 +920,8 @@ uostock:
   # percent
   #
  percent:
-  projea: dct:isPartOf
-  projec: dct:isPartOf
+  projea: dct:relation
+  projec: dct:relation
   identi: oregon:cco/accesionNumber
   oac: holding:label
   title: dct:title
