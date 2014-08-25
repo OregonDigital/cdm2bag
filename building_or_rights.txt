@@ -1,0 +1,45 @@
+Building Oregon
+SHPO
+Current: 
+This image was included in the documentation to support a nomination to the National Register of Historic Places, a program of the National Park Service. The image is provided here by the Oregon State Historic Preservation Office and the University of Oregon Libraries to facilitate scholarship, research, and teaching. For other uses, such as publication, contact the State Historic Preservation Office. Please credit the Oregon State Historic Preservation Office when using this image.
+
+New:
+- Take full text of field and put in new modsrdf:note statement
+- Create a oregon:rightsHolder statement for “Oregon State Historic Preservation Office”
+- Create a dct:rights statement for http://opaquenamespace.org/rights/educational/
+
+City of Eugene
+Current:
+(c) City of Eugene. All rights reserved.
+
+New:
+- oregon:rightsHolder: “City of Eugene”
+- dct:rights: http://europeana.eu/portal/rights/rr-r/
+
+TBG Architects & Planners
+Current:
+(c) TBG Architects & Planners. Educational use is permitted without permission. Permission may be required for additional uses.
+
+New:
+- oregon:rightsHolder: “TBD Architects & Planners”
+- dct:rights: http://opaquenamespace.org/rights/educational/
+
+Photographer ceded rights to UO
+Current:
+(c) University of Oregon. This image is licensed under a Creative Commons Attribution-Noncommercial-No Derivative Works 3.0 United States License (http://creativecommons.org/licenses/by-nc-nd/3.0/us/ ). Acknowledgement of the University of Oregon Libraries as a source is required.
+
+or 
+
+Creative Commons Attribution-Share Alike 3.0 Unported license, http://creativecommons.org/licenses/by-sa/3.0/deed.en
+
+New:
+- oregon:rightsHolder: “University of Oregon”
+- dct:rights: http://creativecommons.org/licenses/by-nc-nd/4.0/
+- license:http://creativecommons.org/licenses/by-nc-nd/4.0/
+
+Photographer retained rights
+- Current: (c) FirstName LastName. All rights reserved.
+
+New:
+- oregon:rightsHolder: First and LasName stripped from statement 
+- dct:rights: http://europeana.eu/portal/rights/rr-r/
