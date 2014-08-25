@@ -920,8 +920,8 @@ uostock:
   # percent
   #
  percent:
-  projea: dct:isPartOf
-  projec: dct:isPartOf
+  projea: dct:relation
+  projec: dct:relation
   identi: oregon:cco/accesionNumber
   oac: holding:label
   title: dct:title
