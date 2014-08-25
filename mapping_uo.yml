@@ -1483,7 +1483,7 @@ maic:
   title: dct:title
   identi: dct:identifier
   work: vra:workType
-  altern: dct:alternative
+  altern: vra: workType #break on semicolons into new fields
   subjec: dce:subject #not LC?
   descri: dct:description
   proces: vra:technique
@@ -1494,8 +1494,7 @@ maic:
     method:geographic
   second: 
     method:geographic
-  availa: 
-    method:availmap #admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in note
+  availa: modsrf:note 
   period: vra:stylePeriod
   perioa: vra:stylePeriod
   relati: dct:relation
@@ -1510,9 +1509,9 @@ maic:
   digiti: oregon:conversionSpecifications
   image: #SKIP
   type: 
-    method:typs
+    method:type
   format: 
-    method:format
+    method:format #overwrite with tiff not jp2
   metada: #SKIP
   batch: #SKIP
   digita: 
