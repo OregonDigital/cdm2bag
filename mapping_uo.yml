@@ -544,17 +544,13 @@ oimb:
  title: dct:identifier
  source: holding:label
  subjec: 
-   method:subject # ITIS, uBio, LC
+   method: subject # ITIS, uBio, LC
  sub: 
-   method:subject # ITIS, uBio, Geonames, LC
- phlyum:	
-   dwc:phlyum 	# ITIS and uBio
- class: 
-  dwc:class	# ITIS
- suba: 
-   dwc:genus  #ITIS
- common: 
-   dwc:vernacularName #ITIS, uBio
+   method: subject # ITIS, uBio, Geonames, LC
+ phlyum:	dwc:phlyum 	# ITIS and uBio
+ class: dwc:class	# ITIS
+ suba: dwc:genus  #ITIS
+ common: dwc:vernacularName #ITIS, uBio
  descri: dct:description
  covra: dct:spatial
  creato: dct:creator
