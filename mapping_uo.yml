@@ -793,15 +793,16 @@ latinoherit:
   #
 univ:  
  title: dct:title
- creato: dct:creator
+ creato: 
+   method:localPhotog #marcrel:pht
  subjec: dce::subject
  lc: 
-   method: dc_subject_lc
+   method:dc_subject_lc
  buildi: #SKIP
  place: 
    method:geographic
  people: 
-   method: uoNames
+   method:localPeople
  names: #SKIP
  corpor: 
    method: dc_subject_lc
@@ -849,7 +850,6 @@ univ:
  dmmodified: #SKIP
  dmrecord:
    method:replace
- 
  
   #
   # uopres
