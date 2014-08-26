@@ -64,6 +64,7 @@ namespaces:
 # *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
 # *contributing_Instittuion - map to dbpedia org name, use institution not library for UO and OSU
 # *arch_rights - see building_or_rights.txt for mappings
+#
 
 mappings:
   #
@@ -542,12 +543,14 @@ ode:
 oimb:
  title: dct:identifier
  source: holding:label
- subjec: dct:subject # ITIS, uBio, LC
- sub: dct:subject # ITIS, uBio, Geonames, LC
+ subjec: 
+   method: subject # ITIS, uBio, LC
+ sub: 
+   method: subject # ITIS, uBio, Geonames, LC
  phlyum:	dwc:phlyum 	# ITIS and uBio
  class: dwc:class	# ITIS
- suba: dwc:genus  #for genusSpecies
- common: dwc:vernacularName
+ suba: dwc:genus  #ITIS
+ common: dwc:vernacularName #ITIS, uBio
  descri: dct:description
  covra: dct:spatial
  creato: dct:creator
