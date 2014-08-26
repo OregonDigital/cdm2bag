@@ -582,7 +582,7 @@ oimb:
    method:format
  identi: dct:identifier
  rights: 
-   method:oimb_rights
+   method:UO_rights
  digita: 
    method:set
  sourca: # SKIP
