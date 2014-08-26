@@ -69,7 +69,11 @@ namespaces:
 # *oimb_subject3 - uses same vocabs as oimb_subject, predicate dwc:class
 # *oimb_subject4 - uses same vocabs as oimb_subject, predicate dwc:genus
 # *oimb_subject5 - uses same vocabs as oimb_subject, predicate dwc:vernacularName
-# *oimb_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
+# *UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
+# *localPhotog - uses local vocab and LC names and predicate marcrel:pht
+# *localAuthor - uses local vocab and LC names and predicate marcrel:aut
+# *localPeople - uses local vocab and LC names and predicate oregon:people
+# *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 
 mappings:
   #
@@ -578,7 +582,7 @@ oimb:
    method:format
  identi: dct:identifier
  rights: 
-   method:oimb_rights
+   method:UO_rights
  digita: 
    method:set
  sourca: # SKIP
@@ -789,15 +793,16 @@ latinoherit:
   #
 univ:  
  title: dct:title
- creato: dct:creator
+ creato: 
+   method:localPhotog #marcrel:pht
  subjec: dce::subject
  lc: 
-   method: dc_subject_lc
+   method:dc_subject_lc
  buildi: #SKIP
  place: 
    method:geographic
  people: 
-   method: uoNames
+   method:localPeople
  names: #SKIP
  corpor: 
    method: dc_subject_lc
@@ -845,7 +850,6 @@ univ:
  dmmodified: #SKIP
  dmrecord:
    method:replace
- 
  
   #
   # uopres
@@ -1348,98 +1352,101 @@ uovets:
   # uo-athletics
   #
 uo-athletics:  
-  title: dct:title
-  descra: dct:alternative
-  sourca: dct:description
-  descri: dct:description
-  collec: 
-       method:localCollectionName
-  collea: oregon:localCollectionID
-  folder: oregon:folderName
-  box: oregon:boxNumber
-  photo: dct:identifier
-  titla: dct:alternative
-  publia: dct:alternative
-  notes: dct:description
-  photog: marcrel:pht
-  author: marcrel:aut
-  publis: dct:source
-  data: 
-       method:date 
-  datb: 
-       method:date
-  catalo: #SKIP
-  exhibi: dct:subject
-  names: oregon:uoNames
-  namea: oregon:uoNames
-  subjec: dct:subject
-  tgm: oregon:tgm
-  corpor: dct:subject
-  corpoa: dct:subject
-  place: 
-        method:geographic
-  date: 
-        method:date
-  genre: dct:subject
-  type: 
-        method:types
-  format: 
-        method:format
-  source: #SKIP
-  langua: 
-        method:language
-  relati: dct:hasVersion
-  covera: dct:coverage
-  rights: 
-        method:rights
-  proven: dct:provenance
-  sourcb: dct:extent
-  sourcc: oregon:sourceCondition
-  sourcd: dct:hasFormat
-  number: schema:numberOfPages
-  donor: marcrel:dnr 
-  citati: schema:citation
-  origin: dct:publisher
-  reposi: marcrel:rps
-  image: rdam:fileSize.en
-  imaga: exif:width
-  imagb: exif:height
-  color: exif:colorSpace
-  sourcf: #SKIP
-  sourcg: #SKIP
-  captur: oregon:dateDigitized
-  captua: oregon:conversionSpecifications
-  resolu: exif:resolution
-  proces: 
-        method:processing_history 
-  links: #SKIP
-  addito: dct:hasVersion
-  additi: dct:hasFormat
-  metada: #SKIP
-  imagc: #SKIP
-  imagd: #SKIP
-  scanni: #SKIP
-  other: dct:identifier
-  catala: #SKIP
-  full: #SKIP
-  load: #SKIP
-  ambros: #SKIP
-  digita: 
-    method:set
-  contri: 
-    method:contributingInstitution
-  fullrs: #SKIP
-  find: #SKIP
-  dmaccess: #SKIP
-  dmiamage: #SKIP
-  dmad1: #SKIP
-  dmad2: #SKIP
-  dmoclcno: #SKIP
-  dmcreated: #SKIP
-  dmmodified: #SKIP
-  dmrecord: 
-    method: replace
-  
+    title: dct:title
+    descra: dct:alternative
+    sourca: #SKIP
+    descri: dct:description
+    collec: oregon:localCollectionName
+    collea: oregon:localCollectionID
+    folder: oregon:archives/folderNumber
+    box: oregon:archives/boxNumber
+    photo: dct:identifier
+    titla: #SKIP
+    publia: dct:alternative
+    notes: modsref:note
+    photog: 
+      method:localPhoto #marcrel:pht
+    author: 
+      method:localAuthor #marcrel:aut
+    publis: #SKIP
+    data: method:date
+    datb: #SKIP
+    catalo: #SKIP
+    exhibi: #SKIP  
+    names: 
+      method:localPeople #oregon:people
+    namea: 
+      method:localPeople #oregon:people
+    subjec:
+      method: dc_subject_lc
+    tgm:
+      method: tgm #dce:subject 
+    corpor:
+      method: dc_subject_lc #some may need to be local
+    corpoa:
+      method: dc_subject_lc
+    place:
+      method:geographic
+    date: #SKIP
+    genre: #SKIP 
+    type:
+      method:type
+    format:
+     method:format
+    source:
+      dct:source
+    langua:
+      method:language
+    relati: #SKIP
+    covera: #SKIP
+    rights: 
+      method:UO_rights  #CC-BY-NC-ND, rightsholder is Univ. of Oregon
+    proven: #SKIP
+    sourcb: dct:extent
+    sourcc: oregon:sourceCondition
+    sourcd: #SKIP
+    number: schema:numberOfPages
+    donor: marcrel:dnr
+    citati: schema:citation
+    origin: #SKIP
+    reposi: marcrel:rps
+    image: rdam:fileSize.en
+    imaga: exif:width
+    imagb: exif:height
+    color: exif:colorSpace
+    sourcf: #SKIP
+    sourcg: #SKIP
+    captur: oregon:dateDigitized
+    captua: oregon:conversionSpecifications  
+    resolu: exif:resolution
+    proces: #SKIP
+    links: #SKIP
+    addito: #SKIP
+    additi: #SKIP
+    metada: #SKIP
+    imagc: #SKIP
+    imagd: #SKIP
+    scanni: #SKIP
+    other: #SKIP
+    catala: #SKIP
+    full: #SKIP
+    load: #SKIP
+    ambros: #SKIP
+    digita: 
+      method:set
+    contri: 
+      method:contributingInstitution
+    fullrs: #SKIP
+    find: #SKIP
+    dmaccess: #SKIP
+    dmimage: #SKIP
+    dmad1: #SKIP
+    dmad2: #SKIP
+    dmococlno: #SKIP
+    dmcreated: #SKIP
+    dmmodified: #SKIP
+    dmrecord:
+      method replace
   #
   # misc
   #
