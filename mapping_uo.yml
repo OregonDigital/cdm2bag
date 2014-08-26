@@ -64,6 +64,12 @@ namespaces:
 # *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
 # *contributing_Instittuion - map to dbpedia org name, use institution not library for UO and OSU
 # *arch_rights - see building_or_rights.txt for mappings
+# *oimb_subject - uses vocabs ITIS, uBio, LC, predicate dct:subject
+# *oimb_subject2 - uses same vocabs as oimb_subject, predicate dwc:phylum
+# *oimb_subject3 - uses same vocabs as oimb_subject, predicate dwc:class
+# *oimb_subject4 - uses same vocabs as oimb_subject, predicate dwc:genus
+# *oimb_subject5 - uses same vocabs as oimb_subject, predicate dwc:vernacularName
+# *oimb_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
 
 mappings:
   #
@@ -542,33 +548,53 @@ ode:
 oimb:
  title: dct:identifier
  source: holding:label
- subjec: dct:subject # ITIS, uBio, LC
- sub: dct:subject # ITIS, uBio, Geonames, LC
- phlyum:	dwc:phlyum 	# ITIS and uBio
- class: dwc:class	# ITIS
- suba: dwc:genus  #for genusSpecies
- common: dwc:vernacularName
+ subjec: 
+   method:oimb_subject #dct:subject
+ sub: 
+   method:oimb_subject #dct:subject
+ phlyum:
+   method:oimb_subject2 #dwc:phlyum
+ class: 
+   method:oimb_subject3 #dwc:class
+ suba: 
+   method:oimb_subject4 #dwc:genus
+ common: 
+   method:oimb_subject5  #dwc:vernacularName
  descri: dct:description
- covra: dct:spatial
- creato: dct:creator
+ covra: 
+   method:geographic
+ creato: 
+   method:localCreator #dct:creator
  id: dwc:identificationVerificationStatus
  slide: # SKIP
  date: 
-      method:date
+   method:date
  catalo: # SKIP
  local: 
-      method:localCollectionName
+   method:localCollectionName
  type: 
-      method:types
+   method:type
  format: 
-      method:format
+   method:format
  identi: dct:identifier
  rights: 
-      method:rights
- digita: oregon:set
+   method:oimb_rights
+ digita: 
+   method:set
  sourca: # SKIP
- contri: oregon:contributingInstitution
-
+ contri: 
+   method:contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP use JPEG images for ingest
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclcno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method:replace
   #
   # tlegacies
   #
