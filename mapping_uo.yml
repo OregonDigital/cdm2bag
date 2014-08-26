@@ -73,7 +73,9 @@ namespaces:
 # *localPhotog - uses local vocab and LC names and predicate marcrel:pht
 # *localAuthor - uses local vocab and LC names and predicate marcrel:aut
 # *localPeople - uses local vocab and LC names and predicate oregon:people
+# *LocalDonor- uses local vocab and predicate marcrel:dnr 
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
+# *lherit_subject #dct:subject # merge for lc, getty, tgm
 
 mappings:
   #
@@ -758,35 +760,49 @@ comm:
 latinoherit:
  title: dct:title
  descri: dct:description
- subjec: dct:subject # merge for lc, getty, tgm
- creato: dct:creator # empty field
- photog: # SKIP empty field, merge with creator
+ subjec: 
+   method: lherit_subject #dct:subject # merge for lc, getty, tgm
+ creato: #SKIP empty field
+ photog: # SKIP empty field
  covera: 
-      method:geographic
+   method: geographic
  date: 
-      method:date
- contri: dct:contributor
+   method: date
+ contri:  # SKIP empty field
  relate: dct:hasVersion
- source: # SKIP (empty field, merge with collec- title of collection)
- reposi: marcrel:rps
+ source: # SKIP empty field
+ reposi: 
+   method: dc_subject_lcna #marcrel:rps
  collec: 
-       method:localCollectionName
+   method: localCollectionName
  collea: oregon:localCollectionID
  relati: oregon:seriesName
  identi: dct:identifier
- donor: marcrel:dnr
+ donor: 
+   method: LocalDonor #marcrel:dnr 
  format: 
-      method:format
+   method: format
  type: 
-      method:types
+   method: type
  langua: 
-      method:language
+   method: language
  rights: 
       method:rights
  publis: dct:source
  digiti: oregon:conversionSpecifications
  digita: oregon:set
  contra: oregon:contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclcno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method:replace
 
   #
   # univ
