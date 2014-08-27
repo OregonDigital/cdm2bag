@@ -75,6 +75,23 @@ namespaces:
 # *localPeople - uses local vocab and LC names and predicate oregon:people
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 
+
+# latinoherit
+# *subject- method: lherit_subject - merge for lc, getty, tgm
+# *repository- method: repository, uses lcna for SCUA id, as above
+# *donor - method: LocalDonor, as above
+
+#uopres
+# *subject- method: dc_subject_lc, as above
+# *tgm- method: tgm, as above
+# *theme- method: dc_subject_lc, as above
+# *people- method:localPeople, as above
+# *corpor-  method: dc_subject_lcna, as above
+# *creato- method: dc_subject_lcna, as above
+# *contrib- method: dc_subject_lcna, as above
+# *reposi- method: dc_subject_lcna, as above
+
+
 mappings:
   #
   # UO collections only
@@ -752,41 +769,57 @@ comm:
  catala: # SKIP
  contri: oregon:contributingInstitution
 
-  #
+   #
   # latinoherit
   #
 latinoherit:
  title: dct:title
  descri: dct:description
- subjec: dct:subject # merge for lc, getty, tgm
- creato: dct:creator # empty field
- photog: # SKIP empty field, merge with creator
+ subjec: 
+   method: lherit_subject #dct:subject
+ creato: #SKIP empty field
+ photog: # SKIP empty field
  covera: 
-      method:geographic
+   method: geographic
  date: 
-      method:date
- contri: dct:contributor
+   method: date
+ contri: # SKIP empty field
  relate: dct:hasVersion
- source: # SKIP (empty field, merge with collec- title of collection)
- reposi: marcrel:rps
+ source: # SKIP empty field
+ reposi: 
+   method: repository #marcrel:rps
  collec: 
-       method:localCollectionName
+   method:localCollectionName
  collea: oregon:localCollectionID
  relati: oregon:seriesName
  identi: dct:identifier
- donor: marcrel:dnr
+ donor:
+   method: LocalDonor #marcrel:dnr 
  format: 
-      method:format
+   method:format
  type: 
-      method:types
+   method:types
  langua: 
-      method:language
+   method:language
  rights: 
-      method:rights
- publis: dct:source
+   method: rights
+ publis: dct:publisher
  digiti: oregon:conversionSpecifications
- digita: oregon:set
- contra: oregon:contributingInstitution
+ digita: 
+   method: set
+ contra: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclcno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method:replace
 
   #
   # univ
@@ -861,32 +894,40 @@ uopres:
   docume: dct:isPartOf
   descri: dct:description
   number: schema:numberOfPages
-  subjec: dct:subject
-  tgm: oregon:tgm
-  theme: dct:subject 
-  people: oregon:uoNames
-  corpor: dct:subject
+  subjec: 
++   method: dc_subject_lc #dct:subject
++ tgm: 
++   method: tgm #dce:subject 
++ theme: 
++   method: dc_subject_lc #dct:subject
++ people:
++   method:localPeople #oregon:people
++ corpor: 
++   method: dc_subject_lcna #dct:subject
   place: 
-       method:geographic
-  creato: dct:creator
-  contri: dct:contributor
+    method:  geographic
+  creato: 
+    method: dc_subject_lcna # dct:creator
++ contri: 
+    method: dc_subject_lcna #dct:contributor
   date: 
-       method:date
+    method: date
   rights: 
-       method:rights
-  reposi: marcrel:rps
+    method: rights
+  reposi: 
++   method: dc_subject_lcna #marcrel:rps
   collec: 
-       method:localCollectionName
+    method: localCollectionName
   collea: oregon:localCollectionID
   box: oregon:boxNumber
   folder: oregon:folderName
   ambros: # SKIP
   type: 
-       method:types
+    method: types
   format: 
-       method:format
+    method: format
   langua: 
-       method:language
+    method: language
   full: oregon:fullText
   addita: dct:hasVersion
   datedi: oregon:dateDigitized
@@ -897,7 +938,7 @@ uopres:
   color: exif:colorSpace
   resolu: exif:resolution
   proces: 
-       method:processing_history
+    method:processing_history
   metada: # SKIP
   imagb: # SKIP
   imagc: # SKIP
@@ -905,8 +946,21 @@ uopres:
   catala: # SKIP
   load: # SKIP
   publis: dct:source
-  digita: oregon:set
-  contra: oregon:contributingInstitution
+  digita: 
+    method: set
+  contra: 
+    method: contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace
   
   #
   # uostock
