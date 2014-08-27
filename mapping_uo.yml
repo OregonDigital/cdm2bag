@@ -47,9 +47,10 @@ namespaces:
 # *lc_subject -
 # *dc_subject_lc -
 # *lcnaf -  dct:creator 
+# *lcnaf- dct:publisher
 # *cover - 
 # *collection - 
-#  *dc_subject_lcna -
+# *dc_subject_lcna -
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not. Not sure why this comment was made uncessary. Need dct:replaces with oldcdmURL
 # *folkrights - separates rights statement from copyright holder for OAC rights
@@ -62,7 +63,7 @@ namespaces:
 # *univ_rights - add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 # *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
-# *contributing_Instittuion - map to dbpedia org name, use institution not library for UO and OSU
+# *contributing_Institution - map to dbpedia org name, use institution not library for UO and OSU
 # *arch_rights - see building_or_rights.txt for mappings
 # *oimb_subject - uses vocabs ITIS, uBio, LC, predicate dct:subject
 # *oimb_subject2 - uses same vocabs as oimb_subject, predicate dwc:phylum
@@ -71,15 +72,22 @@ namespaces:
 # *oimb_subject5 - uses same vocabs as oimb_subject, predicate dwc:vernacularName
 # *UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
 # *localPhotog - uses local vocab and LC names and predicate marcrel:pht
+# *localPhotog - uses local vocab and LC names and predicate dct: creator
 # *localAuthor - uses local vocab and LC names and predicate marcrel:aut
 # *localPeople - uses local vocab and LC names and predicate oregon:people
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
+# *repository- method: repository, uses lcna for SCUA id, predicate #marcrel:rps
+# *uopres_rights- rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon' and add Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
+# *misc_rights - list of statements
+# *comm_rights - none?
+
 
 
 # latinoherit
 # *subject- method: lherit_subject - merge for lc, getty, tgm
 # *repository- method: repository, uses lcna for SCUA id, as above
 # *donor - method: LocalDonor, as above
+# *rights- method: UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
 
 #uopres
 # *subject- method: dc_subject_lc, as above
@@ -90,6 +98,20 @@ namespaces:
 # *creato- method: dc_subject_lcna, as above
 # *contrib- method: dc_subject_lcna, as above
 # *reposi- method: dc_subject_lcna, as above
+# *rights- method: uopres_rights- same as UO_rights but add "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
+
+#misc
+# *subject- method: dc_subject_lc, as above
+# *rights- method:misc_rights -
+# *creator- method: lcnaf, as above
+# *publisher- method: lcnaf, as above
+
+#comm
+# *rights- method: comm_rights - 
+# *creator-  method: localPhotog, as above
+# *person- method: dc_subject_lcna, as above
+# *subject-  method: dc_subject_lc, as above
+# *source- method: comm_ aat_tgm
 
 
 mappings:
@@ -741,33 +763,50 @@ comm:
  descri: dct:description
  identi: dct:alternative
  date: 
-      method:date
+   method: date
  covera: 
-      method:geographic
- creato: dct:creator
- person: dct:subject #lcnaf
- subjec: dct:subject
+   method: geographic
++ creato: 
++   method: localPhotog #dct:creator
++ person: 
++   method: dc_subject_lcna #dct:subject 
++ subjec: 
++   method: dc_subject_lc #dct:subject
  relati: 
-      method:localCollectionName
+   method: localCollectionName
  collec: oregon:localCollectionID
  sourca: holding:label
- source: dct:hasFormat
+ source: 
+   method: comm_ aat_tgm #dct:hasFormat
  type: 
-      method:types
- publis: dct:source
- donor: dct:contributor
+   method: types
+ publis: #SKIP
+ donor: #SKIP
  rights: 
-       method:rights
+   method: comm_rights
  format: 
-       method:format
+   method: format
  date: oregon:dateDigitized 
  captur: oregon:conversionSpecifications
  metadata: # SKIP
  imaga: # SKIP
  catalo: # SKIP
- digita: oregon:set
+ digita: 
+   method: set
  catala: # SKIP
- contri: oregon:contributingInstitution
+ contri:
+   method:  contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclcno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method:replace
 
    #
   # latinoherit
@@ -777,15 +816,15 @@ latinoherit:
  descri: dct:description
  subjec: 
    method: lherit_subject #dct:subject
- creato: #SKIP empty field
- photog: # SKIP empty field
+ creato: #SKIP
+ photog: # SKIP
  covera: 
    method: geographic
  date: 
    method: date
- contri: # SKIP empty field
+ contri: # SKIP
  relate: dct:hasVersion
- source: # SKIP empty field
+ source: # SKIP
  reposi: 
    method: repository #marcrel:rps
  collec: 
@@ -802,8 +841,8 @@ latinoherit:
  langua: 
    method:language
  rights: 
-   method: rights
- publis: dct:publisher
+   method: UO_rights
+ publis: # SKIP
  digiti: oregon:conversionSpecifications
  digita: 
    method: set
@@ -820,6 +859,7 @@ latinoherit:
  dmmodified: #SKIP
  dmrecord:
    method:replace
+
 
   #
   # univ
@@ -938,14 +978,14 @@ uopres:
   color: exif:colorSpace
   resolu: exif:resolution
   proces: 
-    method:processing_history
+    method: processing_history
   metada: # SKIP
   imagb: # SKIP
   imagc: # SKIP
   catalo: # SKIP
   catala: # SKIP
   load: # SKIP
-  publis: dct:source
+  publis: # SKIP
   digita: 
     method: set
   contra: 
@@ -1501,35 +1541,50 @@ uo-athletics:
     dmmodified: #SKIP
     dmrecord:
       method replace
-  #
+ #
   # misc
   #
 misc: 
   title: dct:title
-  subjec: dct:subject
+  subjec: 
+    method: method: dc_subject_lc #dct:subject
   descri: dct:description
-  creato: dct:creator
-  publis: dct:publisher
-  contri: dct:contributor
+  creato: 
++   method: lcnaf #dct:creator
++ publis: 
++   method: lcnaf #dct:publisher
++ contri: #SKIP
   date: 
-       method:date
+    method: date
   type: 
-       method:types
+    method: types
   format: 
-       method:format
+    method: format
   identi: dct:identifier
-  source: dct:source
+  source: #SKIP
   langua: 
-       method:language
+    method: language
   relati: #SKIP
   covera: 
-       method:date
+    method: date
   rights: 
-       method:rights
+    method: misc_rights
   audien: #SKIP
   full: #SKIP
   fulla: oregon:fullText
-  contra: oregon:contributingInstitution
+  contra: 
+    method: contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmococlno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method replace  
   
   
   #
