@@ -56,8 +56,8 @@ def create_graphs(file, collection)
         @missing_fields << tag unless @missing_fields.include? tag
       end
     end
-    graphs
   end
+  graphs
 end
 
 def add_set(collection, graph, subject)
