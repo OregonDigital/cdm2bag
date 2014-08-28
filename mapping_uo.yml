@@ -101,7 +101,8 @@ namespaces:
 # *diss_rights- public domain and other statement
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
-
+# *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights
+# *restricted - restrict itmes to UO only after ingest to Oregon Digital
 
 mappings:
   #
@@ -1537,31 +1538,44 @@ uo-athletics:
   #
 misc: 
   title: dct:title
-  subjec: dct:subject
+  subjec: 
+    method:dc_subject_lc
   descri: dct:description
-  creato: dct:creator
+  creato:
+    method:lcnaf
   publis: dct:publisher
   contri: dct:contributor
   date: 
-       method:date
+    method:date
   type: 
-       method:types
+    method:type
   format: 
-       method:format
+    method:format
   identi: dct:identifier
   source: dct:source
   langua: 
-       method:language
+    method:language
   relati: #SKIP
   covera: 
-       method:date
+    method:date
   rights: 
-       method:rights
+    method:misc_rights
   audien: #SKIP
   full: #SKIP
   fulla: oregon:fullText
   contra: oregon:contributingInstitution
-  
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: 
+    method:restricted # need to secure to UO IP only
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
   
   #
   # petrarch
