@@ -4,8 +4,7 @@ class DescParser < OpenStruct
   def self.parse(file)
     hsh = {}
     all_desc = []
-    File.readlines(file).each do |line|
-      tag, value = parse_tag(line)
+    get_tags(file).each do |tag, value|
       next if tag.nil? or tag == 'record' or tag == 'records'
       hsh[tag] = value
       if tag == "dmrecord"
@@ -16,7 +15,7 @@ class DescParser < OpenStruct
     return all_desc
   end
 
-  def self.parse_tag(tag)
-    tag.match(/<(.*)> *(.*) *<.*/).to_a.slice(1,2)
+  def self.get_tags(file)
+    File.read(file).scan(/<(.*)> *(.*) *<\/.*/)
   end
 end

@@ -40,8 +40,21 @@ module MappingMethods
         "programs" => "programs (documents)",
         "letters" => "letters (correspondence)",
         "cyanotypes" => "cyanotypes (photographic prints)",
-        "fillms" => "films"
+        "fillms" => "films",
+        "mezzotint" => "mezzotints (prints)",
+        "relief" => "relief print",
+        "intaglio" => "intaglio prints",
+        "reproduction" => "reproductions",
+        "monotypes" => "monotypes (planographic prints)",
+        "aquatint" => "aquatints (prints)",
+        "silver gelatin" => "gelatin silver prints"
       }
+    end
+
+    def aat_fairbanks(subject, data)
+      data = data.gsub(" & ", ";") || data
+      data = data.gsub(" and ", ";") || data
+      aat_from_search(subject, data)
     end
 
     def aat_gelatin(subject, data)
@@ -50,7 +63,7 @@ module MappingMethods
 
     def aat_siuslaw(subject, data)
       r = RDF::Graph.new
-      uri = 'http://vocab.getty.edu/resource/aat/'
+      uri = 'http://vocab.getty.edu/aat/'
       if data.start_with?("Slide")
         uri += "300128371"
       elsif data == "Photograph"
@@ -65,7 +78,7 @@ module MappingMethods
 
     def aat_siuslaw_colorcontent(subject, data)
       r = RDF::Graph.new
-      uri = 'http://vocab.getty.edu/resource/aat/'
+      uri = 'http://vocab.getty.edu/aat/'
       if data == "B/W" || data == "black and white"
         uri += "300265434"
       elsif data == "Color"
@@ -79,7 +92,7 @@ module MappingMethods
     end
 
     def aat_sheetmusic(subject, data)
-      RDF::Graph.new << RDF::Statement.new(subject, RDF.type, RDF::URI('http://vocab.getty.edu/resource/aat/300026430'))
+      RDF::Graph.new << RDF::Statement.new(subject, RDF.type, RDF::URI('http://vocab.getty.edu/aat/300026430'))
     end
     
   end

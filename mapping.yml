@@ -341,8 +341,11 @@ mappings:
     title: marcrel:art 
     subjec: dct:title
     #descri: SKIP # Woodcut, Etching, Engraving, Drypoint
+    descri:
+      method: aat_fairbanks
     #media1: SKIP # Prints
-    #media2: SKIP # specific printing methods
+    media2:
+      method: aat_fairbanks # specific printing methods
     descrp: dct:description
     format: modsrdf:physicalExtent # 'size'
     datepe: 
@@ -354,7 +357,7 @@ mappings:
     publis: marcrel:dnr # donor
     value: SKIP # dollar value
     type: 
-      method: force_image_type
+      method: image_type
     rights:
       method: osu_archive_rights
     curato: SKIP #really skip
@@ -368,6 +371,7 @@ mappings:
     dmad2: SKIP
     dmcreated: dct:created
     dmmodified: dct:modified
+    locati: modsrdf:note
     dmrecord: 
       method: replace
 

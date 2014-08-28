@@ -6,6 +6,7 @@ require 'bagit'
 require 'logger'
 require 'docopt'
 require './mapping_methods.rb'
+require_relative 'lib/desc_parser'
 
 include MappingMethods
 
@@ -30,36 +31,30 @@ DOCOPT
 def create_graphs(file, collection)
   graphs = []
   graph = RDF::Graph.new
-  File.readlines(file).each do |ln|
-    tag = ln.match(/^\s*<([a-z]+)>/)
-    next if tag.nil? or tag[1] == 'record' or tag[1] == 'records'
-    tag = tag[1]
-    ln.slice!("<#{tag}>")
-    ln.slice!("<\/#{tag}>")
-    ln = ln.strip
-
+  DescParser.parse(file).each do |record|
     bnode = RDF::Node.new
-
-    if tag.to_s == 'dmrecord'
-      graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
-      add_set(collection, graph, bnode)
-      send("#{collection}_cleanup", collection, graph, bnode) if respond_to?("#{collection}_cleanup")
-      graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
-      graph = RDF::Graph.new
-      bnode = RDF::Node.new
-      next
-    end
-
-    begin
-      if @collection_mappings[tag.to_s].include? 'method' and not (ln == nil or ln == '')
-        graph << send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
-      else
-        next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
-        ns, term = @collection_mappings[tag.to_s].split(':') 
-        graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
+    record.marshal_dump.each do |tag, ln|
+      if tag.to_s == 'dmrecord'
+        graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
+        add_set(collection, graph, bnode)
+        send("#{collection}_cleanup", collection, graph, bnode) if respond_to?("#{collection}_cleanup")
+        graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
+        graph = RDF::Graph.new
+        bnode = RDF::Node.new
+        next
       end
-    rescue NoMethodError => e
-      @missing_fields << tag unless @missing_fields.include? tag
+
+      begin
+        if @collection_mappings[tag.to_s].include? 'method' and not (ln == nil or ln == '')
+          graph << send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+        else
+          next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
+          ns, term = @collection_mappings[tag.to_s].split(':') 
+          graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
+        end
+      rescue NoMethodError
+        @missing_fields << tag unless @missing_fields.include? tag
+      end
     end
   end
   graphs
@@ -78,7 +73,8 @@ def map_set
     "siuslaw" => "siuslaw",
     "rockshore93" => "rockyshore93",
     "baseball" => "osu-baseball",
-    "gifford" => "gifford"
+    "gifford" => "gifford",
+    "fairbanks" => "fairbanks"
   }
 end
 

@@ -32,6 +32,10 @@ module MappingMethods
       graph
     end
 
+    def image_type(subject, data)
+      RDF::Graph.new << RDF::Statement.new(subject, RDF::DC.type, DCMITYPE_NS[:Image])
+    end
+
 
     def map_types
       {
