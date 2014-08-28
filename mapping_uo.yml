@@ -295,7 +295,7 @@ mappings:
     subjef: SKIP
     sebjeg: 
       oregon:ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
-    segjeh: dce:subject
+    sebjeh: dce:subject
     resour: 
       method: aat #workType, some might not be in AAT and may need to be changed
     relati: SKIP
