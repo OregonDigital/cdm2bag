@@ -92,10 +92,10 @@ namespaces:
 
 # *rights - tries to identify EU rights, CC Licenses, and OregonDigital (opaque namespace) rights statements.
 # *maic_rights -  http://opaquenamespace.org/rights/educational/ and rightsHolder "Gary Tepfer and the Mongolian Altai Inventory."
-# *percent_rights - http://europeana.eu/portal/rights/rr-r/ and reprint creator in oregon:rightsHolder
+# *percent_rights - http://www.europeana.eu/rights/rr-f/ and reprint creator in oregon:rightsHolder
 # *univ_rights - add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
 # *UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
-# *uopres_rights- ame as UO_rights but add "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
+# *uopres_rights- ame as UO_rights but add  http://www.europeana.eu/rights/unknown/ in rights for "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
 # *comm_rights - none?
 # *manuscripts_rights- public domain and no rightsholder
 # *diss_rights- public domain and other statement
@@ -569,7 +569,7 @@ ode:
       method:language
  relati: dct:relation
  rights: 
-      method:rights # http://europeana.eu/portal/rights/rr-r/ , add rightsHolder "Oregon Daily Emerald Publishing Co., Inc."
+      method:rights # http://www.europeana.eu/rights/rr-f/ , add rightsHolder "Oregon Daily Emerald Publishing Co., Inc."
  full: oregon:fullText
  metada: # SKIP
  digita: 
