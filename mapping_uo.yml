@@ -53,17 +53,20 @@ namespaces:
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 # *repository- method: repository, uses lcna for SCUA id, predicate marcrel:rps
 
-#*Subjects
-# *aat -
+# Creators
+# * lcnaf - query id.loc.gov and use dct:creator
+# * lncaf_ulan - dct:creator uses both lcnag and ulan authorities
+# * lcnaf_cont - query lcnaf at id.loc.gov and use dct:contributor
+# * lcnaf_repo - query lcnaf and lcsh and use marcrel:rps
+
+# Subjects
+# *aat - uses aat from getty
 # *att_sheetmusic - ignores data, adds rdf:type of 'sheet music' uri from aat.
 # *att_format - matches data to either 'silver gelatin print', 'film negative', or ... in aat; adds appropriate rdf:type statement
-# *lc_subject -
-# *dc_subject_lc -
-# *dc_subject_lcna -
-# *lcnaf -  dct:creator 
-# *lcnaf- dct:publisher
+# *lc_subject - uses lcsh in dct:subject
+# *dc_subject_lc - uses lcsh and lcnaf in dct:subject
+# *dc_subject_lcna - uses lncaf in dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
-# *lcnaf_ulan - dct:creator uses both lcnag and ulan authorities
 # *comm_ aat_tgm - predicate dct:hasFormat
 # *dc_subject_lc_aat - predicate dct:subject
 # *subject_lc_MeSH -predicate dct:subject
@@ -968,24 +971,23 @@ uopres:
 +   method: dc_subject_lc #dct:subject
 + tgm: 
 +   method: tgm #dce:subject 
-+ theme: 
-+   method: dc_subject_lc #dct:subject
++ theme: # SKIP 
 + people:
 +   method:localPeople #oregon:people
 + corpor: 
 +   method: dc_subject_lcna #dct:subject
   place: 
-    method:  geographic
+    method: geographic
   creato: 
-    method: dc_subject_lcna # dct:creator
+    method: lcnaf  # dct:creator
 + contri: 
-    method: dc_subject_lcna #dct:contributor
+    method: lcnaf_cont #dct:contributor
   date: 
     method: date
   rights: 
-    method: rights
+    method: UO_rights
   reposi: 
-+   method: dc_subject_lcna #marcrel:rps
++   method: lcnaf_repo  #marcrel:rps
   collec: 
     method: localCollectionName
   collea: oregon:localCollectionID
@@ -993,7 +995,7 @@ uopres:
   folder: oregon:folderName
   ambros: # SKIP
   type: 
-    method: types
+    method: type
   format: 
     method: format
   langua: 
@@ -1007,15 +1009,14 @@ uopres:
   imaga: exif:height
   color: exif:colorSpace
   resolu: exif:resolution
-  proces: 
-    method:processing_history
+  proces: # SKIP
   metada: # SKIP
   imagb: # SKIP
   imagc: # SKIP
   catalo: # SKIP
   catala: # SKIP
   load: # SKIP
-  publis: dct:source
+  publis: #SKIP 
   digita: 
     method: set
   contra: 
