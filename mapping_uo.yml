@@ -72,6 +72,7 @@ namespaces:
 # *subject_lc_MeSH -predicate dct:subject
 # *lherit_subject - merge for lc, getty, tgm
 
+
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
 
@@ -95,13 +96,16 @@ namespaces:
 # *percent_rights - http://www.europeana.eu/rights/rr-f/ and reprint creator in oregon:rightsHolder
 # *univ_rights - add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
 # *UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
-# *uopres_rights- ame as UO_rights but add  http://www.europeana.eu/rights/unknown/ in rights for "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
-# *manuscripts_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
+# *uopres_rights- name as UO_rights but add  http://www.europeana.eu/rights/unknown/ in rights for "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
+# *manuscripts_rights- public domain in rights, http://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
 # *diss_rights- public domain except one with http://www.europeana.eu/rights/rr-f/ in rights and "Goettmann, B. A., Greaves, B. G., and Coons M. P." in rightsHolder
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
+# *ullmann_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
+
+
 
 mappings:
   #
@@ -392,36 +396,55 @@ Ulmann2:
  old: dct:alternative
  descri: dct:description
  series: dct:subject
- names: dct:subject
- corpor: dct:subject
+ names: 
+   method: localPeople #oregon:people
+ corpor:
+   method: dc_subject_lcna #dct:subject
  covera:
-      method:geographic
- lc: dct:subject
- subjec: dct:subject
- photog: dct:creator
+   method: geographic
+ lc: 
+   method: lc_subject #dct:subject
+ subjec:
+   method: lc_subject #dct:subject
+ photog: 
+   method: localPhotog #marcrel:pht
  date:
-      method:date
- reposi: marcrel:rps
+   method: date
+ reposi: 
+   method: repository  #marcrel:rps
  collec: oregon:localCollectionID
  source:
-       method:localCollectionName
+   method:  localCollectionName
  album: dct:isPartOf
  admin: dct:source
  type:
-      method:types
+   method: types
  format: dct:hasFormat
  scan: oregon:conversionSpecifications
  metada: # SKIP
  catala: # SKIP
  catalo: # SKIP
  rights:
-      method:rights
+   method: ullmann_rights
  proven: dct:provenance
  relate: dct:isVersionOf
  bandin: # SKIP
- publis: dct:source
- digita: oregon:set
- contri: oregon:contributingInstitution
+ publis: # SKIP
+ digita: 
+   method: set
+ contri: 
+  method: contributingInstitution
+ fulls: #SKIP
+ find: #SKIPs
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclccno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method: replace #dct:replaces
 
   #
   # diss
