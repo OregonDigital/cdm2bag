@@ -101,7 +101,7 @@ namespaces:
 # *diss_rights- public domain and other statement
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
-# *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights
+# *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
 
 mappings:
