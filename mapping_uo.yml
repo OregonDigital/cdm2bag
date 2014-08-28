@@ -97,7 +97,7 @@ namespaces:
 # *UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
 # *uopres_rights- ame as UO_rights but add  http://www.europeana.eu/rights/unknown/ in rights for "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
 # *manuscripts_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
-# *diss_rights- public domain and other statement
+# *diss_rights- public domain except one with http://www.europeana.eu/rights/rr-f/ in rights and "Goettmann, B. A., Greaves, B. G., and Coons M. P." in rightsHolder
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
@@ -427,52 +427,52 @@ Ulmann2:
   # diss
   #
 diss:
- title: dct:title #some French titles
- creato: 
-   method: localAuthor #marcrel:aut
- subjec: 
-   method: subject_lc_MeSH #dct:subject 
- descri: dct:description
- subjea: dct:subject #French
- descra: dct:description  #French
- journa: swpo:containedInJournal  #some French titles
- relati: schema:citation   #some French titles
- publis: dct:source
- contri: dct:contributor
- date: dct:issued
- type: 
-   method: types
- format: 
-   method: format
- identi: dct:identifier
- data: oregon:dateDigitized
- source: holding:label
- langua: 
-   method: language
- rights: 
-   method: diss_rights
- proces: oregon:conversionSpecifications
- notes: modsrdf:note
- metada: # SKIP
- image: # SKIP
- ambros: # SKIP
- catalo: # SKIP
- digita: 
-   method: set
- full: oregon:fullText
- contra: 
-   method: contributingInstitution
-fulls: #SKIP
-find: #SKIP
-dmaccess: #SKIP
-dmimage: #SKIP
-dmad1: #SKIP
-dmad2: #SKIP
-dmoclccno: #SKIP
-dmcreated: #SKIP
-dmmodified: #SKIP
-dmrecord:
-  method: replace #dct:replaces
+  title: dct:title #some French titles
+  creato: 
+    method: localAuthor #dc:ceator
+  subjec: 
+    method: subject_lc_MeSH #dct:subject 
+  descri: dct:description
+  subjea: dct:subject #French
+  descra: dct:description  #French
+  journa: swpo:containedInJournal  #some French titles
+  relati: schema:citation   #some French titles
+  publis: dct:publisher
+  contri: dct:contributor
+  date: dct:issued
+  type: 
+    method: type
+  format: 
+    method: format
+  identi: dct:identifier
+  data: oregon:dateDigitized
+  source: dct:source
+  langua: 
+    method: language
+  rights: 
+    method: diss_rights
+  proces: oregon:conversionSpecifications
+  notes: modsrdf:note
+  metada: # SKIP
+  image: # SKIP
+  ambros: # SKIP
+  catalo: # SKIP
+  digita: 
+    method: set
+  full: oregon:fullText
+  contra: 
+    method: contributingInstitution
+  fulls: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclccno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace #dct:replaces
 
 
   #
