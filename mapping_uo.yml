@@ -767,38 +767,38 @@ comm:
   descri: dct:description
   identi: dct:alternative
   date: 
-    method:date
+    method: date
   covera: 
-    method:geographic
+    method: geographic
   creato: 
-    method:lcnaf #dct:creator
+    method: lcnaf #dct:creator
   person: 
-    method:dc_subject_lcna #oregon:people
+    method: dc_subject_lcna #oregon:people
   subjec: 
-    method:dc_subjec_lc
+    method: dc_subjec_lc
   relati: 
-    method:localCollectionName
+    method: localCollectionName
   collec: oregon:localCollectionID
   sourca: oregon:folderNumber
   source: dct:hasFormat #aren't we using something else for these?
   type: 
-    method:type
+    method: type
   publis: #SKIP
   donor: marcrel:dnr  #map to local names?
   rights: 
-    method:UO_rights #CC BY-NC-NC 4.0 for rights and licence and UO for rightsHolder
+    method: UO_rights #CC BY-NC-NC 4.0 for rights and licence and UO for rightsHolder
   format: 
-    method:format
+    method: format
   date: oregon:dateDigitized 
   captur: oregon:conversionSpecifications
   metadata: # SKIP
   imaga: # SKIP
   catalo: # SKIP
   digita:
-    method:set
+    method: set
   catala: # SKIP
   contri: 
-    method:contributingInstitution
+    method: contributingInstitution
   fullrs: #SKIP but can use for finding file for ingest
   find: #SKIP
   dmaccess: #SKIP
@@ -809,7 +809,7 @@ comm:
   dmcreated: #SKIP
   dmmodified: #SKIP
   dmrecord
-    method:replace
+    method: replace
    #
   # latinoherit
   #
@@ -830,18 +830,18 @@ latinoherit:
   reposi: 
     method: repository #marcrel:rps
   collec: 
-    method:localCollectionName
+    method: localCollectionName
   collea: oregon:localCollectionID
     relati: oregon:seriesName
   identi: dct:identifier
   donor: 
-    method:localDonor #marcrel:dnr 
+    method: localDonor #marcrel:dnr 
   format: 
-    method:format
+    method: format
   type: 
-    method:type
+    method: type
   langua: 
-    method:language
+    method: language
   rights: 
     method: UO_rights
   publis: #SKIP
@@ -860,7 +860,7 @@ latinoherit:
   dmcreated: #SKIP
   dmmodified: #SKIP
   dmrecord:
-    method:replace
+    method: replace
 
   #
   # univ
@@ -941,7 +941,7 @@ uopres:
 +   method: tgm #dce:subject 
 + theme: # SKIP 
 + people:
-+   method:localPeople #oregon:people
++   method: localPeople #oregon:people
 + corpor: 
 +   method: dc_subject_lcna #dct:subject
   place: 
@@ -1343,10 +1343,8 @@ Manuscripts:
   altern: dct:alternative
   subjec: 
     method: dc_subject_lc_aat  #dct:subject
-  keywor: 
-    method: dc_subject_lc_aat  #dct:subject
-  genre: 
-    method: dc_subject_lc_aat  #dct:subject
+  keywor: dce:subject
+  genre: dce:subject
   part: dct:hasPart
   creato: 
     method: lcnaf #dct:creator
@@ -1554,27 +1552,27 @@ uo-athletics:
 misc: 
   title: dct:title
   subjec: 
-    method:dc_subject_lc
+    method: dc_subject_lc
   descri: dct:description
   creato:
-    method:lcnaf
+    method: lcnaf
   publis: dct:publisher
   contri: dct:contributor
   date: 
-    method:date
+    method: date
   type: 
-    method:type
+    method: type
   format: 
-    method:format
+    method: format
   identi: dct:identifier
   source: dct:source
   langua: 
-    method:language
+    method: language
   relati: #SKIP
   covera: 
-    method:date
+    method: date
   rights: 
-    method:misc_rights
+    method: misc_rights
   audien: #SKIP
   full: #SKIP
   fulla: oregon:fullText
@@ -1582,7 +1580,7 @@ misc:
   fullrs: #SKIP
   find: #SKIP
   dmaccess: 
-    method:restricted # need to secure to UO IP only
+    method: restricted # need to secure to UO IP only
   dmimage: #SKIP
   dmad1: #SKIP
   dmad2: #SKIP
@@ -1590,7 +1588,7 @@ misc:
   dmcreated: #SKIP
   dmmodified: #SKIP
   dmrecord:
-    method:replace
+    method: replace
   
   #
   # petrarch
