@@ -66,11 +66,16 @@ namespaces:
 # *lc_subject - uses lcsh in dct:subject
 # *dc_subject_lc - uses lcsh and lcnaf in dct:subject
 # *dc_subject_lcna - uses lncaf in dct:subject
+# *dc_subject_lc_aat - predicate dct:subject
+#* dc_subject_lc_tgm- predicate dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 # *comm_ aat_tgm - predicate dct:hasFormat
-# *dc_subject_lc_aat - predicate dct:subject
 # *subject_lc_MeSH -predicate dct:subject
 # *lherit_subject - merge for lc, getty, tgm
+
+
+# *culture- uses local voacb and lcsh and lcnaf, predicate vra:culture
+
 
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
@@ -95,13 +100,16 @@ namespaces:
 # *percent_rights - http://www.europeana.eu/rights/rr-f/ and reprint creator in oregon:rightsHolder
 # *univ_rights - add rightsholder for "University of Oregon" and map for appropriate rights/license for either http://creativecommons.org/publicdomain/mark/1.0/ or http://creativecommons.org/licenses/by-nc-nd/4.0/
 # *UO_rights - rights and license for http://creativecommons.org/licenses/by-nc-nd/4.0/ and rightsHolder 'University of Oregon'
-# *uopres_rights- ame as UO_rights but add  http://www.europeana.eu/rights/unknown/ in rights for "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
-# *manuscripts_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
+# *uopres_rights- name as UO_rights but add  http://www.europeana.eu/rights/unknown/ in rights for "Those documents authored by individuals or entities outside of the University of Oregon may be subject to copyright restriction" where needed
+# *manuscripts_rights- public domain in rights, http://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
 # *diss_rights- public domain except one with http://www.europeana.eu/rights/rr-f/ in rights and "Goettmann, B. A., Greaves, B. G., and Coons M. P." in rightsHolder
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
+# *ullmann_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
+#* tlegacies_rights- see statements
+
 
 mappings:
   #
@@ -641,48 +649,68 @@ oimb:
  dmmodified: #SKIP
  dmrecord:
    method:replace
-  #
+    #
   # tlegacies
   #
 tlegacies:
  title: dct:title
  altern: dct:alternative
- creato: dct:creator
- cultur: vra:culture
- organi: dct:description
+ creato: 
+   method: localPeople #oregon:people
+ cultur: 
+  method:culture #vra:culture
+ organi: 
+   method: localPeople #oregon:people
  date:
-      method:date
+   method: date
  time:
-      method:date
+   method: date
  langua:
-      method:language
- lc: dct:subject
- subjec: dct:subject
+   method: language
+ lc: 
+   method: dc_subject_lc #dct:subject
+ subjec: 
+   method: dc_subject_lc_tgm #dct:subject
  descri: dct:description
  descra: dct:description
  geogra:
-      method:geographic
- work: vra:workType
+   method: geographic
+ work: 
+   method: aat #vra:workType
  type:
-      method:types
+   method: types
  format:
-      method:format
- reposi: marcrel:rps
+   method: format
+ reposi: 
+   method: repository #marcrel:rps
  identi: oregon:localCollectionID
  size: dct:description
  number: dct:description
  nwda: oad:has_findingAid
  additi: # SKIP
  rights:
-      method:rights
+ method: tlegacies_rights
  catala: # SKIP
  repres: # SKIP
  publis: dct:source
  catalo: # SKIP
  metada: # SKIP
- digita: oregon:set
- contri: oregon:contributingInstitution
-
+ digita: 
+   method: set
+ contri: 
+   method: contributingInstitution
+ fulls: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclccno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method: replace #dct:replaces
+   
   #
   # wwdl
   #
