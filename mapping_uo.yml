@@ -85,7 +85,7 @@ namespaces:
 # *localPhotog - uses local vocab and LC names and predicate dct:creator
 # *localAuthor - uses local vocab and LC names and predicate marcrel:aut
 # *localPeople - uses local vocab and LC names and predicate oregon:people
-
+# *localDonor - uses local vocab and LC names and predicate marcrel:dnr 
 
 
 #*Rights statements
@@ -101,54 +101,6 @@ namespaces:
 # *diss_rights- public domain and other statement
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
-
-
-
-
-
-
-#*Collections for reference
-
-
-# latinoherit
-# *subject- method: lherit_subject - merge for lc, getty, tgm
-# *repository- method: repository, uses lcna for SCUA id, as above
-# *donor - method: LocalDonor, as above
-# *rights- method: UO_rights
-
-#uopres
-# *subject- method: dc_subject_lc, as above
-# *tgm- method: tgm, as above
-# *theme- method: dc_subject_lc, as above
-# *people- method:localPeople, as above
-# *corpor-  method: dc_subject_lcna, as above
-# *creato- method: dc_subject_lcna, as above
-# *contrib- method: dc_subject_lcna, as above
-# *reposi- method: dc_subject_lcna, as above
-# *rights- method: uopres_rights
-
-#misc
-# *subject- method: dc_subject_lc, as above
-# *rights- method: misc_rights
-# *creator- method: lcnaf, as above
-# *publisher- method: lcnaf, as above
-
-#comm
-# *rights- method: UO_rights
-# *creator-  method: localPhotog, as above
-# *person- method: dc_subject_lcna, as above
-# *subject-  method: dc_subject_lc, as above
-# *source- method: comm_ aat_tgm
-
-#Manuscripts
-# *subject- dc_subject_lc_aat - dct:subject
-# *rights- manuscripts_rights
-
-#diss
-# *subject- subject_lc_MeSH - dct:subject
-# *rights- diss_rights
-
-
 
 
 mappings:
@@ -846,53 +798,53 @@ comm:
   # latinoherit
   #
 latinoherit:
- title: dct:title
- descri: dct:description
- subjec: 
-   method: lherit_subject #dct:subject
- creato: #SKIP empty field
- photog: # SKIP empty field
- covera: 
-   method: geographic
- date: 
-   method: date
- contri: # SKIP empty field
- relate: dct:hasVersion
- source: # SKIP empty field
- reposi: 
-   method: repository #marcrel:rps
- collec: 
-   method:localCollectionName
- collea: oregon:localCollectionID
- relati: oregon:seriesName
- identi: dct:identifier
- donor:
-   method: LocalDonor #marcrel:dnr 
- format: 
-   method:format
- type: 
-   method:types
- langua: 
-   method:language
- rights: 
-   method: rights
- publis: dct:publisher
- digiti: oregon:conversionSpecifications
- digita: 
-   method: set
- contra: 
-   method: contributingInstitution
- fullrs: #SKIP
- find: #SKIP
- dmaccess: #SKIP
- dmimage: #SKIP
- dmad1: #SKIP
- dmad2: #SKIP
- dmoclcno: #SKIP
- dmcreated: #SKIP
- dmmodified: #SKIP
- dmrecord:
-   method:replace
+  title: dct:title
+  descri: dct:description
+  subjec: 
+    method: lherit_subject #dct:subject
+  creato: # SKIP
+  photog: # SKIP
+  covera: 
+    method: geographic
+  date: 
+    method: date
+  contri: # SKIP
+  relate: oregon:seriesName
+  source: # SKIP
+  reposi: 
+    method: repository #marcrel:rps
+  collec: 
+    method:localCollectionName
+  collea: oregon:localCollectionID
+    relati: oregon:seriesName
+  identi: dct:identifier
+  donor: 
+    method:localDonor #marcrel:dnr 
+  format: 
+    method:format
+  type: 
+    method:type
+  langua: 
+    method:language
+  rights: 
+    method: UO_rights
+  publis: #SKIP
+  digiti: oregon:conversionSpecifications
+  digita: 
+    method: set
+  contra: 
+    method: contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method:replace
 
   #
   # univ
