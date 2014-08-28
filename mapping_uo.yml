@@ -16,23 +16,23 @@ namespaces:
   oregon: "http://opaquenamespace.org/ns/"
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
-  dwc: "http://rs.tdwg.org/dwc/terms/" 
-  exif: "http://www.w3.org/2003/12/exif/ns" 
-  holding: "http://purl.org/ontology/holding#" 
-  schema: "http://schema.org/" 
-  oad: "http://lod.xdams.org/reload/oad/" 
+  dwc: "http://rs.tdwg.org/dwc/terms/"
+  exif: "http://www.w3.org/2003/12/exif/ns"
+  holding: "http://purl.org/ontology/holding#"
+  schema: "http://schema.org/"
+  oad: "http://lod.xdams.org/reload/oad/"
   swpo: "http://sw-portal.deri.org/ontologies/swportal#"
   rdam: "http://rdaregistry.info/Elements/m/"
   rdaw: "http://rdaregistry.info/Elements/w/"
   rdae: "http://rdaregistry.info/Elements/e/"
   rdai: "http://rdaregistry.info/Elements/i/"
   rdaa: "http://rdaregistry.info/Elements/a/"
-  
+
 ##
 # METHODS:
 #
 # *Dates
-# *xsd_date - converts date to yyyy-mm-dd format and serializes it as a literal of type xsd:date 
+# *xsd_date - converts date to yyyy-mm-dd format and serializes it as a literal of type xsd:date
 # *dc_date - uses dcterms:date and a string value
 # *dc_created - uses dcterms:created and a string value
 # *dc_modified - uses dcterms:modified and a string value
@@ -43,11 +43,11 @@ namespaces:
 # *type - splits ;-delimited types and identifies dcmitype for each.
 # *mime - converts string mimetype into a purl.org/NET/mediatypes uri
 # *geographic - attempts to identify a geonames URI locations in field. Will strip "(Ore.)" from string before searching. (probably needs honing, check data in bags before ingest).
-# *geopup - 
-# *cover - 
-# *collection - 
+# *geopup -
+# *cover -
+# *collection -
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not. Not sure why this comment was made uncessary. Need dct:replaces with oldcdmURL
-# *set - maps to new set in Oregon Digital Hydra 
+# *set - maps to new set in Oregon Digital Hydra
 # *contributing_Institution - map to dbpedia org name, use institution not library for UO and OSU
 # *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
@@ -85,7 +85,7 @@ namespaces:
 # *localPhotog - uses local vocab and LC names and predicate dct:creator
 # *localAuthor - uses local vocab and LC names and predicate marcrel:aut
 # *localPeople - uses local vocab and LC names and predicate oregon:people
-# *localDonor - uses local vocab and LC names and predicate marcrel:dnr 
+# *localDonor - uses local vocab and LC names and predicate marcrel:dnr
 
 
 #*Rights statements
@@ -110,17 +110,17 @@ mappings:
   # afpep
   #
   afpep:
-    work: 
+    work:
       method: aat # vra:workType class not a property; uses Getty AAT cv in rdf:type
-    title: dct:title  
+    title: dct:title
     view: oregon:cco/viewDescription
     creato: dct:creator
     politi: dct:contributor
-    date: 
+    date:
       method: dc_date
     earlie: vra:earliestDate
     latest: vra:latestDate
-    subject: 
+    subject:
       method: dc_subject_lc #  field also contains lc names as subjects and lcsh
     cultur: vra:culturalContext
     countr:
@@ -153,38 +153,38 @@ mappings:
     dmoclcno: SKIP
     dmcreated: SKIP
     dmmodified: SKIP
-    dmrecord: 
+    dmrecord:
       method: replace  # dmrecord has CDM number used in old CDM URL dct:replaces https://oregondigital.org/u?/folklore,5322
   #
   # sheet music
   #
   sheetmusic:
     title: dct:title
-    creato: 
+    creato:
       method: lcnaf #dct:creator
     captio: oregon:captionTitle # subproperty of dct:alternative, schema.org has caption for images and video only, not in sheetmusic dd
     other: dct:alternative
-    composer: 
+    composer:
       method: lcnaf #marcrel:cmp
-    lyrici: 
+    lyrici:
       method: lcnaf #marcrel:lyr
-    arrang: 
+    arrang:
       method: lcnaf #marcrel:arr
-    origib: 
+    origib:
       method: geopup # marcrel:pup, street-level info., geonamesify this!
-    publis: dct:publisher 
+    publis: dct:publisher
     origin: marcrel:cpc
     date: dct:issued
     physic: modsrdf:physicalExtent
     perfor: oregon:sheetmusic/instrumentation
     descri: dct:description
     subjec:
-      method: dc_subject_lc  # uses LCSH and LC Names 
-    genre: 
+      method: dc_subject_lc  # uses LCSH and LC Names
+    genre:
       method: aat_sheetmusic # vra:workType class, use AAT, always "sheet music" for this collection
-    cover: 
+    cover:
       oregon: coverDescription
-    illust: marcrel:ill 
+    illust: marcrel:ill
     lithog: marcrel:prm
     sourca:
       method: aat # vra:workType, new VRA may have workType as class, add as second workType entry if present (e.g. lithographs)
@@ -193,10 +193,10 @@ mappings:
     relati: oregon:sheetmusic/largerWork
     publia: oregon:sheetmusic/hostItem
     theme: oregon:exhibit # curated set, terms LC Subject, different from oregon:set?
-    source: mods:locationCopySublocation 
-    reposi: 
+    source: mods:locationCopySublocation
+    reposi:
       method: collection # use aat:collections concept as dc:isPartof
-    identi: modsrdf:locationCopyShelfLocator  
+    identi: modsrdf:locationCopyShelfLocator
     rights:
       method: rights
     contac: SKIP
@@ -211,7 +211,7 @@ mappings:
     digita: oregon:set
     contri: oregon:contributingInstitution
     fullrs: SKIP
-    #    oregon:fullText will need to be scripted, CDM doesn't track file paths for PDF files 
+    #    oregon:fullText will need to be scripted, CDM doesn't track file paths for PDF files
     dmoclcno: SKIP
     dmaccess: SKIP
     find: oregon:fullText # coordinating file in CDM
@@ -219,39 +219,39 @@ mappings:
     dmmodified: SKIP
     dmrecord:
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
-  # 
+  #
   # folklore
   #
   folklore:
-    collec: 
+    collec:
        method:localCollectionName
-    collea: SKIP 
+    collea: SKIP
     title: dct:title
-    photo: holding:label 
-    photoa: dc:date 
-    colleb: 
+    photo: holding:label
+    photoa: dc:date
+    colleb:
       method: lcnaf #aat:collectors ,  aat concept of type of agent
-    contri: 
+    contri:
       method: lcnaf #dct:contributor
     descri: dct:description
     inscri: vra:inscription
-    langua: 
+    langua:
       method: language
     notes: modsrdf:note
-    subjec: 
+    subjec:
       method: lcnaf #dct:subject
     subjea:
       method: lcnaf #dct:subject
-    contra: 
+    contra:
       method: geographic  #dct:spatial
-    subjed: 
+    subjed:
       method: lc_subject #vra:culture, very short list of lcsh terms are used
     subjee: SKIP
     subjef: SKIP
-    sebjeg: 
+    sebjeg:
       oregon:ethnographic #oregon:ethnot  #American Folklore Society Ethnographic Thesaurus, v. 2.0 not linked
     sebjeh: dce:subject
-    resour: 
+    resour:
       method: aat #workType, some might not be in AAT and may need to be changed
     relati: SKIP
     subjeb: SKIP
@@ -265,7 +265,7 @@ mappings:
       method: types
     format:
       method: format
-    catalo: SKIP 
+    catalo: SKIP
     identi: dct:identifier #use to match file names in directories
     digita: oregon:set
     contri: oregon:contributingInstitution
@@ -273,7 +273,7 @@ mappings:
     find: SKIP
     dmcreated: SKIP
     dmmodified: SKIP
-    dmrecord: 
+    dmrecord:
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
 
   #
@@ -288,13 +288,13 @@ archpnw:
   creata: dct:creator
   date: dct:date
   covra: dct:temporal
-  city: 
+  city:
     method: geographic
-  county: 
+  county:
     method: geographic
-  state: 
+  state:
     method: geographic
-  countr: 
+  countr:
     method: geographic
   site: madsrdf:streetAddress
   photog: oregon: cco/viewDate
@@ -315,15 +315,15 @@ archpnw:
   source: dct:source
   souceb: holding:label
   publis: #SKIP
-  rights: 
+  rights:
     method:arch_rights
-  type: 
+  type:
     method:type
-  format: 
+  format:
     method:format
   identi: dct:identifier
   techni: oregon:conversionSpecifications
-  contri: 
+  contri:
      method:contributingInstitution
   fullrs: #SKIP
   find: #SKIP
@@ -353,20 +353,20 @@ Bestof:
  temp: dct:subject
  creato: dct:creator
  data: oregon:cco/viewDate
- rights: 
+ rights:
       method:rights
  reposi: marcrel:rps
- relati: 
+ relati:
       method:localCollectionName
  collec: oregon:localCollectionID
  collea: oad:has_findingAid
  sourca: dct:extent
  source: dct:hasFormat
  sourcb: oregon:sourceCondition
- type: 
+ type:
       method:types
  image: dct:extent
- format: 
+ format:
       method:format
  imagd: exif:width
  imagc: exif:height
@@ -374,8 +374,8 @@ Bestof:
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
  resolu: exif:resolution
- ditigi: 
-      method:processing_history  
+ ditigi:
+      method:processing_history
  additi: dct:hasVersion
  publis: dct:source
  digita: oregon:set
@@ -394,28 +394,28 @@ Ulmann2:
  series: dct:subject
  names: dct:subject
  corpor: dct:subject
- covera: 
+ covera:
       method:geographic
  lc: dct:subject
  subjec: dct:subject
  photog: dct:creator
- date: 
+ date:
       method:date
  reposi: marcrel:rps
  collec: oregon:localCollectionID
- source: 
+ source:
        method:localCollectionName
  album: dct:isPartOf
  admin: dct:source
- type: 
+ type:
       method:types
  format: dct:hasFormat
  scan: oregon:conversionSpecifications
  metada: # SKIP
  catala: # SKIP
  catalo: # SKIP
- rights: 
-      method:rights	
+ rights:
+      method:rights
  proven: dct:provenance
  relate: dct:isVersionOf
  bandin: # SKIP
@@ -428,10 +428,10 @@ Ulmann2:
   #
 diss:
   title: dct:title #some French titles
-  creato: 
+  creato:
     method: localAuthor #dc:ceator
-  subjec: 
-    method: subject_lc_MeSH #dct:subject 
+  subjec:
+    method: subject_lc_MeSH #dct:subject
   descri: dct:description
   subjea: dct:subject #French
   descra: dct:description  #French
@@ -440,16 +440,16 @@ diss:
   publis: dct:publisher
   contri: dct:contributor
   date: dct:issued
-  type: 
+  type:
     method: type
-  format: 
+  format:
     method: format
   identi: dct:identifier
   data: oregon:dateDigitized
   source: dct:source
-  langua: 
+  langua:
     method: language
-  rights: 
+  rights:
     method: diss_rights
   proces: oregon:conversionSpecifications
   notes: modsrdf:note
@@ -457,10 +457,10 @@ diss:
   image: # SKIP
   ambros: # SKIP
   catalo: # SKIP
-  digita: 
+  digita:
     method: set
   full: oregon:fullText
-  contra: 
+  contra:
     method: contributingInstitution
   fulls: #SKIP
   find: #SKIP
@@ -486,23 +486,23 @@ jasr:
  corpor: dct:subject
  creato: dct:creator
  publis: dct:source
- date: 
+ date:
       method:date
- type: 
+ type:
       method:types
- format: 
+ format:
       method:format
  identi: dct:identifier
  source: holding:label
- langua: 
+ langua:
       method:language
- collec: 
+ collec:
       method:localCollectionName
  collea: oregon:localCollectionID
  colleb: oad:has_findingAid
  box: # SKIP
  folder: # SKIP
- rights: 
+ rights:
       method:rights
  full: oregon:fullText
  datedi: oregon:dateDigitized
@@ -524,20 +524,20 @@ jsma:
  creata: oregon:cco/creatorDisplay
  cultur: vra:culture
  subjec: vra:stylePeriod
- date: 
+ date:
       method:date
  materi: vra:material
  measur: vra:measurements
  catego: vra:workType
  descri: dct:description
  notes: modsrdf:note
- type: 
+ type:
       method:types
- format: 
+ format:
       method:format
- rights: 
-      method:rights	
- collec: 
+ rights:
+      method:rights
+ collec:
       method:localCollectionName
  source: marcrel:rps
  identi: dct:identifier
@@ -551,7 +551,7 @@ jsma:
   #
 ode:
  title: dct:title
- date: 
+ date:
    method:date
  volume: swpo:isVolume
  issue: swpo:hasNumber
@@ -559,22 +559,22 @@ ode:
  notes: modsrdf:note
  descri: dct:description
  contri: schema:editor
- type: 
+ type:
       method:type
- format: 
+ format:
       method:format
  identi: dct:identifier
- langua: 
+ langua:
       method:language
  relati: dct:relation
- rights: 
+ rights:
       method:rights # http://www.europeana.eu/rights/rr-f/ , add rightsHolder "Oregon Daily Emerald Publishing Co., Inc."
  full: oregon:fullText
  metada: # SKIP
- digita: 
+ digita:
    method:set #daily-emerald
  ambros: # SKIP
- contra: 
+ contra:
    method: contributingInstitution
  fulls: #SKIP
  find: #SKIP
@@ -594,41 +594,41 @@ ode:
 oimb:
  title: dct:identifier
  source: holding:label
- subjec: 
+ subjec:
    method:oimb_subject #dct:subject
- sub: 
+ sub:
    method:oimb_subject #dct:subject
  phlyum:
    method:oimb_subject2 #dwc:phlyum
- class: 
+ class:
    method:oimb_subject3 #dwc:class
- suba: 
+ suba:
    method:oimb_subject4 #dwc:genus
- common: 
+ common:
    method:oimb_subject5  #dwc:vernacularName
  descri: dct:description
- covra: 
+ covra:
    method:geographic
- creato: 
+ creato:
    method:localCreator #dct:creator
  id: dwc:identificationVerificationStatus
  slide: # SKIP
- date: 
+ date:
    method:date
  catalo: # SKIP
- local: 
+ local:
    method:localCollectionName
- type: 
+ type:
    method:type
- format: 
+ format:
    method:format
  identi: dct:identifier
- rights: 
+ rights:
    method:UO_rights
- digita: 
+ digita:
    method:set
  sourca: # SKIP
- contri: 
+ contri:
    method:contributingInstitution
  fullrs: #SKIP
  find: #SKIP use JPEG images for ingest
@@ -650,22 +650,22 @@ tlegacies:
  creato: dct:creator
  cultur: vra:culture
  organi: dct:description
- date: 
+ date:
       method:date
- time: 
+ time:
       method:date
- langua: 
+ langua:
       method:language
  lc: dct:subject
  subjec: dct:subject
  descri: dct:description
  descra: dct:description
- geogra: 
+ geogra:
       method:geographic
- work: vra:workType      
- type: 
+ work: vra:workType
+ type:
       method:types
- format: 
+ format:
       method:format
  reposi: marcrel:rps
  identi: oregon:localCollectionID
@@ -673,7 +673,7 @@ tlegacies:
  number: dct:description
  nwda: oad:has_findingAid
  additi: # SKIP
- rights: 
+ rights:
       method:rights
  catala: # SKIP
  repres: # SKIP
@@ -697,11 +697,11 @@ wwdl:
  subjec: dce:subject
  lc:
    method: dc_subject_lc
- people: 
+ people:
    method: dc_subject_lc
- corpor: 
+ corpor:
    method: dc_subject_lc
- place: 
+ place:
    method:geographic
  genre: rdaw:formOfWork.en
  author: marcrel:aut
@@ -714,19 +714,19 @@ wwdl:
  covera: dct:temporal
  publis: #SKIP
  datedi: oregon:dateDigitized
- rights: 
+ rights:
     method:rights
  reposi: marcrel:rps
- relati: 
+ relati:
     method:localCollectionName
  collec: oregon:localCollectionID
  additi: dct:hasVersion
  addita: dct:hasVersion
- langua: 
+ langua:
     method:language
- type: 
+ type:
    method:typee
- format: 
+ format:
    method:format
  captur: oregon:conversionSpecifications
  file: rdam:fileSize.en
@@ -740,18 +740,18 @@ wwdl:
  imagc: # SKIP
  full: oregon:fullText
  link: dct:relation
- contra: 
+ contra:
     method:contributingInstitution
  catalo: # SKIP
  load: # SKIP
- digitb: 
+ digitb:
     method:set
  find: #SKIP
  dmoclcno: #SKIP
  dmimage: #SKIP
  dmcreated: #SKIP
  dmmodified: #SKIP
- dmrecord: 
+ dmrecord:
    method:replace  #dct:replaces
  fulla: #SKIP
 
@@ -765,30 +765,30 @@ comm:
   titlb: dct:title
   descri: dct:description
   identi: dct:alternative
-  date: 
+  date:
     method: date
-  covera: 
+  covera:
     method: geographic
-  creato: 
+  creato:
     method: lcnaf #dct:creator
-  person: 
+  person:
     method: dc_subject_lcna #oregon:people
-  subjec: 
+  subjec:
     method: dc_subjec_lc
-  relati: 
+  relati:
     method: localCollectionName
   collec: oregon:localCollectionID
   sourca: oregon:folderNumber
   source: dct:hasFormat #aren't we using something else for these?
-  type: 
+  type:
     method: type
   publis: #SKIP
   donor: marcrel:dnr  #map to local names?
-  rights: 
+  rights:
     method: UO_rights #CC BY-NC-NC 4.0 for rights and licence and UO for rightsHolder
-  format: 
+  format:
     method: format
-  date: oregon:dateDigitized 
+  date: oregon:dateDigitized
   captur: oregon:conversionSpecifications
   metadata: # SKIP
   imaga: # SKIP
@@ -796,7 +796,7 @@ comm:
   digita:
     method: set
   catala: # SKIP
-  contri: 
+  contri:
     method: contributingInstitution
   fullrs: #SKIP but can use for finding file for ingest
   find: #SKIP
@@ -815,39 +815,39 @@ comm:
 latinoherit:
   title: dct:title
   descri: dct:description
-  subjec: 
+  subjec:
     method: lherit_subject #dct:subject
   creato: # SKIP
   photog: # SKIP
-  covera: 
+  covera:
     method: geographic
-  date: 
+  date:
     method: date
   contri: # SKIP
   relate: oregon:seriesName
   source: # SKIP
-  reposi: 
+  reposi:
     method: repository #marcrel:rps
-  collec: 
+  collec:
     method: localCollectionName
   collea: oregon:localCollectionID
     relati: oregon:seriesName
   identi: dct:identifier
-  donor: 
-    method: localDonor #marcrel:dnr 
-  format: 
+  donor:
+    method: localDonor #marcrel:dnr
+  format:
     method: format
-  type: 
+  type:
     method: type
-  langua: 
+  langua:
     method: language
-  rights: 
+  rights:
     method: UO_rights
   publis: #SKIP
   digiti: oregon:conversionSpecifications
-  digita: 
+  digita:
     method: set
-  contra: 
+  contra:
     method: contributingInstitution
   fullrs: #SKIP
   find: #SKIP
@@ -864,51 +864,51 @@ latinoherit:
   #
   # univ
   #
-univ:  
+univ:
  title: dct:title
- creato: 
+ creato:
    method:localPhotog #marcrel:pht
  subjec: dce::subject
- lc: 
+ lc:
    method:dc_subject_lc
  buildi: #SKIP
- place: 
+ place:
    method:geographic
- people: 
+ people:
    method:localPeople
  names: #SKIP
- corpor: 
+ corpor:
    method: dc_subject_lc
  event: schema:event
  descri: dct:description
  notesa: dct:description
  peopla: #SKIP
  publis: #SKIP
- date: 
+ date:
    method:date
- type: 
+ type:
    method:type
- format: 
+ format:
    method:format
  identi: dct:identifier
  source: #SKIP
  relati: dct:relation
  issuin: #SKIP
- collec: 
+ collec:
     method:localCollectionName
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
- proces: 
+ proces:
    method:processing_history
  datea: oregon:dateDigitized
- rights: 
+ rights:
    method:univ_rights  #add rightsholder for "University of Oregon" and map for appropriate rights/license
  notes: # SKIP
  metada: # SKIP
  imagin: # SKIP
  catalo: # SKIP
- digita: 
+ digita:
    method:set
  contri:
    method:contributingInstitution
@@ -923,7 +923,7 @@ univ:
  dmmodified: #SKIP
  dmrecord:
    method:replace
- 
+
   #
   # uopres
   #
@@ -934,38 +934,38 @@ uopres:
   docume: dct:isPartOf
   descri: dct:description
   number: schema:numberOfPages
-  subjec: 
+  subjec:
 +   method: dc_subject_lc #dct:subject
-+ tgm: 
-+   method: tgm #dce:subject 
-+ theme: # SKIP 
++ tgm:
++   method: tgm #dce:subject
++ theme: # SKIP
 + people:
 +   method: localPeople #oregon:people
-+ corpor: 
++ corpor:
 +   method: dc_subject_lcna #dct:subject
-  place: 
+  place:
     method: geographic
-  creato: 
+  creato:
     method: lcnaf  # dct:creator
-+ contri: 
++ contri:
     method: lcnaf_cont #dct:contributor
-  date: 
+  date:
     method: date
-  rights: 
+  rights:
     method: UO_rights
-  reposi: 
+  reposi:
 +   method: lcnaf_repo  #marcrel:rps
-  collec: 
+  collec:
     method: localCollectionName
   collea: oregon:localCollectionID
   box: oregon:boxNumber
   folder: oregon:folderName
   ambros: # SKIP
-  type: 
+  type:
     method: type
-  format: 
+  format:
     method: format
-  langua: 
+  langua:
     method: language
   full: oregon:fullText
   addita: dct:hasVersion
@@ -983,10 +983,10 @@ uopres:
   catalo: # SKIP
   catala: # SKIP
   load: # SKIP
-  publis: #SKIP 
-  digita: 
+  publis: #SKIP
+  digita:
     method: set
-  contra: 
+  contra:
     method: contributingInstitution
   fullrs: #SKIP
   find: #SKIP
@@ -999,7 +999,7 @@ uopres:
   dmmodified: #SKIP
   dmrecord:
     method: replace
-  
+
   #
   # uostock
   #
@@ -1007,7 +1007,7 @@ uostock:
  title: dct: title
  creato: dct: creator
  subjec: dct:subject
- buildi: dct:subject 
+ buildi: dct:subject
  event: schema:event
  descri: dct:description
  season: dct:subject
@@ -1015,11 +1015,11 @@ uostock:
  note: modsrdf:note
  people: dct:description
  publis: dct:source
- date: 
+ date:
       method:date
- type: 
+ type:
       method:types
- format: 
+ format:
       method:format
  photo:  exif:orientation
  phota: rdae:colourContent.ed
@@ -1028,8 +1028,8 @@ uostock:
  relati: dct:description
  donor: dct:source
  proces: oregon:conversionSpecifications
- data: oregon:dateDigitized 
- rights: 
+ data: oregon:dateDigitized
+ rights:
       method:rights
  metada: # SKIP
  scanni: # SKIP
@@ -1053,15 +1053,15 @@ uostock:
   descra: dct:description
   dscri: modsrdf:note
   artist: rdaa:biographicalInformation.en
-  lc: 
+  lc:
     method: dc_subject_lc
-  aat: 
+  aat:
     method: aat
-  place: 
+  place:
     method:geographic
-  people: 
+  people:
     method: dc_subject_lcna
-  creato: 
+  creato:
     method:lcnaf_ulan
   artisb: dct:description
   artisa: dct:description
@@ -1069,7 +1069,7 @@ uostock:
   region: dct:description
   data: oregon:awardDate
   commis: #SKIP
-  datb: 
+  datb:
     method:date_isused
   instal: vra:material
   format: vra:material
@@ -1077,11 +1077,11 @@ uostock:
   materi: vra:material
   source: dct:hasVersion
   sourcb: #SKIP
-  artwob: 
+  artwob:
     method:geographic
   locati: modsrdf:note
   covera: mads:streetAddress
-  artwoc: 
+  artwoc:
     method:geographic #dct:spatial
   artwod: dct:relation
   langua:
@@ -1089,13 +1089,13 @@ uostock:
   titla: oregon:cco/viewDescription
   digita: oregon:dateDigitized
   captur: oregon:conversionSpecifications
-  type: 
+  type:
     method:type
-  formaa: 
+  formaa:
     method:format
   digitb: dct:extent
   color: exif:colorSpace
-  imaga: 
+  imaga:
     method:processing_history
   missin: #SKIP
   full:  oregon:fullText
@@ -1103,14 +1103,14 @@ uostock:
   image: #SKIP
   catalo: #SKIP
   load: #SKIP
-  rights: 
+  rights:
     method:perent_rights  #http://europeana.eu/portal/rights/rr-r/ and reprint creator in oregon:rightsHolder
   contri: #SKIP
   publis: #SKIP
-  collec: 
+  collec:
     method:set
-  contra: 
-    method:percentContributingInstitution  #looks like bad data; need two statements one for University of Oregon and one for Oregon Arts Commission 
+  contra:
+    method:percentContributingInstitution  #looks like bad data; need two statements one for University of Oregon and one for Oregon Arts Commission
   fullrs: #SKIP
   find: #SKIP  any old .cpd file and related pages should be skipped
   dmaccess: #SKIP
@@ -1120,9 +1120,9 @@ uostock:
   dmoclcno: #SKIP
   dmcreated: #SKIP
   dmmmodified: #SKIP
-  dmrecord: 
+  dmrecord:
     method:replace
-  
+
   #
   # archivision
   #
@@ -1141,9 +1141,9 @@ archivision:
  cultur: vra:culture
  reposi: marcrel:rps
  reposa: vra:idCurrentRepository
- city: 
+ city:
       method:geographic
- countr: 
+ countr:
       method:geographic
  site: dct:spatial
  work: vra:workType
@@ -1156,14 +1156,14 @@ archivision:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: 
+ sourcb:
       method:localCollectionName
  sourcc: #SKIP, same as identifier
  vrc: holding:label
- rights: 
+ rights:
       method:rights
  record: #SKIP
- type: 
+ type:
       method:types
  identi: dct:identifier
  vrca: holding:label
@@ -1195,9 +1195,9 @@ artimages:
  cultur: vra:culture
  reposi: marcrel:rps
  reposa: vra:idCurrentRepository
- city: 
+ city:
       method:geographic
- country: 
+ country:
       method:geographic
  site: dct:spatial
  work: vra:workType
@@ -1210,14 +1210,14 @@ artimages:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: 
+ sourcb:
       method:localCollectionName
  sourcc: #SKIP source id, only useful for Meggs set of >50 images
  vrc: holding:label
- rights: 
+ rights:
       method:rights
  record: #SKIP
- type: 
+ type:
       method:types
  identi: dct:identifier
  vrca: holding:label
@@ -1250,9 +1250,9 @@ artlicensed:
  cultur: vra:culture
  reposi: marcrel:rps
  reposa: vra:idCurrentRepository
- city: 
+ city:
       method:geographic
- countr: 
+ countr:
       method:geographic
  site: dct:spatial
  work: vra:workType
@@ -1265,14 +1265,14 @@ artlicensed:
  larger: dct:isPartOf
  source: dct:source
  sourca: #SKIP source caption
- sourcb: 
+ sourcb:
       method:localCollectionName
  sourcc: dct:identifier   #not necessarily the same as identifier
  vrc: holding:label
- rights: 
+ rights:
       method:rights
  record: #SKIP
- type: 
+ type:
       method:types
  identi: dct:identifier
  vrca: holding:label
@@ -1302,7 +1302,7 @@ lowenstam:
  style: vra:stylePeriod
  cultur: vra:culture
  work: vra:workType
- locati: 
+ locati:
       method:geographic
  reposa: vra:idCurrentRepository
  inscri: vra:inscription
@@ -1310,7 +1310,7 @@ lowenstam:
  state: dct:description
  relati: dct:relation
  text: dct:description
- collec: 
+ collec:
       method:localCollectionName
  photog: marcrel:pht
  photo: oregon:cco/viewDate
@@ -1321,18 +1321,18 @@ lowenstam:
  rights:
       method:rights
  record: #SKIP
- type: 
+ type:
       method:types
  metada: #SKIP
  digita: oregon:set
  contri: oregon:contributingInstitution
- 
- 
+
+
 
   #
   # Manuscripts
   #
-Manuscripts:  
+Manuscripts:
   title: dct:title
   identi: dct:identifier
   shelfm: holding:label
@@ -1340,32 +1340,32 @@ Manuscripts:
   conten: dct:tableOfContents
   titla: dct:alternative
   altern: dct:alternative
-  subjec: 
+  subjec:
     method: dc_subject_lc_aat  #dct:subject
   keywor: dce:subject
   genre: dce:subject
   part: dct:hasPart
-  creato: 
+  creato:
     method: lcnaf #dct:creator
   scribe: #SKIP
   artist: #SKIP
   contri: #SKIP
-  datc: 
+  datc:
     method: date
-  datb: 
+  datb:
     method: date
   date: oregon:dateDigitized
   publis: #SKIP
-  langua: 
+  langua:
     method: language
-  reposi: 
-    method: repository 
+  reposi:
+    method: repository
   sourcb: schema:numberOfPages
   sourcc: dct:extent
-  sourcd: 
+  sourcd:
     method: aat #vra:support
   source: dct:alternative
-  collec: 
+  collec:
     method: localCollectionName
   collea: oregon:localCollectionID
   notes: modsrdf:note
@@ -1379,12 +1379,12 @@ Manuscripts:
   proven: dct:provenance
   contra: #SKIP
   prefer: schema:citation
-  rights: 
+  rights:
     method: manuscripts_rights
   acknow: #SKIP
-  type: 
+  type:
     method: type
-  format: 
+  format:
     method: format
   captur: #SKIP
   datd: #SKIP
@@ -1392,48 +1392,48 @@ Manuscripts:
   imagc: #SKIP
   metada: #SKIP
   metadb: #SKIP
-  digita: 
+  digita:
     method: set
   full: oregon:fullText
   fullrs: #SKIP
 
-  
+
 
   #
   # uovets
   #
-uovets:  
+uovets:
   identi: dct:identifier
   title: dct: title
   interv: marcrel:ive
   intera: marcel:ivr
-  subjec: 
+  subjec:
     method: dc_subject_lc
   descri: dct:description
-  branch: 
+  branch:
     method: militaryBranch
   occupa: oregon:militaryOccupation
   highes: oregon:militaryHighestRank
   places: oregon:militaryServiceLocations
-  interb: dct:description 
-  date: 
+  interb: dct:description
+  date:
     method:date #need to convert to yyyy-mm-dd
-  type: 
+  type:
     method:types
-  format: 
+  format:
     method:format
-  langua: 
+  langua:
     method:language
   audio: #SKIP
-  transc: #SKIP 
+  transc: #SKIP
   publis: #SKIP
   notes: #SKIP
   metada: #SKIP
   catalo: #SKIP
   digiti: oregon:conversionSpecifications
-  relati: 
+  relati:
      method:set
-  contri: 
+  contri:
      method:contributingInstitution
   fullrs: #SKIP
   find: #SKIP
@@ -1446,13 +1446,13 @@ uovets:
   dmmodified: #SKIP
   dmrecord:
     method:replace
-  
-  
-  
+
+
+
   #
   # uo-athletics
   #
-uo-athletics:  
+uo-athletics:
     title: dct:title
     descra: dct:alternative
     sourca: #SKIP
@@ -1465,23 +1465,23 @@ uo-athletics:
     titla: #SKIP
     publia: dct:alternative
     notes: modsref:note
-    photog: 
+    photog:
       method:localPhoto #marcrel:pht
-    author: 
+    author:
       method:localAuthor #marcrel:aut
     publis: #SKIP
     data: method:date
     datb: #SKIP
     catalo: #SKIP
-    exhibi: #SKIP  
-    names: 
+    exhibi: #SKIP
+    names:
       method:localPeople #oregon:people
-    namea: 
+    namea:
       method:localPeople #oregon:people
     subjec:
       method: dc_subject_lc
     tgm:
-      method: tgm #dce:subject 
+      method: tgm #dce:subject
     corpor:
       method: dc_subject_lc #some may need to be local
     corpoa:
@@ -1489,7 +1489,7 @@ uo-athletics:
     place:
       method:geographic
     date: #SKIP
-    genre: #SKIP 
+    genre: #SKIP
     type:
       method:type
     format:
@@ -1500,7 +1500,7 @@ uo-athletics:
       method:language
     relati: #SKIP
     covera: #SKIP
-    rights: 
+    rights:
       method:UO_rights  #CC-BY-NC-ND, rightsholder is Univ. of Oregon
     proven: #SKIP
     sourcb: dct:extent
@@ -1518,7 +1518,7 @@ uo-athletics:
     sourcf: #SKIP
     sourcg: #SKIP
     captur: oregon:dateDigitized
-    captua: oregon:conversionSpecifications  
+    captua: oregon:conversionSpecifications
     resolu: exif:resolution
     proces: #SKIP
     links: #SKIP
@@ -1533,9 +1533,9 @@ uo-athletics:
     full: #SKIP
     load: #SKIP
     ambros: #SKIP
-    digita: 
+    digita:
       method:set
-    contri: 
+    contri:
       method:contributingInstitution
     fullrs: #SKIP
     find: #SKIP
@@ -1551,29 +1551,29 @@ uo-athletics:
   #
   # misc
   #
-misc: 
+misc:
   title: dct:title
-  subjec: 
+  subjec:
     method: dc_subject_lc
   descri: dct:description
   creato:
     method: lcnaf
   publis: dct:publisher
   contri: dct:contributor
-  date: 
+  date:
     method: date
-  type: 
+  type:
     method: type
-  format: 
+  format:
     method: format
   identi: dct:identifier
   source: dct:source
-  langua: 
+  langua:
     method: language
   relati: #SKIP
-  covera: 
+  covera:
     method: date
-  rights: 
+  rights:
     method: misc_rights
   audien: #SKIP
   full: #SKIP
@@ -1581,7 +1581,7 @@ misc:
   contra: oregon:contributingInstitution
   fullrs: #SKIP
   find: #SKIP
-  dmaccess: 
+  dmaccess:
     method: restricted # need to secure to UO IP only
   dmimage: #SKIP
   dmad1: #SKIP
@@ -1591,11 +1591,11 @@ misc:
   dmmodified: #SKIP
   dmrecord:
     method: replace
-  
+
   #
   # petrarch
   #
- petrarch: 
+ petrarch:
   title: dct:title
   poems: oregon:canzonierePoems
   subjec: dct:subject
@@ -1603,30 +1603,30 @@ misc:
   creato: dct:creator
   publis: dct:publisher
   contri: dct:contributor
-  date: 
+  date:
        method:date
-  type: 
+  type:
        method:types
-  format: 
+  format:
        method:format
   identi: dct:identifier
   source: dct:source
-  langua: 
+  langua:
        method:language
   relati: dct:isPartOf
   covera: dct:coverage
-  rights: 
+  rights:
        method:rights
   fulla: oregon:fullText
   full: #SKIP
   digita: oregon:set
   contra: oregon:contributingInstitution
-  
-  
+
+
   #
   # maic
   #
-maic:  
+maic:
   title: dct:title
   identi: dct:identifier
   work: vra:workType
@@ -1637,33 +1637,33 @@ maic:
   point: dct:hasVersion
   measur: vra:measurements
   object: oregon:compassDirection
-  primar: 
+  primar:
     method:geographic
-  second: 
+  second:
     method:geographic
-  availa: modsrf:note 
+  availa: modsrf:note
   period: vra:stylePeriod
   perioa: vra:stylePeriod
   relati: dct:relation
   orient: oregon:compassDirection
   rights: marcrel:pht
   date: oregon:cco/viewDate
-  righta: 
+  righta:
     method:maic_rights
   publis: #SKIP
   source: holding:label
   data: oregon:dateDigitized
   digiti: oregon:conversionSpecifications
   image: #SKIP
-  type: 
+  type:
     method:type
-  format: 
+  format:
     method:format #overwrite with tiff not jp2
   metada: #SKIP
   batch: #SKIP
-  digita: 
+  digita:
     method:set
-  contri: 
+  contri:
     method:contributingInstitution
   fullrs: #SKIP use to map to full image for ingest
   find: #SKIP
@@ -1676,12 +1676,12 @@ maic:
   dmmodified: #SKIP
   dmrecord:
     method:replace
-  
-  
+
+
   #
   # Moorhouse-wk
   #
-Moorhouse-wk: 
+Moorhouse-wk:
  title: dct:identifier
  identi: dct:title
  titla: dct:alternative
@@ -1694,23 +1694,23 @@ Moorhouse-wk:
  tci: # SKIP checklist
  subjec: dct:subject
  names: dct:subject
- covera: 
+ covera:
       method:geographic
  creato: marcrel:pht
  data: dct:date
- rights: 
+ rights:
       method:rights
  reposi: marcrel:rps
- relati: 
+ relati:
       method:localCollectionName
  collec: oregon:localCollectionID
  source: dct:hasFormat
  sourca: dct:extent
  sourceb: oregon:sourceCondition
- type: 
+ type:
       method:types
  sub: dct:subject
- format: 
+ format:
       method:format
  image: rdam:fileSize.en
  imagd: exif:width
@@ -1719,7 +1719,7 @@ Moorhouse-wk:
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
  resolu: exif:resolution
- digiti: 
+ digiti:
       method:processing_history
  scanni: # SKIP scanning pass
  additi: dct:hasVersion
@@ -1748,7 +1748,7 @@ bookarts:
  descri: dct:description
  coloph: rdam:descriptionOfManifestation.en
  relati: dct:isPartOf
- langua: 
+ langua:
       method: language
  date: dct:issued
  publis: dct:publisher
@@ -1760,12 +1760,12 @@ bookarts:
  struct: vra:workType
  litera: rdaw:formOfWork.en
  materi: vra:material
- format: 
+ format:
      method: format
- type: 
+ type:
      method: type
- digiti: oregon:conversionSpecifications 
- rights: 
+ digiti: oregon:conversionSpecifications
+ rights:
      method: rights
  local: modsrdf:note
  librar: # SKIP
