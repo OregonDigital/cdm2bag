@@ -14,7 +14,7 @@ Current:
 
 New:
 - oregon:rightsHolder: “City of Eugene”
-- dct:rights: http://europeana.eu/portal/rights/rr-r/
+- dct:rights: http://www.europeana.eu/rights/rr-f/
 
 TBG Architects & Planners
 Current:
@@ -42,4 +42,4 @@ Photographer retained rights
 
 New:
 - oregon:rightsHolder: First and LasName stripped from statement 
-- dct:rights: http://europeana.eu/portal/rights/rr-r/
+- dct:rights: http://www.europeana.eu/rights/rr-f/
