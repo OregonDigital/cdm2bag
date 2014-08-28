@@ -418,7 +418,7 @@ Ulmann2:
  album: dct:isPartOf
  admin: dct:source
  type:
-   method: types
+   method: type
  format: dct:hasFormat
  scan: oregon:conversionSpecifications
  metada: # SKIP
@@ -435,7 +435,7 @@ Ulmann2:
  contri: 
   method: contributingInstitution
  fulls: #SKIP
- find: #SKIPs
+ find: #SKIP
  dmaccess: #SKIP
  dmimage: #SKIP
  dmad1: #SKIP
