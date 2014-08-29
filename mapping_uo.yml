@@ -52,6 +52,8 @@ namespaces:
 # *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 # *repository- method: repository, uses lcna for SCUA id, predicate marcrel:rps
+# *event- use local subject vocab #schema:event
+
 
 # Creators
 # * lcnaf - query id.loc.gov and use dct:creator
@@ -66,11 +68,14 @@ namespaces:
 # *lc_subject - uses lcsh in dct:subject
 # *dc_subject_lc - uses lcsh and lcnaf in dct:subject
 # *dc_subject_lcna - uses lncaf in dct:subject
+# *dc_subject_lc_aat - predicate dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 # *comm_ aat_tgm - predicate dct:hasFormat
-# *dc_subject_lc_aat - predicate dct:subject
 # *subject_lc_MeSH -predicate dct:subject
 # *lherit_subject - merge for lc, getty, tgm
+
+
+# *culture- uses local voacb and lcsh and lcnaf, predicate vra:culture
 
 
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
@@ -104,6 +109,8 @@ namespaces:
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
 # *ullmann_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
+# *petrarch_right- public domain and "Copyright resides with the creator(s) of the item and may be subject to copyright restrictions."
+# *tlegacies_rights - http://www.europeana.eu/rights/unknown/ for dct:rights and no rightsholder
 
 
 
@@ -664,48 +671,69 @@ oimb:
  dmmodified: #SKIP
  dmrecord:
    method:replace
+   
+   
   #
   # tlegacies
   #
 tlegacies:
- title: dct:title
- altern: dct:alternative
- creato: dct:creator
- cultur: vra:culture
- organi: dct:description
- date:
-      method:date
- time:
-      method:date
- langua:
-      method:language
- lc: dct:subject
- subjec: dct:subject
- descri: dct:description
- descra: dct:description
- geogra:
-      method:geographic
- work: vra:workType
- type:
-      method:types
- format:
-      method:format
- reposi: marcrel:rps
- identi: oregon:localCollectionID
- size: dct:description
- number: dct:description
- nwda: oad:has_findingAid
- additi: # SKIP
- rights:
-      method:rights
- catala: # SKIP
- repres: # SKIP
- publis: dct:source
- catalo: # SKIP
- metada: # SKIP
- digita: oregon:set
- contri: oregon:contributingInstitution
-
+  title: dct:title
+  altern: dct:alternative
+  creato: 
+    method: localPeople #oregon:people
+  cultur: 
+    method: culture #vra:culture
+  organi: 
+    method: localPeople #oregon:people
+  date:
+    method: date
+  time: dct:temporal
+  langua:
+    method: language
+  lc: 
+    method: dc_subject_lc #dct:subject
+  subjec: 
+    method: tgm
+  descri: dct:description
+  descra: dct:description
+  geogra:
+    method: geographic
+  work: 
+    method: aat #vra:workType
+  type:
+    method: type
+  format:
+    method: format
+  reposi: 
+    method: repository #marcrel:rps
+  identi: oregon:localCollectionID
+  size: dct:description
+  number: # SKIP
+  nwda: oad:has_findingAid
+  additi: # SKIP
+  rights:
+    method: tlegacies_rights
+  catala: # SKIP
+  repres: # SKIP
+  publis: # SKIP
+  catalo: # SKIP
+  metada: # SKIP
+  digita: 
+    method: set
+  contri: 
+    method: contributingInstitution
+  fulls: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclccno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace #dct:replaces
+   
   #
   # wwdl
   #
@@ -1028,37 +1056,56 @@ uopres:
   #
 uostock:
  title: dct: title
- creato: dct: creator
- subjec: dct:subject
- buildi: dct:subject
- event: schema:event
+ creato: 
+   method: localPhotog #dct:creator
+ subjec: 
+   method: lc_subject #dct:subject
+ buildi: 
+  method: geographic
+ event: 
+   method: event  #schema:event
  descri: dct:description
- season: dct:subject
- genre:  dct:subject
+ season: 
+   method: lc_subject #dct:subject
+ genre:  
+   method: dc_subject_lc_tgm   #dct:subject
  note: modsrdf:note
  people: dct:description
- publis: dct:source
+ publis: #SKIP
  date:
-      method:date
+   method: date
  type:
-      method:types
+   method: types
  format:
-      method:format
+   method: format
  photo:  exif:orientation
  phota: rdae:colourContent.ed
  identi: dct:identifier
  source: dct:hasFormat
  relati: dct:description
- donor: dct:source
+ donor: #SKIP
  proces: oregon:conversionSpecifications
  data: oregon:dateDigitized
  rights:
-      method:rights
+   method: rights
  metada: # SKIP
  scanni: # SKIP
  catalo: # SKIP
- digita: oregon:set
- contri: oregon:contributingInstitution
+ digita: 
+   method: set
+ contri: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace
 
 
   #
@@ -1621,30 +1668,44 @@ misc:
  petrarch:
   title: dct:title
   poems: oregon:canzonierePoems
-  subjec: dct:subject
+  subjec: #SKIP
   descri: dct:description
-  creato: dct:creator
+  creato: 
+    method: dc_subject_lcna #dct:creator
   publis: dct:publisher
-  contri: dct:contributor
+  contri: 
+    method: dc_subject_lcna #dct:contributor
   date:
-       method:date
+    method: date
   type:
-       method:types
+    method: types
   format:
-       method:format
+    method: format
   identi: dct:identifier
   source: dct:source
   langua:
-       method:language
+    method: language
   relati: dct:isPartOf
   covera: dct:coverage
   rights:
-       method:rights
+    method: petrarch_rights
   fulla: oregon:fullText
   full: #SKIP
-  digita: oregon:set
-  contra: oregon:contributingInstitution
-
+  digita: 
+    method: set
+  contra: 
+    method: contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmococlno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method replace
 
   #
   # maic
