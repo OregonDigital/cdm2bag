@@ -679,63 +679,62 @@ oimb:
   # tlegacies
   #
 tlegacies:
- title: dct:title
- altern: dct:alternative
- creato: 
-   method: localPeople #oregon:people
- cultur: 
-  method:culture #vra:culture
- organi: 
-   method: localPeople #oregon:people
- date:
-   method: date
- time:
-   method: date
- langua:
-   method: language
- lc: 
-   method: dc_subject_lc #dct:subject
- subjec: 
-   method: dc_subject_lc_tgm #dct:subject
- descri: dct:description
- descra: dct:description
- geogra:
-   method: geographic
- work: 
-   method: aat #vra:workType
- type:
-   method: types
- format:
-   method: format
- reposi: 
-   method: repository #marcrel:rps
- identi: oregon:localCollectionID
- size: dct:description
- number: dct:description
- nwda: oad:has_findingAid
- additi: # SKIP
- rights:
- method: tlegacies_rights
- catala: # SKIP
- repres: # SKIP
- publis: dct:source
- catalo: # SKIP
- metada: # SKIP
- digita: 
-   method: set
- contri: 
-   method: contributingInstitution
- fulls: #SKIP
- find: #SKIP
- dmaccess: #SKIP
- dmimage: #SKIP
- dmad1: #SKIP
- dmad2: #SKIP
- dmoclccno: #SKIP
- dmcreated: #SKIP
- dmmodified: #SKIP
- dmrecord:
-   method: replace #dct:replaces
+  title: dct:title
+  altern: dct:alternative
+  creato: 
+    method: localPeople #oregon:people
+  cultur: 
+    method: culture #vra:culture
+  organi: 
+    method: localPeople #oregon:people
+  date:
+    method: date
+  time: dct:temporal
+  langua:
+    method: language
+  lc: 
+    method: dc_subject_lc #dct:subject
+  subjec: 
+    method: dc_subject_lc_tgm #dct:subject
+  descri: dct:description
+  descra: dct:description
+  geogra:
+    method: geographic
+  work: 
+    method: aat #vra:workType
+  type:
+    method: type
+  format:
+    method: format
+  reposi: 
+    method: repository #marcrel:rps
+  identi: oregon:localCollectionID
+  size: dct:description
+  number: # SKIP
+  nwda: oad:has_findingAid
+  additi: # SKIP
+  rights:
+    method: tlegacies_rights
+  catala: # SKIP
+  repres: # SKIP
+  publis: # SKIP
+  catalo: # SKIP
+  metada: # SKIP
+  digita: 
+    method: set
+  contri: 
+    method: contributingInstitution
+  fulls: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclccno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace #dct:replaces
    
   #
   # wwdl
