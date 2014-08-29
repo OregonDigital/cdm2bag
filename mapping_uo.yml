@@ -110,7 +110,7 @@ namespaces:
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
 # *ullmann_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
 # *petrarch_right- public domain and "Copyright resides with the creator(s) of the item and may be subject to copyright restrictions."
-
+# *tlegacies_rights - http://www.europeana.eu/rights/unknown/ for dct:rights and no rightsholder
 
 
 
@@ -711,8 +711,8 @@ tlegacies:
   number: # SKIP
   nwda: oad:has_findingAid
   additi: # SKIP
-  rights: dct:rights
-  righth: oregon:rightsHolder
+  rights:
+    method: tlegacies_rights
   catala: # SKIP
   repres: # SKIP
   publis: # SKIP
