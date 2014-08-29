@@ -674,10 +674,8 @@ tlegacies:
  creato: dct:creator
  cultur: vra:culture
  organi: dct:description
- date:
-      method:date
- time:
-      method:date
+ date: dct:temporal
+ time: dct:temporal
  langua:
       method:language
  lc: dct:subject
