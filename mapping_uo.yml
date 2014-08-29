@@ -42,8 +42,13 @@ namespaces:
 # *iso_lanugage - converts two and three letter language codes (;-delimited) into LoC ISO 639 URIs.
 # *type - splits ;-delimited types and identifies dcmitype for each.
 # *mime - converts string mimetype into a purl.org/NET/mediatypes uri
+
+#* Location
 # *geographic - attempts to identify a geonames URI locations in field. Will strip "(Ore.)" from string before searching. (probably needs honing, check data in bags before ingest).
 # *geopup -
+# *bookarts_geographic- uses rdam:placeOfProduction.en
+
+
 # *cover -
 # *collection -
 # *replace - (unnecessary) converts dmrecord field into an OregonDigital ContentDM url. This happens whether dmrecord is included in field list or not. Not sure why this comment was made uncessary. Need dct:replaces with oldcdmURL
@@ -51,14 +56,22 @@ namespaces:
 # *contributing_Institution - map to dbpedia org name, use institution not library for UO and OSU
 # *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
+
+
 # *repository- method: repository, uses lcna for SCUA id, predicate marcrel:rps
+# *bookarts_repository- SCUA and AAA "University of Oregon Libraries. Architecture & Allied Arts Library."  -uses #marcrel:rps
+
 # *event- use local subject vocab #schema:event
+
 
 # Creators
 # * lcnaf - query id.loc.gov and use dct:creator
 # * lncaf_ulan - dct:creator uses both lcnag and ulan authorities
 # * lcnaf_cont - query lcnaf at id.loc.gov and use dct:contributor
 # * lcnaf_repo - query lcnaf and lcsh and use marcrel:rps
+
+#* Publishers
+# *lcnaf_pub- query lcnaf and lcsh and use dct: publisher
 
 # Subjects
 # *aat - uses aat from getty
@@ -67,11 +80,22 @@ namespaces:
 # *lc_subject - uses lcsh in dct:subject
 # *dc_subject_lc - uses lcsh and lcnaf in dct:subject
 # *dc_subject_lcna - uses lncaf in dct:subject
+# *dc_subject_lc_aat - predicate dct:subject
+#* dc_subject_lc_tgm- predicate dct:subject
+#* dc_subject_lc_tgm_aat- predicate dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 # *comm_ aat_tgm - predicate dct:hasFormat
-# *dc_subject_lc_aat - predicate dct:subject
 # *subject_lc_MeSH -predicate dct:subject
 # *lherit_subject - merge for lc, getty, tgm
+
+# *bookarts_technique- uses aat and rbms (we are publishing)- uses #vra:technique
+# *bookarts_product- uses aat, lcsh, and lc vocab - uses #rdam:modeOfIssuance.en
+#* bookarts_worktype- uses aat, tgm, lcsh, lcna, rbms (we are publishing)- uses vra:workType
+# *bookarts_literary- uses lcsh, lcna, and lc ethno - uses #rdaw:formOfWork.en
+
+
+
+# *culture- uses local voacb and lcsh and lcnaf, predicate vra:culture
 
 
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
@@ -105,7 +129,9 @@ namespaces:
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
 # *pd_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
-
+# *tlegacies_rights - http://www.europeana.eu/rights/unknown/ for dct:rights and no rightsholder
+# *petrarch_right- public domain and "Copyright resides with the creator(s) of the item and may be subject to copyright restrictions."
+# *bookarts_rights- "Copyright resides with the creator(s) of the image or their assigns and may be subject to copyright restrictions."
 
 
 mappings:
@@ -139,7 +165,7 @@ mappings:
       method: iso_language
     relati: dct:hasPart
     type:
-      method: types
+      method: type
     format:
       method: mime
     identi: dct:identifier
@@ -206,7 +232,7 @@ mappings:
       method: rights
     contac: SKIP
     type:
-      method: types
+      method: type
     format:
       method: mime
     digiti: SKIP
@@ -267,7 +293,7 @@ mappings:
     copyri: oregon:rightsHolder
     record: SKIP
     type:
-      method: types
+      method: type
     format:
       method: format
     catalo: SKIP
@@ -513,7 +539,7 @@ jasr:
  date:
       method:date
  type:
-      method:types
+      method:type
  format:
       method:format
  identi: dct:identifier
@@ -556,7 +582,7 @@ jsma:
  descri: dct:description
  notes: modsrdf:note
  type:
-      method:types
+      method:type
  format:
       method:format
  rights:
@@ -665,47 +691,66 @@ oimb:
  dmmodified: #SKIP
  dmrecord:
    method:replace
-  #
+ #
   # tlegacies
   #
 tlegacies:
- title: dct:title
- altern: dct:alternative
- creato: dct:creator
- cultur: vra:culture
- organi: dct:description
- date:
-      method:date
- time:
-      method:date
- langua:
-      method:language
- lc: dct:subject
- subjec: dct:subject
- descri: dct:description
- descra: dct:description
- geogra:
-      method:geographic
- work: vra:workType
- type:
-      method:types
- format:
-      method:format
- reposi: marcrel:rps
- identi: oregon:localCollectionID
- size: dct:description
- number: dct:description
- nwda: oad:has_findingAid
- additi: # SKIP
- rights:
-      method:rights
- catala: # SKIP
- repres: # SKIP
- publis: dct:source
- catalo: # SKIP
- metada: # SKIP
- digita: oregon:set
- contri: oregon:contributingInstitution
+title: dct:title
++  altern: dct:alternative
++  creato: 
++    method: localPeople #oregon:people
++  cultur: 
++    method: culture #vra:culture
++  organi: 
++    method: localPeople #oregon:people
++  date:
++    method: date
++  time: dct:temporal
++  langua:
++    method: language
++  lc: 
++    method: dc_subject_lc #dct:subject
++  subjec: 
++    method: dc_subject_lc_tgm #dct:subject - mapped to both LCSH and TGM- correct this way?
++  descri: dct:description
++  descra: dct:description
++  geogra:
++    method: geographic
++  work: 
++    method: aat #vra:workType
++  type:
++    method: type
++  format:
++    method: format
++  reposi: 
++    method: repository #marcrel:rps
++  identi: oregon:localCollectionID
++  size: dct:description
++  number: # SKIP
++  nwda: oad:has_findingAid
++  additi: # SKIP
++  rights:
++    method: tlegacies_rights
++  catala: # SKIP
++  repres: # SKIP
++  publis: # SKIP
++  catalo: # SKIP
++  metada: # SKIP
++  digita: 
++    method: set
++  contri: 
++    method: contributingInstitution
++  fulls: #SKIP
++  find: #SKIP
++  dmaccess: #SKIP
++  dmimage: #SKIP
++  dmad1: #SKIP
++  dmad2: #SKIP
++  dmoclccno: #SKIP
++  dmcreated: #SKIP
++  dmmodified: #SKIP
++  dmrecord:
++    method: replace #dct:replaces
 
   #
   # wwdl
@@ -749,7 +794,7 @@ wwdl:
  langua:
     method:language
  type:
-   method:typee
+   method:type
  format:
    method:format
  captur: oregon:conversionSpecifications
@@ -833,6 +878,8 @@ comm:
   dmmodified: #SKIP
   dmrecord
     method: replace
+    
+    
    #
   # latinoherit
   #
@@ -1042,7 +1089,7 @@ uostock:
  date:
       method:date
  type:
-      method:types
+      method:type
  format:
       method:format
  photo:  exif:orientation
@@ -1297,7 +1344,7 @@ artlicensed:
       method:rights
  record: #SKIP
  type:
-      method:types
+      method:type
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note  #or skip
@@ -1346,7 +1393,7 @@ lowenstam:
       method:rights
  record: #SKIP
  type:
-      method:types
+      method:type
  metada: #SKIP
  digita: oregon:set
  contri: oregon:contributingInstitution
@@ -1443,7 +1490,7 @@ uovets:
   date:
     method:date #need to convert to yyyy-mm-dd
   type:
-    method:types
+    method:type
   format:
     method:format
   langua:
@@ -1622,30 +1669,44 @@ misc:
  petrarch:
   title: dct:title
   poems: oregon:canzonierePoems
-  subjec: dct:subject
+  subjec: #SKIP
   descri: dct:description
-  creato: dct:creator
+  creato: 
+    method: dc_subject_lcna #dct:creator
   publis: dct:publisher
-  contri: dct:contributor
+  contri: 
+    method: dc_subject_lcna #dct:contributor
   date:
-       method:date
+    method: date
   type:
-       method:types
+    method: type
   format:
-       method:format
+    method: format
   identi: dct:identifier
   source: dct:source
   langua:
-       method:language
+    method: language
   relati: dct:isPartOf
   covera: dct:coverage
   rights:
-       method:rights
+    method: petrarch_rights
   fulla: oregon:fullText
   full: #SKIP
-  digita: oregon:set
-  contra: oregon:contributingInstitution
-
+  digita: 
+    method: set
+  contra: 
+    method: contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmococlno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method replace
 
   #
   # maic
@@ -1702,7 +1763,7 @@ maic:
     method:replace
 
 
-  #
+ #
   # Moorhouse-wk
   #
 Moorhouse-wk:
@@ -1726,7 +1787,7 @@ Moorhouse-wk:
     method: localPhotog #marcrel:pht
   data: dct:date
   rights:
-    method: pd_rights
+    method: pd_rights 
   reposi:
     method: repository #marcrel:rps
   relati:
@@ -1757,7 +1818,7 @@ Moorhouse-wk:
   cata: # SKIP
   publis: modsrdf:note  # statement of joint project
   digita:
-      method: set
+    method: set
   contri:
      method: contributingInstitution
   fullrs: #SKIP
@@ -1772,6 +1833,7 @@ Moorhouse-wk:
   dmrecord:
     method: replace
 
+  	
   #
   # bookarts
   #
@@ -1780,40 +1842,65 @@ bookarts:
  call: holding:label
  title: dct:title
  altern: dct:alternative
- creato: dct:creator
+ creato: 
+   metohd: lcnaf  #dct:creator
  uo: # SKIP
- author: dct:contributor
- contri: dct:contributor
+ author: 
+   method: localAuthor #marcrel:aut
+ contri: 
+   method: lcnaf_cont #dct:contributor
  editio: vra:stateEdition
  object: vra:measurements
  descri: dct:description
  coloph: rdam:descriptionOfManifestation.en
  relati: dct:isPartOf
  langua:
-      method: language
+   method: language
  date: dct:issued
- publis: dct:publisher
- place: rdam:placeOfProduction.en
- subjec: dct:subject
- bindin: vra:technique
- prinit: vra:technique
- produc: rdam:modeOfIssuance.en
- struct: vra:workType
- litera: rdaw:formOfWork.en
+ publis:
+   method:lcnaf_pub #dct: publisher
+ place: 
+   method: bookarts_geographic #rdam:placeOfProduction.en
+ subjec: 
+   method: dc_subject_lc #dct:subject
+ bindin: 
+   method: bookarts_technique #vra:technique
+ prinit: 
+   method: bookarts_technique #vra:technique
+ produc: 
+   method: bookarts_product #rdam:modeOfIssuance.en
+ struct: 
+   method: bookarts_worktype  #vra:workType
+ litera: 
+   method: bookarts_literary #rdaw:formOfWork.en
  materi: vra:material
  format:
-     method: format
+   method: format
  type:
-     method: type
+   method: type
  digiti: oregon:conversionSpecifications
  rights:
-     method: rights
+   method: bookarts_rights
  local: modsrdf:note
  librar: # SKIP
  datea: oregon:dateDigitized
- photog: marcrel:pht
+ photog: # SKIP
  catalo: # SKIP
  catala: # SKIP
- source: marcrel:rps
- digita: oregon:set
- contra: oregon:contributingInstitution
+ source: 
+   method: bookarts_repository #marcrel:rps
+ digita: 
+   method: set
+ contra: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmococlno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method replace
