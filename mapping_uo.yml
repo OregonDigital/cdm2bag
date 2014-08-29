@@ -69,7 +69,6 @@ namespaces:
 # *dc_subject_lc - uses lcsh and lcnaf in dct:subject
 # *dc_subject_lcna - uses lncaf in dct:subject
 # *dc_subject_lc_aat - predicate dct:subject
-#* dc_subject_lc_tgm- predicate dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 # *comm_ aat_tgm - predicate dct:hasFormat
 # *subject_lc_MeSH -predicate dct:subject
@@ -695,7 +694,7 @@ tlegacies:
   lc: 
     method: dc_subject_lc #dct:subject
   subjec: 
-    method: dc_subject_lc_tgm #dct:subject
+    method: tgm
   descri: dct:description
   descra: dct:description
   geogra:
