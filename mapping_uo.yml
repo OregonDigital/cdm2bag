@@ -52,6 +52,7 @@ namespaces:
 # *perecentContributingInstitution - oregon:contributingInstitution with two values. May need to look up URI for OAC.
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 # *repository- method: repository, uses lcna for SCUA id, predicate marcrel:rps
+# *event- use local subject vocab #schema:event
 
 # Creators
 # * lcnaf - query id.loc.gov and use dct:creator
@@ -103,7 +104,7 @@ namespaces:
 # *arch_rights - see building_or_rights.txt for mappings
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
 # *restricted - restrict itmes to UO only after ingest to Oregon Digital
-# *ullmann_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
+# *pd_rights- public domain in rights, ttp://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
 
 
 
@@ -396,21 +397,21 @@ Ulmann2:
  old: dct:alternative
  descri: dct:description
  series: dct:subject
- names: 
+ names:
    method: localPeople #oregon:people
  corpor:
    method: dc_subject_lcna #dct:subject
  covera:
    method: geographic
- lc: 
+ lc:
    method: lc_subject #dct:subject
  subjec:
    method: lc_subject #dct:subject
- photog: 
+ photog:
    method: localPhotog #marcrel:pht
  date:
    method: date
- reposi: 
+ reposi:
    method: repository  #marcrel:rps
  collec: oregon:localCollectionID
  source:
@@ -425,14 +426,14 @@ Ulmann2:
  catala: # SKIP
  catalo: # SKIP
  rights:
-   method: ullmann_rights
+   method: pd_rights
  proven: dct:provenance
  relate: dct:isVersionOf
  bandin: # SKIP
  publis: # SKIP
- digita: 
+ digita:
    method: set
- contri: 
+ contri:
   method: contributingInstitution
  fulls: #SKIP
  find: #SKIP
@@ -1705,54 +1706,71 @@ maic:
   # Moorhouse-wk
   #
 Moorhouse-wk:
- title: dct:identifier
- identi: dct:title
- titla: dct:alternative
- descra: dct:alternative
- tribad: dct:alternative
- descri: dct:description
- tribac: dct:description
- tribal: dct:subject
- tribaa: dct:subject
- tci: # SKIP checklist
- subjec: dct:subject
- names: dct:subject
- covera:
-      method:geographic
- creato: marcrel:pht
- data: dct:date
- rights:
-      method:rights
- reposi: marcrel:rps
- relati:
-      method:localCollectionName
- collec: oregon:localCollectionID
- source: dct:hasFormat
- sourca: dct:extent
- sourceb: oregon:sourceCondition
- type:
-      method:types
- sub: dct:subject
- format:
-      method:format
- image: rdam:fileSize.en
- imagd: exif:width
- imagc: exif:height
- color: exif:colorSpace
- date: oregon:dateDigitized
- captur: oregon:conversionSpecifications
- resolu: exif:resolution
- digiti:
-      method:processing_history
- scanni: # SKIP scanning pass
- additi: dct:hasVersion
- imaga:  # SKIP scanner
- imagb: # SKIP editor
- metada: # SKIP cataloger
- cata: modsrdf:note # cataloger notes
- publis: dct:description # statement of joint project
- digita: oregon:set
- contri: oregon:contributingInstitution
+  title: dct:identifier
+  identi: dct:title
+  titla: dct:alternative
+  descra: dct:alternative
+  tribad: dct:alternative # TCI need proveance statement
+  descri: dct:description
+  tribac: dct:description # TCI need proveance statement
+  tribal: dct:subject # TCI need proveance statement
+  tribaa: dct:subject # TCI need proveance statement
+  tci: # SKIP checklist
+  subjec:
+    method: dc_subject_lc_tgm_aat  #dct:subject
+  names:
+    method: localPeople #oregon:people
+  covera:
+    method: geographic
+  creato:
+    method: localPhotog #marcrel:pht
+  data: dct:date
+  rights:
+    method: pd_rights
+  reposi:
+    method: repository #marcrel:rps
+  relati:
+    method: localCollectionName
+  collec: oregon:localCollectionID
+  source: dct:hasFormat
+  sourca: dct:extent
+  sourceb: oregon:sourceCondition
+  type:
+    method: type
+  sub:
+    method: aat #dct:subject
+  format:
+    method: format
+  image: # SKIP
+  imagd: exif:width
+  imagc: exif:height
+  color: exif:colorSpace
+  date: oregon:dateDigitized
+  captur: oregon:conversionSpecifications
+  resolu: exif:resolution
+  digiti: # SKIP
+  scanni: # SKIP scanning pass
+  additi: dct:hasVersion
+  imaga:  # SKIP scanner
+  imagb: # SKIP editor
+  metada: # SKIP cataloger
+  cata: # SKIP
+  publis: modsrdf:note  # statement of joint project
+  digita:
+      method: set
+  contri:
+     method: contributingInstitution
+  fullrs: #SKIP
+  find: #SKIP
+  dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmococlno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace
 
   #
   # bookarts
