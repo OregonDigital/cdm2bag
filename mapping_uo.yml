@@ -61,7 +61,7 @@ namespaces:
 # *method:availmap - admin field needed to query for map; "Add prefix to strings: "Available on map: " and put in modsrdf:note
 
 
-# *repository- method: repository, uses lcna for SCUA id, predicate marcrel:rps
+# *repository- method: repository, uses lcna for SCUA id, LCNA and ULAN and local for rest - predicate marcrel:rps
 # *bookarts_repository- SCUA and AAA "University of Oregon Libraries. Architecture & Allied Arts Library."  -uses #marcrel:rps
 
 # *event- use local subject vocab #schema:event
@@ -88,20 +88,17 @@ namespaces:
 #* dc_subject_lc_tgm- predicate dct:subject
 #* dc_subject_lc_tgm_aat- predicate dct:subject
 #* dc_subject_lc_lcna_tgm_aat- predicate dct:subject
+#* dc_subject_lc_lcna_tgm_aat_ulan- predicate dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
 # *comm_ aat_tgm - predicate dct:hasFormat
 # *subject_lc_MeSH -predicate dct:subject
-
 
 # *bookarts_technique- uses aat and rbms (we are publishing)- uses #vra:technique
 # *bookarts_product- uses aat, lcsh, and lc vocab - uses #rdam:modeOfIssuance.en
 #* bookarts_worktype- uses aat, tgm, lcsh, lcna, rbms (we are publishing)- uses vra:workType
 # *bookarts_literary- uses lcsh, lcna, and lc ethno - uses #rdaw:formOfWork.en
 
-
-
 # *culture- uses local voacb and lcsh and lcnaf, predicate vra:culture
-
 
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
@@ -118,6 +115,8 @@ namespaces:
 # *localPeople - uses local vocab and LC names and predicate oregon:people
 # *localDonor - uses local vocab and LC names and predicate marcrel:dnr
 
+# *Art collections
+# *art_agent- merge for ULAN and LCNA and local #dct:creator
 
 #*Rights statements
 
@@ -138,6 +137,10 @@ namespaces:
 # *petrarch_right- public domain and "Copyright resides with the creator(s) of the item and may be subject to copyright restrictions."
 # *bookarts_rights- "Copyright resides with the creator(s) of the image or their assigns and may be subject to copyright restrictions."
 # *bestof_rights- "Copyright resides with the creator(s) of the items or their assigns. Permission may be required." and public domain http://creativecommons.org/publicdomain/mark/1.0/
+# *lowenstam_rights- see statements
+# *artimages_rights- see statements
+# *archivision_rights-  one statement
+# *artlicensed_rights-  see statements
 
 
 
@@ -1247,32 +1250,38 @@ uostock:
   dmrecord:
     method:replace
 
-  #
+    #
   # archivision
   #
 archivision:
  title: dct:title
  view: oregon:cco/viewDescription
  agent: oregon:cco/creatorDisplay
- creato: dct:creator
- creata: dct:creator
+ creato: 
+   method: art_agent   #dct:creator
+ creata: #merge with above
  date: dct:date
  earlie: vra:earliestDate
  latest: vra:latestDate
  materi: vra:material
  measur: vra:measurements
- style: vra:stylePeriod
- cultur: vra:culture
- reposi: marcrel:rps
+ style: 
+   method: art_stylePeriod #vra:stylePeriod
+ cultur: 
+   method: culture #vra:culture
+ reposi: 
+   method: repository #marcrel:rps
  reposa: vra:idCurrentRepository
  city:
       method:geographic
  countr:
       method:geographic
  site: dct:spatial
- work: vra:workType
+ work: 
+   method: workType #vra:workType
  inscri: vra:inscription
- subjec: dct:subject
+ subjec: 
+    method: dc_subject_lc_lcna_tgm_aat_ulan   #dct:subject
  notes: dct:description
  descri: dct:description
  state: vra:stateEdition
@@ -1281,14 +1290,14 @@ archivision:
  source: dct:source
  sourca: #SKIP source caption
  sourcb:
-      method:localCollectionName
+   method: localCollectionName
  sourcc: #SKIP, same as identifier
  vrc: holding:label
  rights:
-      method:rights
+   method:archivision_rights
  record: #SKIP
  type:
-      method:types
+   method: types
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note  #or skip
@@ -1298,9 +1307,22 @@ archivision:
  catalo: #SKIP
  metada: #SKIP
  keywor: dct:subject
- digita: oregon:set
- contri: oregon:contributingInstitution
-
+ digita: 
+   method: set
+ contri: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace
+    
   #
   # artimages
   #
@@ -1308,25 +1330,31 @@ artimages:
  title: dct:title
  view: oregon:cco/viewDescription
  agent: oregon:cco/creatorDisplay
- creato: dct:creator
- creata: dct:creator
+ creato: 
+   method: art_agent   #dct:creator
+ creata: #merge with above
  date: dct:date
  earlie: vra:earliestDate
  latest: vra:latestDate
  materi: vra:material
  measur: vra:measurements
- style: vra:stylePeriod
- cultur: vra:culture
- reposi: marcrel:rps
+ style: 
+   method: art_stylePeriod #vra:stylePeriod
+ cultur: 
+   method: culture #vra:culture
+ reposi: 
+   method: repository #marcrel:rps
  reposa: vra:idCurrentRepository
  city:
-      method:geographic
+   method: art_locations #dct:coverage
  country:
-      method:geographic
+   method: art_locations #dct:coverage
  site: dct:spatial
- work: vra:workType
+ work: 
+   method: workType #vra:workType
  inscri: vra:inscription
- subjec: dct:subject
+ subjec: 
+    method: dc_subject_lc_lcna_tgm_aat_ulan   #dct:subject
  notes: dct:description
  descri: dct:description
  state: vra:stateEdition
@@ -1335,53 +1363,71 @@ artimages:
  source: dct:source
  sourca: #SKIP source caption
  sourcb:
-      method:localCollectionName
+   method: localCollectionName
  sourcc: #SKIP source id, only useful for Meggs set of >50 images
  vrc: holding:label
  rights:
-      method:rights
+      method: artimages_rights
  record: #SKIP
  type:
       method:types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note #or skip
+ course: modsrdf:note
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
  keywor: dct:subject
- digita: oregon:set
- contri: oregon:contributingInstitution
+  digita: 
+   method: set
+ contri: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace
 
-
-  #
+    #
   # artlicensed
   #
 artlicensed:
  title: dct:title
  view: oregon:cco/viewDescription
  agent: oregon:cco/creatorDisplay
- creato: dct:creator
- creata: dct:creator
+ creato: 
+   method: art_agent   #dct:creator
+ creata: #merge with above
  date: dct:date
  earlie: vra:earliestDate
  latest: vra:latestDate
  materi: vra:material
  measur: vra:measurements
- style: vra:stylePeriod
- cultur: vra:culture
- reposi: marcrel:rps
+ style: 
+   method: art_stylePeriod #vra:stylePeriod
+ cultur: 
+   method: culture #vra:culture
+ reposi: 
+   method: repository #marcrel:rps
  reposa: vra:idCurrentRepository
  city:
       method:geographic
  countr:
       method:geographic
  site: dct:spatial
- work: vra:workType
+ work: 
+   method: workType #vra:workType
  inscri: vra:inscription
- subjec: dct:subject
+ subjec: 
+    method: dc_subject_lc_lcna_tgm_aat_ulan   #dct:subject
  notes: dct:description
  descri: dct:description
  state: vra:stateEdition
@@ -1390,11 +1436,11 @@ artlicensed:
  source: dct:source
  sourca: #SKIP source caption
  sourcb:
-      method:localCollectionName
+   method: localCollectionName
  sourcc: dct:identifier   #not necessarily the same as identifier
  vrc: holding:label
  rights:
-      method:rights
+   method:artlicensed_rights
  record: #SKIP
  type:
       method:types
@@ -1407,10 +1453,23 @@ artlicensed:
  catalo: #SKIP
  metada: #SKIP
  keywor: dct:subject
- digita: oregon:set
- contri: oregon:contributingInstitution
-
-
+ digita: 
+   method: set
+ contri: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+  dmimage: #SKIP
+  dmad1: #SKIP
+  dmad2: #SKIP
+  dmoclcno: #SKIP
+  dmcreated: #SKIP
+  dmmodified: #SKIP
+  dmrecord:
+    method: replace
+    
+    
   #
   # lowenstam
   #
@@ -1418,7 +1477,8 @@ lowenstam:
  title: dct:title
  worka: dct:Alternate
  view: oregon:cco/viewDescription
- agent: dct:creator
+ agent: 
+   method: art_agent #dct:creator
  agenta: oregon:cco/creatorDisplay
  date: dct:date
  materi: vra:material
@@ -1427,7 +1487,7 @@ lowenstam:
  cultur: vra:culture
  work: vra:workType
  locati:
-      method:geographic
+   method: tgn
  reposa: vra:idCurrentRepository
  inscri: vra:inscription
  descri: dct:description
@@ -1435,7 +1495,7 @@ lowenstam:
  relati: dct:relation
  text: dct:description
  collec:
-      method:localCollectionName
+   method: localCollectionName
  photog: marcrel:pht
  photo: oregon:cco/viewDate
  box: holding:label
@@ -1443,13 +1503,26 @@ lowenstam:
  sectio: dct:subject
  identi: dct:identifier
  rights:
-      method:rights
+   method: lowenstam_rights
  record: #SKIP
  type:
-      method:types
+   method: type
  metada: #SKIP
- digita: oregon:set
- contri: oregon:contributingInstitution
+ digita: 
+   method: set
+ contri: 
+   method: contributingInstitution
+ fullrs: #SKIP
+ find: #SKIP
+ dmaccess: #SKIP
+ dmimage: #SKIP
+ dmad1: #SKIP
+ dmad2: #SKIP
+ dmoclcno: #SKIP
+ dmcreated: #SKIP
+ dmmodified: #SKIP
+ dmrecord:
+   method:replace
 
 
 
@@ -1816,8 +1889,7 @@ maic:
   dmrecord:
     method:replace
 
-
-  #
+#
   # Moorhouse-wk
   #
 Moorhouse-wk:
@@ -1825,12 +1897,17 @@ Moorhouse-wk:
   identi: dct:title
   titla: dct:alternative
   descra: dct:alternative
-  tribad: dct:alternative # TCI need proveance statement
+  tribad: 
+    oregon: tribalTitle #dct:alternative
   descri: dct:description
-  tribac: dct:description # TCI need proveance statement
-  tribal: dct:subject # TCI need proveance statement
-  tribaa: dct:subject # TCI need proveance statement
-  tci: # SKIP checklist
+  tribac: 
+    oregon: tribalNotes  #dct:description
+  tribal: 
+    oregon: tribalTerms    #dct:subject
+  tribaa: 
+    oregon: tribalClasses  #dct:subject 
+  tci: 
+   oregon: tribalStatus #dct:subject 
   subjec:
     method: dc_subject_lc_tgm_aat  #dct:subject
   names:
@@ -1839,7 +1916,8 @@ Moorhouse-wk:
     method: geographic
   creato:
     method: localPhotog #marcrel:pht
-  data: dct:date
+  data: 
+    method: date
   rights:
     method: pd_rights 
   reposi:
@@ -1886,8 +1964,8 @@ Moorhouse-wk:
   dmmodified: #SKIP
   dmrecord:
     method: replace
-	
-	
+    
+    
   #
   # bookarts
   #
