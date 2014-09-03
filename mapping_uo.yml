@@ -98,7 +98,8 @@ namespaces:
 #* bookarts_worktype- uses aat, tgm, lcsh, lcna, rbms (we are publishing)- uses vra:workType
 # *bookarts_literary- uses lcsh, lcna, and lc ethno - uses #rdaw:formOfWork.en
 
-# *culture- uses local voacb and lcsh and lcnaf, predicate vra:culture
+# *culture- uses local vocab and lcsh and lcnaf, predicate vra:culture
+# *workType- aat, tgm, and local #vra:workType
 
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
@@ -117,6 +118,9 @@ namespaces:
 
 # *Art collections
 # *art_agent- merge for ULAN and LCNA and local #dct:creator
+# *art_stylePeriod-   AAT, LSCH, British Museum, and local #vra:
+# *art_locations- TGN and local #dct:spatial
+
 
 #*Rights statements
 
@@ -1483,11 +1487,14 @@ lowenstam:
  date: dct:date
  materi: vra:material
  measur: vra:measurements
- style: vra:stylePeriod
- cultur: vra:culture
- work: vra:workType
+ style: 
+   method: art_stylePeriod #vra:stylePeriod
+ cultur: 
+   method: culture #vra:culture
+ work: 
+   method: workType  #vra:workType
  locati:
-   method: tgn
+   method: art_locations #dct:spatial
  reposa: vra:idCurrentRepository
  inscri: vra:inscription
  descri: dct:description
@@ -1496,7 +1503,8 @@ lowenstam:
  text: dct:description
  collec:
    method: localCollectionName
- photog: marcrel:pht
+ photog: 
+   method:localPhotog #marcrel:pht
  photo: oregon:cco/viewDate
  box: holding:label
  boxa: dct:subject
@@ -1523,7 +1531,6 @@ lowenstam:
  dmmodified: #SKIP
  dmrecord:
    method:replace
-
 
 
   #
