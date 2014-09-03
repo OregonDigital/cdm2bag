@@ -266,6 +266,7 @@ mappings:
     dmmodified: SKIP
     dmrecord:
       method: replace # dmrecord has CDM number used in old CDM URL dct:replaces
+      
   #
   # folklore
   #
@@ -275,7 +276,8 @@ mappings:
     collea: SKIP
     title: dct:title
     photo: holding:label
-    photoa: dc:date
+    photoa: 
+	  method: date
     colleb:
       method: lcnaf #aat:collectors ,  aat concept of type of agent
     contri:
@@ -302,7 +304,8 @@ mappings:
       method: aat #workType, some might not be in AAT and may need to be changed
     relati: SKIP
     subjeb: SKIP
-    reposi: marcrel:rps
+    reposi: 
+	method: repository #marcrel:rps
     source: SKIP
     rights:
       method: folkrights
