@@ -1606,7 +1606,7 @@ Manuscripts:
 
 
 
-  #
+ #
   # uovets
   #
 uovets:
@@ -1615,10 +1615,10 @@ uovets:
   interv: marcrel:ive
   intera: marcel:ivr
   subjec:
-    method: dc_subject_lc
+    method: dc_subject_lc #dct:subject
   descri: dct:description
   branch:
-    method: militaryBranch
+    method: militaryBranch #dct:subject
   occupa: oregon:militaryOccupation
   highes: oregon:militaryHighestRank
   places: oregon:militaryServiceLocations
@@ -1653,7 +1653,6 @@ uovets:
   dmmodified: #SKIP
   dmrecord:
     method:replace
-
 
 
   #
