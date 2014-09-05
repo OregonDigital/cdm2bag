@@ -1755,18 +1755,19 @@ uo-athletics:
     dmmodified: #SKIP
     dmrecord:
       method replace
+      
   #
   # misc
   #
 misc:
   title: dct:title
   subjec:
-    method: dc_subject_lc
+    method: dc_subject_lc #dct:subject
   descri: dct:description
   creato:
-    method: lcnaf
-  publis: dct:publisher
-  contri: dct:contributor
+    method: lcnaf #dct:subject and local vocab.
+  publis: dct:publisher  #dct:subject and local vocab.
+  contri: dct:contributor #no mapping, empty field
   date:
     method: date
   type:
@@ -1774,7 +1775,7 @@ misc:
   format:
     method: format
   identi: dct:identifier
-  source: dct:source
+  source: #SKIP
   langua:
     method: language
   relati: #SKIP
@@ -1785,7 +1786,8 @@ misc:
   audien: #SKIP
   full: #SKIP
   fulla: oregon:fullText
-  contra: oregon:contributingInstitution
+  contra: 
+    method: contributingInstitution
   fullrs: #SKIP
   find: #SKIP
   dmaccess:
@@ -1798,6 +1800,7 @@ misc:
   dmmodified: #SKIP
   dmrecord:
     method: replace
+    
 
   #
   # petrarch
