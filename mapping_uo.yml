@@ -28,6 +28,7 @@ namespaces:
   rdai: "http://rdaregistry.info/Elements/i/"
   rdaa: "http://rdaregistry.info/Elements/a/"
 
+
 ##
 # METHODS:
 #
@@ -98,8 +99,11 @@ namespaces:
 #* bookarts_worktype- uses aat, tgm, lcsh, lcna, rbms (we are publishing)- uses vra:workType
 # *bookarts_literary- uses lcsh, lcna, and lc ethno - uses #rdaw:formOfWork.en
 
+# VRA
 # *culture- uses local vocab and lcsh and lcnaf, predicate vra:culture
-# *workType- aat, tgm, and local #vra:workType
+# *workType- aat, tgm, lc, and local -uses vra:workType
+# *technique- aat- uses vra:technique
+# *stylePeriod- aat- uses vra:stylePeriod
 
 # *ethnographic - Converts American Folklore Society Ethnographic Thesaurus, v. 2.0 terms into oregondigital defined URIs
 # *militaryBranch - uses lcsh for terms and predicate oregon:militaryBranch
@@ -1847,17 +1851,19 @@ misc:
     method replace
 
 
-  #
+    #
   # maic
   #
 maic:
   title: dct:title
   identi: dct:identifier
-  work: vra:workType
+  work: 
+    method: workType #vra:workType - AAT and one LC term
   altern: vra: workType #break on semicolons into new fields
-  subjec: dce:subject #not LC?
+  subjec: dce:subject #LC and TGM
   descri: dct:description
-  proces: vra:technique
+  proces: 
+    method: technique #vra:technique
   point: dct:hasVersion
   measur: vra:measurements
   object: oregon:compassDirection
@@ -1866,11 +1872,14 @@ maic:
   second:
     method:geographic
   availa: modsrf:note
-  period: vra:stylePeriod
-  perioa: vra:stylePeriod
+  period: 
+    method: stylePeriod  #vra:stylePeriod
+  perioa: 
+    method: stylePeriod  #vra:stylePeriod
   relati: dct:relation
   orient: oregon:compassDirection
-  rights: marcrel:pht
+  rights: 
+    method: localPhotog #marcrel:pht
   date: oregon:cco/viewDate
   righta:
     method: maic_rights
@@ -1886,9 +1895,9 @@ maic:
   metada: #SKIP
   batch: #SKIP
   digita:
-    method:set
+    method: set
   contri:
-    method:contributingInstitution
+    method: contributingInstitution
   fullrs: #SKIP use to map to full image for ingest
   find: #SKIP
   dmaccess: #SKIP
