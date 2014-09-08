@@ -56,7 +56,11 @@ module MappingMethods
       return graph if data == "" || data.nil?
       Array(data.split(";")).each do |str|
         next if str.to_s.strip == ""
-        graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :name_startsWith => str, :orderBy => 'relevance', :adminCode1 => "OR"})
+        if str == "Oregon, Central"
+          graph << RDF::Statement.new(subject, RDF::DC[:spatial], str)
+        else
+          graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :name_startsWith => str, :orderBy => 'relevance', :adminCode1 => "OR"})
+        end
       end
       graph
     end

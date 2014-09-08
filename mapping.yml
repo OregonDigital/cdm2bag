@@ -515,33 +515,36 @@ mappings:
   gifford:
     title: dct:title
     digita: SKIP
-    creato: dce:creator
+    creato: 
+      method: gifford_creator
     date: 
       method: xsd_date
     covera: SKIP
-    descri: dc:description
+    descri: dct:description
+    file: SKIP
     subjec: 
       method: lcsubject #lcsh semicolon delimited
     publis: 
       method: gifford_geographic # semicolon delimited
     contri:
-      method: collection #localCollection
+      method: collection_from_opaquens #localCollection
     relati: SKIP # will add to collection manually
-    refere: SKIP # ASK LARRY
-    identi: dc:identifier
-    origin: 
-      method: collection
+    refere: dct:isReferencedBy # ASK LARRY
+    identi: dct:identifier
+    origin: vra:idFormerAccession
     type:
-      method: type
-    format: SKIP #AAT Type
-    source: SKIP # e.g. 'Glass Positives'
-    other:  # same as above (source)? 
+      method: types
+    format: dct:hasFormat
+    source: 
+      method: aat_from_search # e.g. 'Glass Positives'
+    other: 
+      method: aat_from_search # same as above (source)? 
     rights: 
-      method: rights
+      method: osu_archive_rights
     transm: oregon:conversionSpecifications
     status: modsrdf:note
-    compou: SKIP # what is this?
-    relate: SKIP # same as above (compou)?
+    compou: dct:isPartOf # what is this?
+    relate: dct:isPartOf # same as above (compou)?
     fullrs: oregon:full
     find: premis:hasOriginalName
     dmaccess: SKIP
