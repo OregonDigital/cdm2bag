@@ -432,8 +432,7 @@ Bestof:
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
  resolu: exif:resolution
- ditigi:
-   method:processing_history
+ ditigi: #merge with captur
  additi: dct:hasVersion
  publis: #SKIP
  digita: 
@@ -1015,8 +1014,7 @@ univ:
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
- proces:
-   method:processing_history
+ proces: oregon: conversionSpecifications
  datea: oregon:dateDigitized
  rights:
    method:univ_rights  #add rightsholder for "University of Oregon" and map for appropriate rights/license
@@ -1229,8 +1227,7 @@ uostock:
     method:format
   digitb: dct:extent
   color: exif:colorSpace
-  imaga:
-    method:processing_history
+  imaga: #merge with captur
   missin: #SKIP
   full:  oregon:fullText
   metada: #SKIP
