@@ -374,7 +374,7 @@ archpnw:
   identi: dct:identifier
   techni: oregon:conversionSpecifications
   contri:
-     method:contributingInstitution
+     method:contributing_Institution
   fullrs: #SKIP
   find: #SKIP
   dmaccess: #SKIP
@@ -432,8 +432,7 @@ Bestof:
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
  resolu: exif:resolution
- ditigi:
-   method:processing_history
+ ditigi: oregon:conversionSpecifications #combine with captur
  additi: dct:hasVersion
  publis: #SKIP
  digita: 
@@ -584,7 +583,7 @@ jasr:
  date:
       method:date
  type:
-      method:types
+      method:type
  format:
       method:format
  identi: dct:identifier
@@ -627,7 +626,7 @@ jsma:
  descri: dct:description
  notes: modsrdf:note
  type:
-      method:types
+      method:type
  format:
       method:format
  rights:
@@ -724,7 +723,7 @@ oimb:
    method:set
  sourca: # SKIP
  contri:
-   method:contributingInstitution
+   method:contributing_Institution
  fullrs: #SKIP
  find: #SKIP use JPEG images for ingest
  dmaccess: #SKIP
@@ -810,7 +809,7 @@ wwdl:
  descri: dct:description
  pagina: schema:numberOfPages
  citati: schema:citation
- subjec: dce:subject
+ subjec: dct:subject
  lc:
    method: dc_subject_lc
  people:
@@ -841,7 +840,7 @@ wwdl:
  langua:
     method:language
  type:
-   method:typee
+   method:type
  format:
    method:format
  captur: oregon:conversionSpecifications
@@ -857,7 +856,7 @@ wwdl:
  full: oregon:fullText
  link: dct:relation
  contra:
-    method:contributingInstitution
+    method:contributing_Institution
  catalo: # SKIP
  load: # SKIP
  digitb:
@@ -984,7 +983,7 @@ univ:
  title: dct:title
  creato:
    method:localPhotog #marcrel:pht
- subjec: dce::subject
+ subjec: dce:subject
  lc:
    method:dc_subject_lc
  buildi: #SKIP
@@ -1015,8 +1014,7 @@ univ:
  collea: oregon:localCollectionID
  box: oregon:boxNumber
  folder: oregon:folderNumber
- proces:
-   method:processing_history
+ proces: oregon:conversionSpecifications 
  datea: oregon:dateDigitized
  rights:
    method:univ_rights  #add rightsholder for "University of Oregon" and map for appropriate rights/license
@@ -1027,7 +1025,7 @@ univ:
  digita:
    method:set
  contri:
-   method:contributingInstitution
+   method:contributing_Institution
  fullrs: #SKIP
  find: #SKIP
  dmaccess: #SKIP
@@ -1053,7 +1051,7 @@ uopres:
   subjec:
 +   method: dc_subject_lc #dct:subject
 + tgm:
-+   method: tgm #dce:subject
++   method: tgm #dct:subject
 + theme: # SKIP
 + people:
 +   method: localPeople #oregon:people
@@ -1144,7 +1142,7 @@ uostock:
  format:
    method: format
  photo:  exif:orientation
- phota: rdae:colourContent.ed
+ phota: rdae:colourContent.en
  identi: dct:identifier
  source: dct:hasFormat
  relati: dct:description
@@ -1229,8 +1227,7 @@ uostock:
     method:format
   digitb: dct:extent
   color: exif:colorSpace
-  imaga:
-    method:processing_history
+  imaga: oregon:conversionSpecifications #combine with captur
   missin: #SKIP
   full:  oregon:fullText
   metada: #SKIP
@@ -1313,7 +1310,7 @@ archivision:
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
- keywor: dct:subject
+ keywor: dce:subject
  digita: 
    method: set
  contri: 
@@ -1377,7 +1374,7 @@ artimages:
       method: artimages_rights
  record: #SKIP
  type:
-      method:types
+      method:type
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note
@@ -1386,7 +1383,7 @@ artimages:
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
- keywor: dct:subject
+ keywor: dce:subject
   digita: 
    method: set
  contri: 
@@ -1450,7 +1447,7 @@ artlicensed:
    method:artlicensed_rights
  record: #SKIP
  type:
-      method:types
+      method:type
  identi: dct:identifier
  vrca: holding:label
  course: modsrdf:note  #or skip
@@ -1459,7 +1456,7 @@ artlicensed:
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
- keywor: dct:subject
+ keywor: dce:subject
  digita: 
    method: set
  contri: 
@@ -1503,15 +1500,15 @@ lowenstam:
  descri: dct:description
  state: dct:description
  relati: dct:relation
- text: dct:description
+ text: modsrdf:note
  collec:
    method: localCollectionName
  photog: 
    method:localPhotog #marcrel:pht
  photo: oregon:cco/viewDate
  box: holding:label
- boxa: dct:subject
- sectio: dct:subject
+ boxa: dce:subject
+ sectio: dce:subject
  identi: dct:identifier
  rights:
    method: lowenstam_rights
@@ -1550,7 +1547,7 @@ Manuscripts:
   subjec:
     method: dc_subject_lc_aat  #dct:subject
   keywor: dce:subject
-  genre: dce:subject
+  genre: dct:subject
   part: dct:hasPart
   creato:
     method: lcnaf #dct:creator
@@ -1570,7 +1567,7 @@ Manuscripts:
   sourcb: schema:numberOfPages
   sourcc: dct:extent
   sourcd:
-    method: aat #vra:support
+    method: aat #vra:material
   source: dct:alternative
   collec:
     method: localCollectionName
@@ -1626,7 +1623,7 @@ uovets:
   date:
     method:date #need to convert to yyyy-mm-dd
   type:
-    method:types
+    method:type
   format:
     method:format
   langua:
@@ -1641,7 +1638,7 @@ uovets:
   relati:
      method:set
   contri:
-     method:contributingInstitution
+     method:contributing_Institution
   fullrs: #SKIP
   find: #SKIP
   dmaccess: #SKIP
@@ -1665,12 +1662,12 @@ uo-athletics:
     descri: dct:description
     collec: oregon:localCollectionName
     collea: oregon:localCollectionID
-    folder: oregon:archives/folderNumber
-    box: oregon:archives/boxNumber
+    folder: oregon:folderNumber
+    box: oregon:boxNumber
     photo: dct:identifier
     titla: #SKIP
     publia: dct:alternative
-    notes: modsref:note
+    notes: modsrdf:note
     photog:
       method:localPhoto #marcrel:pht
     author:
@@ -1742,7 +1739,7 @@ uo-athletics:
     digita:
       method:set
     contri:
-      method:contributingInstitution
+      method:contributing_Institution
     fullrs: #SKIP
     find: #SKIP
     dmaccess: #SKIP
@@ -1855,7 +1852,7 @@ maic:
   identi: dct:identifier
   work: vra:workType
   altern: vra: workType #break on semicolons into new fields
-  subjec: dce:subject #not LC?
+  subjec: dct:subject 
   descri: dct:description
   proces: vra:technique
   point: dct:hasVersion
@@ -1888,7 +1885,7 @@ maic:
   digita:
     method:set
   contri:
-    method:contributingInstitution
+    method:contributing_Institution
   fullrs: #SKIP use to map to full image for ingest
   find: #SKIP
   dmaccess: #SKIP
