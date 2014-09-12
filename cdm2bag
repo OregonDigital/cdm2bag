@@ -74,7 +74,8 @@ def map_set
     "rockshore93" => "rockyshore93",
     "baseball" => "osu-baseball",
     "gifford" => "gifford",
-    "fairbanks" => "fairbanks"
+    "fairbanks" => "fairbanks",
+    "lchsa" => "lchsa"
   }
 end
 

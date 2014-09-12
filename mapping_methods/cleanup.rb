@@ -1,4 +1,5 @@
 require 'rdf'
+
 module MappingMethods
   module Cleanup
     def baseball_cleanup(collection, graph, subject)
@@ -14,5 +15,125 @@ module MappingMethods
       end
       graph
     end
+
+    def lchsa_cleanup(collection, graph, subject)
+
+      # Add the repository field for this collection.
+      graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['marcrel']['rps']), RDF::URI.new('http://id.loc.gov/authorities/names/n77019101'))
+
+      # Add contributingInstitution field for this collection
+      graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contributingInstitution']), RDF::URI.new('http://dbpedia.org/resource/Oregon_State_University'))
+
+      # Prepend a label to the lchsaPhotog field and add as a dct:description.
+      photog = graph.query([nil, @namespaces['oregon']['lchsaPhotog'], nil])
+      graph.delete(photog) # Remove placeholder statement.
+      graph << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.description), "Photographer information: #{photog.first.object.to_s}") if photog.first
+
+      # Merges placeholder statements for height, width, and unit into a dct:extent field with format H x W unit.
+      height = graph.query([nil, @namespaces['oregon']['lchsaHeight'], nil])
+      width = graph.query([nil, @namespaces['oregon']['lchsaWidth'], nil])
+      unit = graph.query([nil, @namespaces['oregon']['lchsaUnit'], nil])
+
+      # Remove the placeholder statements.
+      graph.delete(height)
+      graph.delete(width)
+      graph.delete(unit)
+
+      # Only make the dct:extent entry if all of the elements are present.
+      if height.first and width.first and unit.first
+        dims = "#{width.first.object.to_s.gsub(/[^0-9\.]/,'')} x #{height.first.object.to_s.gsub(/[^0-9\.]/,'')} #{unit.first.object.to_s.downcase}"
+        graph << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.extent), dims)
+      end
+
+      # Try to make a useful date field out of the value in temporal
+      temporal = graph.query([nil, RDF::DC.temporal, nil]).first
+      if temporal
+        xsd_date = human_to_date(subject, temporal.object.to_s)
+        xsd_date.each { |statement| graph << statement }
+      end
+    end
+
+  def human_to_date(subject, human_date)
+
+    # Attempts to convert the plain language formatted date into an ISO8601 formatted dct:date statement.
+    # If the date refers to a range then oregon:earliestDate and oregon:latestDate statements are returned.
+    statements = []
+
+    if (year = /^(\d{4})$/.match(human_date))
+      # Matches a 4-digit year: 1950.
+      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), year[1]) # YYYY
+
+    elsif (season = /^(circa|ca|summer|winter|fall|spring|early|late)(\.|,)*\s*(\d{4})$/i.match(human_date))
+      # Matches Circa/season year: Spring 1930.
+      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), season[3]) # YYYY
+
+    elsif (year_range = /^(\d{4})'*s$/.match(human_date))
+      # Matches a 4-digit year with "s" or "'s": 1940s or 1940's.
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[1][0,3]}0") # YYYY
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[1][0,3]}9") # YYYY
+
+    elsif (year_range = /^(circa|ca|c)\.*\s*(\d{4})'*s$/i.match(human_date))
+      # Matches Circa/Ca + "s": Circa 1930s.
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2][0,3]}0") # YYYY
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[2][0,3]}9") # YYYY
+
+    elsif (year_range = /^(ca|.*)\s*(\d{4})\s*.+\s*(\d{4})$/i.match(human_date))
+      # Matches a year range: (Ca) 1960-1961.
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2]}") # YYYY
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[3]}") # YYYY
+
+    elsif (year_range = /^(ca|.*)\.*\s*(\d{4})\s*-\s*(\d{2})$/i.match(human_date))
+      # Matches a year range: (Ca) 1960-61.
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2]}") # YYYY
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[2][0,2]}#{year_range[3]}") # YYYY
+
+    elsif (year_range = /^(\d{4})\s*-\s*(\d)$/.match(human_date))
+      # Matches a year range: 1935-6.
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[1]}") # YYYY
+      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[1][0,3]}#{year_range[2]}") # YYYY
+
+    elsif (year_desc = /^(\d{4})\s+(\D*)$/.match(human_date))
+      # Matches YEAR ... Description: 1941                                   Newport, OR Bayfront
+      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), year_desc[1]) # YYYY
+      # Special case: since some dates had additional descriptive material, a dct:description field is returned as well.
+      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.description), year_desc[2]) # Description
+
+    elsif (mdy = /(\d{2})\/(\d{2})\/(\d{2})/.match(human_date))
+      # Matches 05/12/45: 1954-05-12.
+      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), "19#{mdy[3]}-#{mdy[1]}-#{mdy[2]}") # YYYY-MM-DD
+
+    else
+      begin
+        # Try letting Date parser do the work and convert it to ISO8601.
+        if /\D+(\d+),\s(\d{4})/.match(human_date)
+          # Matches: July 4, 1963.
+          d = Date.strptime(human_date, '%B %d, %Y')
+          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m-%d')) # YYYY-MM
+
+        elsif /(\d+)\s\w+,\s*(\d{4})/.match(human_date)
+          # Matches: 31 July, 1963.
+          d = Date.strptime(human_date, '%d %B, %Y')
+          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m-%d')) # YYYY-MM
+
+        elsif /\w+,\s*\d{4}/.match(human_date)
+          # Matches: Month, Year.
+          d = Date.strptime(human_date,'%B, %Y')
+          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m')) # YYYY-MM
+
+        elsif /\w+\s*\d{4}/.match(human_date)
+          # Matches: Month Year.
+          d = Date.strptime(human_date,'%B %Y')
+          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m')) # YYYY-MM
+
+        end
+      rescue ArgumentError
+        @log.warn("#{__method__} :: Unable to parse date: #{human_date}")
+      end
+    end
+    # printf("%-20s\n",human_date) # if xsd_dates.count == 0
+    # statements.each {|stmt| printf("\t%-45s\t%s\n",stmt.predicate,stmt.object)}
+    statements
+  end
+
   end
 end

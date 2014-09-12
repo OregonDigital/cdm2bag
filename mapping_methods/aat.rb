@@ -79,7 +79,7 @@ module MappingMethods
     def aat_siuslaw_colorcontent(subject, data)
       r = RDF::Graph.new
       uri = 'http://vocab.getty.edu/aat/'
-      if data == "B/W" || data == "black and white"
+      if data == "B/W" || data == "black and white" || "Black&white" == data || "Black & white" == data
         uri += "300265434"
       elsif data == "Color"
         uri += "300056130"
@@ -94,6 +94,5 @@ module MappingMethods
     def aat_sheetmusic(subject, data)
       RDF::Graph.new << RDF::Statement.new(subject, RDF.type, RDF::URI('http://vocab.getty.edu/aat/300026430'))
     end
-    
   end
 end
