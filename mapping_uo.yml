@@ -1143,7 +1143,7 @@ uostock:
  genre:  
    method: dc_subject_lc_tgm   #dct:subject
  note: modsrdf:note
- people: dct:description
+ people: modsrdf:note
  publis: #SKIP
  date:
    method: date
