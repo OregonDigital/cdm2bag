@@ -40,8 +40,12 @@ namespaces:
 
 
 # *iso_lanugage - converts two and three letter language codes (;-delimited) into LoC ISO 639 URIs.
+# *language- defer to iso above
+
 # *type - splits ;-delimited types and identifies dcmitype for each.
 # *mime - converts string mimetype into a purl.org/NET/mediatypes uri
+
+# *format- uses CVs and local subjects; AAT and other
 
 #* Location
 # *geographic - attempts to identify a geonames URI locations in field. Will strip "(Ore.)" from string before searching. (probably needs honing, check data in bags before ingest).
@@ -64,6 +68,7 @@ namespaces:
 # *repository- method: repository, uses lcna for SCUA id, LCNA and ULAN and local for rest - predicate marcrel:rps
 # *bookarts_repository- SCUA and AAA "University of Oregon Libraries. Architecture & Allied Arts Library."  -uses #marcrel:rps
 
+# *localCollectionName- uses local vocab and oregon: pred
 # *event- use local subject vocab #schema:event
 
 
@@ -167,7 +172,8 @@ mappings:
     latest: vra:latestDate
     subject:
       method: dc_subject_lc #  field also contains lc names as subjects and lcsh
-    cultur: vra:culturalContext
+    cultur: 
+      method: culture #vra:culture
     countr:
       method: geographic
     region: dct:coverage
@@ -617,7 +623,8 @@ jsma:
  title: dct:title
  creato: dct:creator
  creata: oregon:cco/creatorDisplay
- cultur: vra:culture
+ cultur: 
+  method: culture #vra:culture
  subjec: vra:stylePeriod
  date:
       method:date
@@ -810,7 +817,8 @@ wwdl:
  descri: dct:description
  pagina: schema:numberOfPages
  citati: schema:citation
- subjec: dce:subject
+ subjec: 
+   method:dc_subject_lc_tgm #dct:subject
  lc:
    method: dc_subject_lc
  people:
@@ -1764,8 +1772,9 @@ misc:
     method: dc_subject_lc #dct:subject
   descri: dct:description
   creato:
-    method: lcnaf #dct:subject and local vocab.
-  publis: dct:publisher  #dct:subject and local vocab.
+    method: lcnaf #dct:creator and local vocab.
+  publis: 
+    method: lcnaf_pub #dct:publisher and local vocab.
   contri: dct:contributor #no mapping, empty field
   date:
     method: date
