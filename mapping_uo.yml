@@ -940,7 +940,7 @@ latinoherit:
   date:
     method: date
   contri: # SKIP
-  relate: oregon:seriesName
+  relate: dct:hasVersion
   source: # SKIP
   reposi:
     method: repository #marcrel:rps
