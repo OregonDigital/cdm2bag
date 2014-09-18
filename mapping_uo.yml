@@ -95,7 +95,7 @@ namespaces:
 #* dc_subject_lc_lcna_tgm_aat- predicate dct:subject
 #* dc_subject_lc_lcna_tgm_aat_ulan- predicate dct:subject
 # *tgm - uses tgm vocab at id.loc.gov and predicate dce:subject
-# *comm_ aat_tgm - predicate dct:hasFormat
+# *comm_ aat_tgm - predicate dct:hasVersion
 # *subject_lc_MeSH -predicate dct:subject
 
 # *bookarts_technique- uses aat and rbms (we are publishing)- uses #vra:technique
@@ -425,7 +425,7 @@ Bestof:
  collec: oregon:localCollectionID
  collea: oad:has_findingAid
  sourca: dct:extent
- source: dct:hasFormat
+ source: dct:hasVersion
  sourcb: oregon:sourceCondition
  type:
    method: type
@@ -493,7 +493,7 @@ Ulmann2:
  admin: dct:source
  type:
    method: types
- format: dct:hasFormat
+ format: dct:hasVersion
  scan: oregon:conversionSpecifications
  metada: # SKIP
  catala: # SKIP
@@ -902,7 +902,7 @@ comm:
     method: localCollectionName
   collec: oregon:localCollectionID
   sourca: oregon:folderNumber
-  source: dct:hasFormat #aren't we using something else for these?
+  source: dct:hasVersion
   type:
     method: type
   publis: #SKIP
@@ -1152,7 +1152,7 @@ uostock:
  photo:  exif:orientation
  phota: rdae:colourContent.ed
  identi: dct:identifier
- source: dct:hasFormat
+ source: dct:hasVersion
  relati: dct:description
  donor: #SKIP
  proces: oregon:conversionSpecifications
@@ -1943,7 +1943,7 @@ Moorhouse-wk:
   relati:
     method: localCollectionName
   collec: oregon:localCollectionID
-  source: dct:hasFormat
+  source: dct:hasVersion
   sourca: dct:extent
   sourceb: oregon:sourceCondition
   type:
