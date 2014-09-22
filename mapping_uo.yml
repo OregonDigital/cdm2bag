@@ -1320,7 +1320,7 @@ archivision:
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
- keywor: dct:subject
+ keywor: dce:subject
  digita: 
    method: set
  contri: 
@@ -1393,7 +1393,7 @@ artimages:
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
- keywor: dct:subject
+ keywor: dce:subject
   digita: 
    method: set
  contri: 
@@ -1466,7 +1466,7 @@ artlicensed:
  projea: #SKIP
  catalo: #SKIP
  metada: #SKIP
- keywor: dct:subject
+ keywor: dce:subject
  digita: 
    method: set
  contri: 
