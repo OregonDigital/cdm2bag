@@ -429,7 +429,7 @@ Bestof:
  sourcb: oregon:sourceCondition
  type:
    method: type
- image: dct:extent
+ image: exif:fileSize
  format:
    method: format
  imagd: exif:width
