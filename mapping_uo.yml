@@ -1207,7 +1207,9 @@ uostock:
   artisa: dct:description
   artisc: dct:description
   region: dct:description
-  data: oregon:awardDate
+  data: 
+    method: date #dct:date
+  date: oregon:awardDate
   commis: #SKIP
   datb:
     method:date_isused
