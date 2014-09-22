@@ -124,7 +124,7 @@ namespaces:
 # *Art collections
 # *art_agent- merge for ULAN and LCNA and local #dct:creator
 # *art_stylePeriod-   AAT, LSCH, British Museum, and local #vra:
-# *art_locations- TGN and local #dct:spatial
+# *art_locations- TGN and local #dct:coverage
 
 
 #*Rights statements
@@ -1290,7 +1290,8 @@ archivision:
       method:geographic
  countr:
       method:geographic
- site: dct:spatial
+ site: 
+   method: art_locations #dct:coverage
  work: 
    method: workType #vra:workType
  inscri: vra:inscription
@@ -1363,7 +1364,9 @@ artimages:
    method: art_locations #dct:coverage
  country:
    method: art_locations #dct:coverage
- site: dct:spatial
+ site: 
+   site: 
+   method: art_locations #dct:coverage
  work: 
    method: workType #vra:workType
  inscri: vra:inscription
@@ -1436,7 +1439,8 @@ artlicensed:
       method:geographic
  countr:
       method:geographic
- site: dct:spatial
+ site: 
+   method: art_locations #dct:coverage
  work: 
    method: workType #vra:workType
  inscri: vra:inscription
