@@ -16,6 +16,7 @@ namespaces:
   oregon: "http://opaquenamespace.org/ns/"
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
+  exif: "http://www.w3.org/2003/12/exif/"
 ##
 # METHODS:
 #
@@ -611,4 +612,35 @@ mappings:
       method: dc_modified
     dmrecord: 
       method: replace    
-    
+  #
+  # lchsa - Lincoln County Historical Society
+  #
+  lchsa:
+    title: dct:title
+    descri: dct:description
+    creato: oregon:lchsaPhotog # temp to create dc:description in cleanup
+    publis: marcrel:dnr
+    contri: SKIP # always Library or ""
+    date: dct:temporal
+    type: oregon:vra/material
+    format:
+      method: aat_from_search
+    identi: SKIP # always blank
+    langua: oregon:lchsaWidth # temp to create dc:extent in cleanup
+    relati: oregon:lchsaHeight # temp to create dc:extent in cleanup
+    rights: oregon:lchsaUnit # temp to create dc:extent in cleanup
+    covera: oregon:sourceCondition
+    audien: SKIP # always blank
+    other: modsrdf:note # Other Notes
+    scann: exif:resolution
+    color:
+      method: aat_siuslaw_colorcontent
+    fullrs: SKIP
+    find: oregon:full # no compound objects
+    dmoclcno: SKIP # always blank
+    dmaccess: SKIP # always blank
+    dmcreated:
+      method: dc_created
+    dmmodified: SKIP
+    dmrecord:
+      method: replace
