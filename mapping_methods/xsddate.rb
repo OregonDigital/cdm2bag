@@ -38,5 +38,20 @@ module MappingMethods
       string_date(subject, RDF::DC.modified, data)
     end
 
+    def dc_date_collected(subject, date)
+
+      # Make sure that the date has two digits for month and day, padding if necessary.
+      parts = date.split('-')
+      case parts.count
+        when 3
+          date = sprintf("%s-%02d-%02d",parts[0], parts[1], parts[2])
+        when 2
+          date = sprintf("%s-%02d",parts[0], parts[1])
+        else
+          # Just use the date as is.
+      end
+      string_date(subject, RDF::URI.new(@namespaces['oregon']['collectedDate']), date)
+    end
+
   end
 end

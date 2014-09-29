@@ -53,87 +53,209 @@ module MappingMethods
       end
     end
 
-  def human_to_date(subject, human_date)
+    def herbarium_cleanup(collection, graph, subject)
 
-    # Attempts to convert the plain language formatted date into an ISO8601 formatted dct:date statement.
-    # If the date refers to a range then oregon:earliestDate and oregon:latestDate statements are returned.
-    statements = []
-
-    if (year = /^(\d{4})$/.match(human_date))
-      # Matches a 4-digit year: 1950.
-      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), year[1]) # YYYY
-
-    elsif (season = /^(circa|ca|summer|winter|fall|spring|early|late)(\.|,)*\s*(\d{4})$/i.match(human_date))
-      # Matches Circa/season year: Spring 1930.
-      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), season[3]) # YYYY
-
-    elsif (year_range = /^(\d{4})'*s$/.match(human_date))
-      # Matches a 4-digit year with "s" or "'s": 1940s or 1940's.
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[1][0,3]}0") # YYYY
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[1][0,3]}9") # YYYY
-
-    elsif (year_range = /^(circa|ca|c)\.*\s*(\d{4})'*s$/i.match(human_date))
-      # Matches Circa/Ca + "s": Circa 1930s.
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2][0,3]}0") # YYYY
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[2][0,3]}9") # YYYY
-
-    elsif (year_range = /^(ca|.*)\s*(\d{4})\s*.+\s*(\d{4})$/i.match(human_date))
-      # Matches a year range: (Ca) 1960-1961.
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2]}") # YYYY
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[3]}") # YYYY
-
-    elsif (year_range = /^(ca|.*)\.*\s*(\d{4})\s*-\s*(\d{2})$/i.match(human_date))
-      # Matches a year range: (Ca) 1960-61.
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2]}") # YYYY
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[2][0,2]}#{year_range[3]}") # YYYY
-
-    elsif (year_range = /^(\d{4})\s*-\s*(\d)$/.match(human_date))
-      # Matches a year range: 1935-6.
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[1]}") # YYYY
-      statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[1][0,3]}#{year_range[2]}") # YYYY
-
-    elsif (year_desc = /^(\d{4})\s+(\D*)$/.match(human_date))
-      # Matches YEAR ... Description: 1941                                   Newport, OR Bayfront
-      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), year_desc[1]) # YYYY
-      # Special case: since some dates had additional descriptive material, a dct:description field is returned as well.
-      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.description), year_desc[2]) # Description
-
-    elsif (mdy = /(\d{2})\/(\d{2})\/(\d{2})/.match(human_date))
-      # Matches 05/12/45: 1954-05-12.
-      statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), "19#{mdy[3]}-#{mdy[1]}-#{mdy[2]}") # YYYY-MM-DD
-
-    else
-      begin
-        # Try letting Date parser do the work and convert it to ISO8601.
-        if /\D+(\d+),\s(\d{4})/.match(human_date)
-          # Matches: July 4, 1963.
-          d = Date.strptime(human_date, '%B %d, %Y')
-          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m-%d')) # YYYY-MM
-
-        elsif /(\d+)\s\w+,\s*(\d{4})/.match(human_date)
-          # Matches: 31 July, 1963.
-          d = Date.strptime(human_date, '%d %B, %Y')
-          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m-%d')) # YYYY-MM
-
-        elsif /\w+,\s*\d{4}/.match(human_date)
-          # Matches: Month, Year.
-          d = Date.strptime(human_date,'%B, %Y')
-          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m')) # YYYY-MM
-
-        elsif /\w+\s*\d{4}/.match(human_date)
-          # Matches: Month Year.
-          d = Date.strptime(human_date,'%B %Y')
-          statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m')) # YYYY-MM
-
-        end
-      rescue ArgumentError
-        @log.warn("#{__method__} :: Unable to parse date: #{human_date}")
+      fn = graph.query([subject, @namespaces['oregon']['fileName'], nil])
+      # We need to grab the filename from this field before we turn it into an identifier (cpd files won't have one of these).
+      if fn.first
+        filename = fn.first.object.to_s
+        graph.delete(fn)
+        graph << RDF::Statement.new(subject, RDF::DC.identifier, filename)
       end
+
+      full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
+      full_file = full_stmt.first.object.to_s.downcase
+      if full_file.end_with? '.cpd'
+        # Load the compound object data into the graph.
+        graph = load_compound_objects(collection, graph, subject)
+        graph.delete(full_stmt)
+      else
+        if full_file.end_with? '.pdf'
+          # The PDFs we have use the filename specified in oregon:fileName, not oregon:full so remove the existing oregon:full name.
+          graph.delete(full_stmt)
+          # puts "PDF FILE: #{full_file}"
+          graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['full']), filename)
+        else
+          # If oregon:full is not a pdf, replace it with the new barcode filename referenced by the accession number.
+          accession = graph.query([nil, @namespaces['oregon']['cco/accessionNumber'], nil])
+          if accession.first
+            barcode = @image_file_map[accession.first.object.to_s] if @image_file_map
+            if barcode
+              graph.delete(full_stmt)
+              graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['full']), "#{barcode}.tif")
+              graph << RDF::Statement.new(subject, RDF::DC.identifier, barcode)
+            else
+              graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['full']), "#{accession.first.object.to_s}.tif")
+              @log.warn("No matching barcode for #{accession.first.object.to_s}, using existing tif")
+            end
+          else
+            # If it's an image file, it should have an accession number.
+            @log.warn('No accession number found')
+          end
+        end
+      end
+
+      search_params = {}
+      # There are some non-US countries/states listed, so see which country we have before running county/state
+      country = graph.query([nil, @namespaces['oregon']['herbCountry'], nil])
+      search_params[:countryBias] = 'US' if country.first and ('United States' == country.first.object.to_s or 'U.S.A.' == country.first.object.to_s)
+      graph << geographic(subject, country.first.object.to_s, RDF::DC[:spatial], search_params) if country.first
+
+      # Run geoname search on state - featureCode ADM1.
+      state = graph.query([nil, @namespaces['oregon']['herbState'], nil])
+      graph << geographic(subject, state.first.object.to_s, RDF::DC[:spatial], {:featureCode => 'ADM1'}.merge(search_params)) if state.first
+
+      # Combine county and state then run geoname search - county is featureCode ADM2.
+      county = graph.query([nil, @namespaces['oregon']['herbCounty'], nil])
+      if county.first and state.first and not '[needs research]' == county.first.object.to_s
+        combined = "#{county.first.object.to_s} county, #{state.first.object.to_s}"
+        stmt = geographic(subject, combined, RDF::DC[:spatial],{:featureCode => 'ADM2'}.merge(search_params))
+        graph << stmt if stmt
+      end
+
+      # Prepend the abbreviation notes with a label and add to modsrdf:note.
+      abbrev = graph.query([nil, @namespaces['oregon']['herbariumAbbrev'], nil])
+      graph << RDF::Statement.new(subject, RDF::URI.new('http://www.loc.gov/standards/mods/modsrdf/v1/note'), "Accepted Acronym: #{abbrev.first.object.to_s}" ) if abbrev.first
+
+      # Remove the placeholder statements.
+      graph.delete(county)
+      graph.delete(state)
+      graph.delete(country)
+      graph.delete(abbrev)
+      # graph.each { |x| puts x.inspect }
+      graph
     end
-    # printf("%-20s\n",human_date) # if xsd_dates.count == 0
-    # statements.each {|stmt| printf("\t%-45s\t%s\n",stmt.predicate,stmt.object)}
-    statements
-  end
+    #
+    # def herbarium_load_map
+    #   require 'csv'
+    #   accession_list = {}
+    #   params = {:headers => true, :return_headers => true, :header_converters => :symbol, :converters => :all}
+    #   CSV.read('metadata/herbarium/image-names-accession-numbers.csv', params).each { |row| accession_list[row.fields[1]] = row.fields[0] }
+    #   @filename_map = accession_list
+    # end
+
+    def human_to_date(subject, human_date)
+
+      # Attempts to convert the plain language formatted date into an ISO8601 formatted dct:date statement.
+      # If the date refers to a range then oregon:earliestDate and oregon:latestDate statements are returned.
+      statements = []
+
+      if (year = /^(\d{4})$/.match(human_date))
+        # Matches a 4-digit year: 1950.
+        statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), year[1]) # YYYY
+
+      elsif (season = /^(circa|ca|summer|winter|fall|spring|early|late)(\.|,)*\s*(\d{4})$/i.match(human_date))
+        # Matches Circa/season year: Spring 1930.
+        statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), season[3]) # YYYY
+
+      elsif (year_range = /^(\d{4})'*s$/.match(human_date))
+        # Matches a 4-digit year with "s" or "'s": 1940s or 1940's.
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[1][0,3]}0") # YYYY
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[1][0,3]}9") # YYYY
+
+      elsif (year_range = /^(circa|ca|c)\.*\s*(\d{4})'*s$/i.match(human_date))
+        # Matches Circa/Ca + "s": Circa 1930s.
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2][0,3]}0") # YYYY
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[2][0,3]}9") # YYYY
+
+      elsif (year_range = /^(ca|.*)\s*(\d{4})\s*.+\s*(\d{4})$/i.match(human_date))
+        # Matches a year range: (Ca) 1960-1961.
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2]}") # YYYY
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[3]}") # YYYY
+
+      elsif (year_range = /^(ca|.*)\.*\s*(\d{4})\s*-\s*(\d{2})$/i.match(human_date))
+        # Matches a year range: (Ca) 1960-61.
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[2]}") # YYYY
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[2][0,2]}#{year_range[3]}") # YYYY
+
+      elsif (year_range = /^(\d{4})\s*-\s*(\d)$/.match(human_date))
+        # Matches a year range: 1935-6.
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['earliestDate']), "#{year_range[1]}") # YYYY
+        statements << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['latestDate']), "#{year_range[1][0,3]}#{year_range[2]}") # YYYY
+
+      elsif (year_desc = /^(\d{4})\s+(\D*)$/.match(human_date))
+        # Matches YEAR ... Description: 1941                                   Newport, OR Bayfront
+        statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), year_desc[1]) # YYYY
+        # Special case: since some dates had additional descriptive material, a dct:description field is returned as well.
+        statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.description), year_desc[2]) # Description
+
+      elsif (mdy = /(\d{2})\/(\d{2})\/(\d{2})/.match(human_date))
+        # Matches 05/12/45: 1954-05-12.
+        statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date), "19#{mdy[3]}-#{mdy[1]}-#{mdy[2]}") # YYYY-MM-DD
+
+      else
+        begin
+          # Try letting Date parser do the work and convert it to ISO8601.
+          if /\D+(\d+),\s(\d{4})/.match(human_date)
+            # Matches: July 4, 1963.
+            d = Date.strptime(human_date, '%B %d, %Y')
+            statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m-%d')) # YYYY-MM
+
+          elsif /(\d+)\s\w+,\s*(\d{4})/.match(human_date)
+            # Matches: 31 July, 1963.
+            d = Date.strptime(human_date, '%d %B, %Y')
+            statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m-%d')) # YYYY-MM
+
+          elsif /\w+,\s*\d{4}/.match(human_date)
+            # Matches: Month, Year.
+            d = Date.strptime(human_date,'%B, %Y')
+            statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m')) # YYYY-MM
+
+          elsif /\w+\s*\d{4}/.match(human_date)
+            # Matches: Month Year.
+            d = Date.strptime(human_date,'%B %Y')
+            statements << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.date),  d.strftime('%Y-%m')) # YYYY-MM
+
+          end
+        rescue ArgumentError
+          @log.warn("#{__method__} :: Unable to parse date: #{human_date}")
+        end
+      end
+      # printf("%-20s\n",human_date) # if xsd_dates.count == 0
+      # statements.each {|stmt| printf("\t%-45s\t%s\n",stmt.predicate,stmt.object)}
+      statements
+    end
+
+    def load_compound_objects(collection, graph, subject)
+
+      begin
+        # Get the id from 'replaces' object so we can retrieve the .cpd file.
+        replaces = graph.query([nil, RDF::DC.replaces, nil])
+        cis_id = replaces.first.object.to_s.split("#{collection},").last
+        cpd_url = "http://oregondigital.org/cgi-bin/showfile.exe?CISOROOT=/#{collection}&CISOPTR=#{cis_id}&filename=cpdfilename"
+        cpd_file = RestClient.get cpd_url
+        if 200 == cpd_file.code
+          cpd_doc = Nokogiri::XML.parse(cpd_file)
+          if cpd_doc.xpath('/cpd/page')
+            file_node = RDF::Node.new
+
+            # Connect the graph to the compound object list.
+            graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contents']),  file_node)
+
+            # Pull out the "type" from the compound object as it's used as a title.
+            graph << RDF::Statement.new(file_node, RDF::DC.title, cpd_doc.at_xpath('/cpd/type').text)
+
+            # Pull out the individual 'page' element(s) from the .cpd and add them to the graph.
+            pages = []
+            cpd_doc.xpath('/cpd/page').each_with_index do |page, i|
+              cpd_node = RDF::Node.new
+              graph << RDF::Statement.new(cpd_node, RDF::DC.title, page.at_xpath('pagetitle').text)
+              graph << RDF::Statement.new(cpd_node, RDF::DC.replaces, RDF::URI.new("http://oregondigital.org/u?/#{collection},#{page.at_xpath('pageptr').text}"))
+              graph << RDF::Statement.new(cpd_node, RDF::URI.new(@namespaces['oregon']['full']), page.at_xpath('pagefile').text)
+              graph << RDF::Statement.new(cpd_node, RDF.type, RDF::URI.new(@namespaces['oregon']['compoundObject']))
+              pages << cpd_node
+            end
+            RDF::List.new(file_node, graph, pages)
+            # graph.each { |x| puts x.inspect}
+          end
+        else
+          raise "Unexpected result code received: #{cpd_file.code}"
+        end
+      rescue => e
+        @log.error("Error: #{e} getting RDF file: #{cpd_url}")
+      end
+      graph
+    end
 
   end
 end

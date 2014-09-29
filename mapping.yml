@@ -17,6 +17,11 @@ namespaces:
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
   exif: "http://www.w3.org/2003/12/exif/"
+  dwc: "http://rs.tdwg.org/dwc/terms/"
+  biol: "http://ontologi.es/biol/botany#"
+  schema: "http://schema.org/"
+  swpo: "http://sw-portal.deri.org/ontologies/swportal#"
+
 ##
 # METHODS:
 #
@@ -639,6 +644,113 @@ mappings:
     find: oregon:full # no compound objects
     dmoclcno: SKIP # always blank
     dmaccess: SKIP # always blank
+    dmcreated:
+      method: dc_created
+    dmmodified: SKIP
+    dmrecord:
+      method: replace
+
+  #
+  # gwilliams - Gerald W. Williams Collection
+  #
+  gwilliams:
+    creato: dct:creator
+    title: dct:title
+    digita: SKIP # always blank
+    date:
+      method: xsd_date
+    datese: SKIP
+    descri: dct:description
+    subjec:
+      method: lcsubject
+    geogra:
+      method: gifford_geographic
+    geogrb:
+      method: gifford_geographic
+    huc: oregon:huc
+    llid: oregon:llid
+    object:
+      method: types
+    type:
+      method: aat_gwilliams
+    origin: SKIP
+    relate:
+      method: collection_from_opaquens
+    source: dct:isReferencedBy
+    identi: dct:identifier
+    langua: SKIP # always blank
+    rights:
+      method: osu_archive_rights
+    relati: dct:isPartOf
+    format: oregon:conversionSpecifications
+    covera: SKIP
+    datedi: oregon:dateDigitized
+    contra:
+      method: institution
+    contri: SKIP # always empty
+    status: modsrdf:note
+    catalo: SKIP # always empty
+    dmaccess: SKIP
+    dmimage: SKIP
+    fullrs: oregon:full
+    dmoclcno: SKIP
+    find: oregon:checkForCompound # Cleanup will look for .cpd files
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord:
+      method: replace
+
+  #
+  # herbarium (Herbarium Specimens Collection)
+  #
+  herbarium:
+    title: dct:title  # Basionym
+    basioa: dwc:originalNameUsage # Original Identification : ["Atriplex rosea L.", "Deyeuxia (Calamagrostis) howellii Vasey", ...]
+    family: dwc:family # Family : ["Chenopodiaceae", "Poaceae", "Polygonaceae", ...]
+    common: dwc:vernacularName # : ["", "sickle leaved onion", "Malheur Valley fiddleneck; Malheur fiddleneck", ...]
+    journa: swpo:containedInJournal # Journal Title : ["The American Midland Naturalist", "Annals. Missouri Botanical Garden", ...]
+    articl: dct:title # : ["Some Nomenclatural Changes in the Genus Isoetes", "Perennial Lupines", ...]
+    author: marcrel:aut # Author : ["Reveal, James L.", "Suksd", "Alverson, Edward R.", ...]
+    curren: dwc:acceptedNameUsage # Current taxon : ["Atriplex rosea L.", "Calamagrostis howellii Vasey",...]
+    primar: marcrel:col # Primary Collector : ["Nelson, A.", "Howell, T.", ...]
+    creato: marcrel:col # Collector(s) : ["Aven Nelson", "Thomas J. Howell", ...]
+    date:
+      method: dc_date_collected # Collection Date :  ["1900-8-29", "1881-5", "1896-6-8",...]
+    descri: modsrdf:note # : ["Pages Basionym: 39-40; Pages Full Article: 39-40", ...]
+    fullte: SKIP # : ["", nil, "Pages Basionym: 1,2,3,4,6,11,29; Pages Full Article: 1-14; 29", "one specimen image; one type description (pdf)"]
+    publis: oregon:specimenType # TODO Type : ["Isotype", "Isosyntype", "Holotype",...]
+    subjec: dwc:originalNameUsage # Genus Basionym : ["Atriplex", "Calamagrostis", ...]
+    specie: dwc:originalNameUsage # Species Basionym : ["spatiosa", "howellii", "ochrocephalum",...]
+    basion: oregon:previousNameAuthorship # TODO Basionym Authority : ["A. Nelson", "Vasey", "Stokes", ...]
+    currea: dwc:genus # Current Genus : ["Atriplex", "Calamagrostis", ...]
+    curreb: biol:species # Current Species : ["rosea", "howellii", "ochrocephalum",...]
+    currec: dwc:scientificNameAuthorship # Current Authority : ["L.", "Vasey", "(S. Stokes) M. Peck", ...]
+    type:
+      method: types # Resource Type : ["Image", "Text", ""]
+    format: dct:format # Digital Object Format : ["image/jpg2000", "application/pdf", "multipart/mixed", "mulitpart/mixed", ""]
+    identi: oregon:cco/accessionNumber # Filename : ["ORE28507", "ORE9181", "ORE26792", ...]
+    collec: oregon:localCollectionID # Collection Number : ["2228", "2614", "19100",...]
+    accept: SKIP # Stakeholder does not want to use 
+    relati: schema:citation # Protologue Citation ["Bot. Gaz. 34: 360.  1902.",...]
+    langua: oregon:herbCounty # County ["Sweetwater", ...]
+    covera: oregon:herbState # State ["Wyoming", ...]
+    countr: oregon:herbCountry # Country ["U.S.A.", ...]
+    source: dct:spatial # Location Notes ["Granger.", "cliffs of Columbia River near the Cascades.", "near Harper's Ranch, Malheur Valley.", ...]
+    rights:
+      method: herbarium_rights # ["Copyright Oregon State University Herbarium. Digital type specimens remain the property of the Oregon State University Herbarium. For questions regarding reproduction or use, please contact the OSU Herbarium Director at: http://oregonstate.edu/dept/botany/herbarium/.  Type descriptions remain the property of the individual copyright holders.  For information on site disclaimers, participating publishers and acknowledgements, please see: http://digitalcollections.library.oregonstate.edu/cdm4/client/herbarium/acknowledgements.php?CISOROOT=/herbarium"]
+    transm: oregon:conversionSpecifications # ["Images captured on digital camera at 400 dpi and edited in Adobe Photoshop 7.0.  JPEG2000 images generated at 8-bit depth, using CONTENTdm's JPEG2000 extension."]
+    filena: oregon:fileName # The PDF files from CDM use these file names so we need to keep them in order to copy the correct item into the bag.
+    compou: dce:identifier # Accession Number : ["ORE28507", "ORE9181", "ORE26792", ...]
+    projec: SKIP # [""]
+    fullrs: SKIP # : ["Herb_vol8\\ORE81846.tif", "Herb_vol8\\ORE82507.tif", ...]
+    find: oregon:full
+    dmaccess: SKIP # : ["", "ORE11000", "ip:128.193.*; deny:file"]
+    dmimage: SKIP # [""]
+    dmad1: SKIP # [""]
+    dmad2: SKIP # [""]
+    dmoclcno: SKIP # [""]
     dmcreated:
       method: dc_created
     dmmodified: SKIP

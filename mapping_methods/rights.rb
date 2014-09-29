@@ -97,5 +97,12 @@ module MappingMethods
       graph << RDF::Statement.new(subject, RDF::URI('http://purl.org/dc/elements/1.1/rights'), data)
       graph
     end
+
+    def herbarium_rights(subject, data)
+      graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://www.europeana.eu/rights/rr-f/'))
+      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'Oregon State University Herbarium')
+      graph << RDF::Statement(subject, RDF::URI('http://data.archiveshub.ac.uk/def/useRestrictions'), data)
+      graph
+    end
   end
 end
