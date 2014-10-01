@@ -1571,7 +1571,7 @@ Manuscripts:
   datc:
     method: date
   datb:
-    method: date
+    dct: temporal
   date: oregon:dateDigitized
   publis: #SKIP
   langua:
