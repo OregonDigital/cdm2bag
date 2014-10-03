@@ -140,7 +140,6 @@ namespaces:
 # *folkrights - separates rights statement from copyright holder for OAC rights
 # *arch_rights - see building_or_rights.txt for mappings
 # *misc_rights - http://www.europeana.eu/rights/rr-r/ in rights and reprint publisher in rightsHolder
-# *restricted - restrict itmes to UO only after ingest to Oregon Digital
 # *pd_rights- public domain in rights, http://creativecommons.org/publicdomain/mark/1.0/,  and no rightsholder
 # *tlegacies_rights - http://www.europeana.eu/rights/unknown/ for dct:rights and no rightsholder
 # *petrarch_right- public domain and "Copyright resides with the creator(s) of the item and may be subject to copyright restrictions."
@@ -150,6 +149,8 @@ namespaces:
 # *artimages_rights- see statements
 # *archivision_rights-  one statement
 # *artlicensed_rights-  see statements
+# *accessRestrictions_all- All content is restrcited UO IP "This item is restricted to University of Oregon authorized users for personal study, research, and teaching."
+# *accessRestrictions_some- Content under copyright is restricted to UO IP with accessRestrictions_all statement, all other content have "None"
 
 
 
@@ -645,6 +646,8 @@ jsma:
  museum: # SKIP
  digita: oregon:set
  catalo: # SKIP
+ accessRestrictions:
+      method: accessRestrictions_all
 
 
   #
@@ -1337,6 +1340,8 @@ archivision:
   dmmodified: #SKIP
   dmrecord:
     method: replace
+  accessRestrictions:
+    method: accessRestrictions_all
     
   #
   # artimages
@@ -1412,6 +1417,8 @@ artimages:
   dmmodified: #SKIP
   dmrecord:
     method: replace
+  accessRestrictions:
+    method: accessRestrictions_some
 
     #
   # artlicensed
@@ -1486,7 +1493,8 @@ artlicensed:
   dmmodified: #SKIP
   dmrecord:
     method: replace
-    
+  accessRestrictions:
+    method: accessRestrictions_all
     
   #
   # lowenstam
@@ -1545,6 +1553,8 @@ lowenstam:
  dmmodified: #SKIP
  dmrecord:
    method:replace
+  accessRestrictions:
+    method: accessRestrictions_some
 
 
   #
@@ -1802,7 +1812,7 @@ misc:
   fullrs: #SKIP
   find: #SKIP
   dmaccess:
-    method: restricted # need to secure to UO IP only
+    method: #SKIP
   dmimage: #SKIP
   dmad1: #SKIP
   dmad2: #SKIP
@@ -1811,6 +1821,8 @@ misc:
   dmmodified: #SKIP
   dmrecord:
     method: replace
+  accessRestrictions:
+    method: accessRestrictions_all
     
 
   #
