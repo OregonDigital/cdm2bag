@@ -286,9 +286,9 @@ mappings:
     photoa: 
 	  method: date
     colleb:
-      method: lcnaf #aat:collectors ,  aat concept of type of agent
+      method: lcnaf #aat:collectors ,  aat concept of type of agent, dct:contributor
     contri:
-      method: lcnaf #dct:contributor
+      method: lcnaf #dct:creator
     descri: dct:description
     inscri: vra:inscription
     langua:
