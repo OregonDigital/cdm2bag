@@ -70,6 +70,7 @@ namespaces:
 
 # *localCollectionName- uses local vocab and oregon: pred
 # *event- use local subject vocab #schema:event
+# *jasr_localCollectionName- Use http://opaquenamespace.org/ns/localCollectionName/NationalJapaneseAmericanStudentRelocationCouncilRecords in all records
 
 
 # Creators
@@ -80,6 +81,7 @@ namespaces:
 
 #* Publishers
 # *lcnaf_pub- query lcnaf and lcsh and use dct: publisher
+# *jasr_boxFolder- split field into oregon:boxNumber and oregon:folderNumber, discard ua9 element
 
 # Subjects
 # *aat - uses aat from getty
@@ -586,7 +588,7 @@ jasr:
  subjec: dct:subject
  corpor: dct:subject
  creato: dct:creator
- publis: dct:source
+ publis: # SKIP
  date:
       method:date
  type:
@@ -594,15 +596,16 @@ jasr:
  format:
       method:format
  identi: dct:identifier
- source: holding:label
+ source: # Split field into oregon:boxNumber and oregon:folderNumber (box and folder fields below), discard ua9 element
+      method:jasr_boxFolder
  langua:
       method:language
  collec:
-      method:localCollectionName
+      method:jasr_localCollectionName # Use http://opaquenamespace.org/ns/localCollectionName/NationalJapaneseAmericanStudentRelocationCouncilRecords to all records
  collea: oregon:localCollectionID
  colleb: oad:has_findingAid
- box: # SKIP
- folder: # SKIP
+ box: oregon:boxNumber
+ folder: oregon:folderNumber
  rights:
       method:rights
  full: oregon:fullText
