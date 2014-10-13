@@ -108,10 +108,13 @@ def add_content_file(graph, bag, dir)
     end
     fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
     fname = fname.split(/\\/).last
-    file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, '')) 
+    file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, ''))
     require 'find'
     Find.find(dir) do |path|
-      file = path if path.include? fname
+       if File.basename(path) == fname
+         file = path
+         break
+       end
     end
     bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
   rescue Errno::ENOENT => e
