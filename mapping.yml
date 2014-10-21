@@ -17,6 +17,11 @@ namespaces:
   vra: "http://www.loc.gov/standards/vracore/vocab/"
   aat: "http://vocab.getty.edu/resource/aat/"
   exif: "http://www.w3.org/2003/12/exif/"
+  dwc: "http://rs.tdwg.org/dwc/terms/"
+  biol: "http://ontologi.es/biol/botany#"
+  schema: "http://schema.org/"
+  swpo: "http://sw-portal.deri.org/ontologies/swportal#"
+
 ##
 # METHODS:
 #
@@ -639,6 +644,113 @@ mappings:
     find: oregon:full # no compound objects
     dmoclcno: SKIP # always blank
     dmaccess: SKIP # always blank
+    dmcreated:
+      method: dc_created
+    dmmodified: SKIP
+    dmrecord:
+      method: replace
+
+  #
+  # gwilliams - Gerald W. Williams Collection
+  #
+  gwilliams:
+    creato: dct:creator
+    title: dct:title
+    digita: SKIP # always blank
+    date:
+      method: xsd_date
+    datese: SKIP
+    descri: dct:description
+    subjec:
+      method: lcsubject
+    geogra:
+      method: gifford_geographic
+    geogrb:
+      method: gifford_geographic
+    huc: oregon:huc
+    llid: oregon:llid
+    object:
+      method: types
+    type:
+      method: aat_gwilliams
+    origin: SKIP
+    relate:
+      method: collection_from_opaquens
+    source: dct:isReferencedBy
+    identi: dct:identifier
+    langua: SKIP # always blank
+    rights:
+      method: osu_archive_rights
+    relati: dct:isPartOf
+    format: oregon:conversionSpecifications
+    covera: SKIP
+    datedi: oregon:dateDigitized
+    contra:
+      method: institution
+    contri: SKIP # always empty
+    status: modsrdf:note
+    catalo: SKIP # always empty
+    dmaccess: SKIP
+    dmimage: SKIP
+    fullrs: oregon:full
+    dmoclcno: SKIP
+    find: oregon:checkForCompound # Cleanup will look for .cpd files
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord:
+      method: replace
+
+  #
+  # herbarium (Herbarium Specimens Collection)
+  #
+  herbarium:
+    title: dct:title  # Basionym
+    basioa: dwc:originalNameUsage # Original Identification
+    family: dwc:family # Family
+    common: dwc:vernacularName
+    journa: swpo:containedInJournal # Journal Title
+    articl: dct:title
+    author: marcrel:aut # Author
+    curren: dwc:acceptedNameUsage # Current taxon
+    primar: marcrel:col # Primary Collector
+    creato: marcrel:col # Collector(s)
+    date:
+      method: dc_date_collected # Collection Date
+    descri: modsrdf:note
+    fullte: SKIP
+    publis: oregon:specimenType # Type
+    subjec: dwc:originalNameUsage # Genus Basionym
+    specie: dwc:originalNameUsage # Species Basionym
+    basion: oregon:previousNameAuthorship # Basionym Authority
+    currea: dwc:genus # Current Genus
+    curreb: biol:species # Current Species
+    currec: dwc:scientificNameAuthorship # Current Authority
+    type:
+      method: types # Resource Type
+    format: dct:format # Digital Object Format
+    identi: oregon:cco/accessionNumber # Filename
+    collec: oregon:localCollectionID # Collection Number
+    accept: SKIP # Stakeholder does not want to use 
+    relati: schema:citation # Protologue Citation
+    langua: oregon:herbCounty # County
+    covera: oregon:herbState # State
+    countr: oregon:herbCountry # Country
+    source: dct:spatial # Location Notes
+    rights:
+      method: herbarium_rights # ["Copyright Oregon State University Herbarium. Digital type specimens remain the property of the Oregon State University Herbarium. For questions regarding reproduction or use, please contact the OSU Herbarium Director at: http://oregonstate.edu/dept/botany/herbarium/.  Type descriptions remain the property of the individual copyright holders.  For information on site disclaimers, participating publishers and acknowledgements, please see: http://digitalcollections.library.oregonstate.edu/cdm4/client/herbarium/acknowledgements.php?CISOROOT=/herbarium"]
+    transm: oregon:conversionSpecifications # ["Images captured on digital camera at 400 dpi and edited in Adobe Photoshop 7.0.  JPEG2000 images generated at 8-bit depth, using CONTENTdm's JPEG2000 extension."]
+    filena: oregon:fileName # The PDF files from CDM use these file names so we need to keep them in order to copy the correct item into the bag.
+    compou: dce:identifier # Accession Number
+    projec: SKIP # Always empty
+    fullrs: SKIP # Use the file mapping spreadsheet
+    find: oregon:full
+    dmaccess: SKIP # : ["", "ORE11000", "ip:128.193.*; deny:file"]
+    dmimage: SKIP # Always empty
+    dmad1: SKIP # Always empty
+    dmad2: SKIP # Always empty
+    dmoclcno: SKIP # Always empty
     dmcreated:
       method: dc_created
     dmmodified: SKIP

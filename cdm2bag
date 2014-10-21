@@ -7,6 +7,7 @@ require 'logger'
 require 'docopt'
 require './mapping_methods.rb'
 require_relative 'lib/desc_parser'
+require 'csv'
 
 include MappingMethods
 
@@ -17,28 +18,45 @@ Consumes a directory of ContentDM collections and converts them into
 bags.
 
 Usage:
-  #{__FILE__} [--skip] [--map-file=<file>] DIR [TARGET]
+  #{__FILE__} [--skip] [--map-file=<file>] [--image-file=<file>] [--image-file-path=<dir>] DIR [TARGET]
   #{__FILE__} -h | --version
 
 Options:
-  -s --skip             Skip missing fields.
-  -m --map-file=<file>  Mapping file. [default: mapping.yml]
-  -h --help             Show this help screen.
-  -v --version          Show version.
+  -s --skip                 Skip missing fields.
+  -m --map-file=<file>      Mapping file. [default: mapping.yml]
+  -h --help                 Show this help screen.
+  -v --version              Show version.
+  --image-file=<file>       CSV format file containing mapping from one image file to another in the format old,new
+  --image-file-path=<dir>   Path where the full size images are located. [default: metadata/COLLNAME]
 
 DOCOPT
 
 def create_graphs(file, collection)
+
   graphs = []
+  compounds = []
+  singles = []
   graph = RDF::Graph.new
-  DescParser.parse(file).each do |record|
+
+  items = DescParser.parse(file)
+  # Make a quick pass through and determine if there are any compound objects, moving them to the end of the list.
+  items.each do |rec|
+    if rec.find.to_s.downcase.end_with? '.cpd'
+      compounds << rec
+    else
+      singles << rec
+    end
+  end
+  @cpd_item_count = compounds.count
+  items.clear.concat(singles).concat(compounds)
+  items.each do |record|
     bnode = RDF::Node.new
     record.marshal_dump.each do |tag, ln|
       if tag.to_s == 'dmrecord'
         graph << RDF::Statement(bnode, RDF::DC.replaces, RDF::URI("http://oregondigital.org/u?/#{collection},#{ln}"))
         add_set(collection, graph, bnode)
         send("#{collection}_cleanup", collection, graph, bnode) if respond_to?("#{collection}_cleanup")
-        graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}")) unless graph.empty?
+        graphs << set_subject(graph, RDF::URI("http://example.org/ns/#{ln}"), bnode) unless graph.empty?
         graph = RDF::Graph.new
         bnode = RDF::Node.new
         next
@@ -46,10 +64,11 @@ def create_graphs(file, collection)
 
       begin
         if @collection_mappings[tag.to_s].include? 'method' and not (ln == nil or ln == '')
-          graph << send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+          result = send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+          graph << result unless result.nil?
         else
           next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
-          ns, term = @collection_mappings[tag.to_s].split(':') 
+          ns, term = @collection_mappings[tag.to_s].split(':')
           graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
         end
       rescue NoMethodError
@@ -69,23 +88,33 @@ end
 
 def map_set
   {
-    "oe_explorer" => "oregon-explorer",
-    "siuslaw" => "siuslaw",
-    "rockshore93" => "rockyshore93",
-    "baseball" => "osu-baseball",
-    "gifford" => "gifford",
-    "fairbanks" => "fairbanks",
-    "lchsa" => "lchsa"
+      "oe_explorer" => "oregon-explorer",
+      "siuslaw" => "siuslaw",
+      "rockshore93" => "rockyshore93",
+      "baseball" => "osu-baseball",
+      "gifford" => "gifford",
+      "fairbanks" => "fairbanks",
+      'lchsa' => 'lchsa',
+      'gwilliams' => 'gwilliams',
+      'herbarium' => 'herbarium'
   }
 end
 
-def set_subject(graph, subject)
+def set_subject(graph, new_subject, old_subject)
+  list_items = []
   graph.each_statement do |statement|
+    graph.delete(statement)
+    # Separate any list statements so they appear at the end.
     if statement.subject.node?
-      graph.delete(statement)
-      graph << RDF::Statement.new(subject, statement.predicate, statement.object)
+      if old_subject == statement.subject
+        graph << RDF::Statement.new(new_subject, statement.predicate, statement.object)
+      else
+        list_items << statement
+      end
     end
   end
+  # Add any list items to the end of the graph.
+  list_items.each { |statement| graph << statement }
   graph
 end
 
@@ -96,10 +125,10 @@ def write_desc_metadata(graph, bag)
   bag.add_tag_file('descMetadata.nt', 'descMetadata.nt')
 end
 
-def add_content_file(graph, bag, dir)
+def add_content_file(graph, bag, dir, subject)
   begin
     query = RDF::Query.new do
-      pattern [:subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
+      pattern [subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
     end
     results = query.execute(graph)
     if results.empty?
@@ -108,10 +137,21 @@ def add_content_file(graph, bag, dir)
     end
     fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
     fname = fname.split(/\\/).last
-    file = File.join(dir, '', fname.to_s.split('\\')[-1].gsub(/^1_/, '')) 
+
+    # Use the supplied filename unless it is in the image map (if one was passed in on the command line).
+    if @image_file_map and @image_file_map.has_value?(File.basename(fname, '.*'))
+      # Override the image dir if one is passed in on the command line along with a mapping file.
+      dir = @image_file_path if @image_file_path
+    else
+      fname = fname.to_s.split('\\')[-1].gsub(/^1_/, '')
+    end
+    file = File.join(dir, '', fname)
     require 'find'
     Find.find(dir) do |path|
-      file = path if path.include? fname
+      if File.basename(path) == fname
+         file = path
+         break
+      end
     end
     bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
   rescue Errno::ENOENT => e
@@ -120,15 +160,17 @@ def add_content_file(graph, bag, dir)
 end
 
 def make_bag(dir, graph, subject, source_dir)
-  bag = BagIt::Bag.new(File.join(dir, File.basename(subject)))
+  folder = @folder_id.to_s
+  @folder_id += 1
+  bag = BagIt::Bag.new(File.join(dir, folder))
   write_desc_metadata(graph, bag)
-  add_content_file(graph, bag, source_dir)
+  add_content_file(graph, bag, source_dir, subject)
   bag.tagmanifest!
   bag.manifest!
 end
 
 def make_coll_bags(dir, target, collection, *args)
-  # file = File.join(dir, collection, 'index', 'description', 'desc.all')
+
   file = File.join(dir, collection, 'desc.all')
   col_dir = FileUtils.mkdir_p(File.join(target, collection))
   @collection_mappings = @mappings['mappings'][collection]
@@ -139,7 +181,7 @@ def make_coll_bags(dir, target, collection, *args)
     graphs.each do |graph|
       subject = ''
       graph.each_statement do |s|
-        if s.subject.start_with? 'http://example.org/ns/'
+        if s.subject.to_s.start_with? 'http://example.org/ns/'
           subject = s.subject
           break
         end
@@ -161,9 +203,19 @@ end
 
 begin
   @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.2')
+  @folder_id = 1
 
   @missing_fields = []
   @mappings = YAML.load_file(@opts['--map-file'])
+  @image_file_path = @opts['--image-file-path'] if @opts['--image-file-path']
+
+  # If there is an image file present, split it into k->v pairs for filename lookup.
+  if @opts['--image-file']
+    list = {}
+    params = {:headers => true, :return_headers => true, :header_converters => :symbol, :converters => :all}
+    CSV.read(@opts['--image-file'], params).each {|row| list[row.fields[0]] = row.fields[1] }
+    @image_file_map = list
+  end
   @namespaces = {}
   @mappings['namespaces'].each do |ns, base_uri|
     @namespaces[ns] = RDF::Vocabulary.new(base_uri)
