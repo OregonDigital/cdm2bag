@@ -74,7 +74,7 @@ module MappingMethods
           # The PDFs we have use the filename specified in oregon:fileName, not oregon:full so remove the existing oregon:full name.
           graph.delete(full_stmt)
           # puts "PDF FILE: #{full_file}"
-          graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['full']), filename)
+          graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), filename)
         else
           # If oregon:full is not a pdf, replace it with the new barcode filename referenced by the accession number.
           accession = graph.query([nil, @namespaces['oregon']['cco/accessionNumber'], nil])
@@ -82,10 +82,10 @@ module MappingMethods
             barcode = @image_file_map[accession.first.object.to_s] if @image_file_map
             if barcode
               graph.delete(full_stmt)
-              graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['full']), "#{barcode}.tif")
-              graph << RDF::Statement.new(subject, RDF::DC.identifier, barcode)
+              graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{barcode}.tif")
+              graph << RDF::Statement.new(subject, RDF::URI('http://bibframe.org/vocab/barcode'), barcode)
             else
-              graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['full']), "#{accession.first.object.to_s}.tif")
+              graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{accession.first.object.to_s}.tif")
               @log.warn("No matching barcode for #{accession.first.object.to_s}, using existing tif")
             end
           else
@@ -115,7 +115,7 @@ module MappingMethods
 
       # Prepend the abbreviation notes with a label and add to modsrdf:note.
       abbrev = graph.query([nil, @namespaces['oregon']['herbariumAbbrev'], nil])
-      graph << RDF::Statement.new(subject, RDF::URI.new('http://www.loc.gov/standards/mods/modsrdf/v1/note'), "Accepted Acronym: #{abbrev.first.object.to_s}" ) if abbrev.first
+      graph << RDF::Statement.new(subject, RDF::URI('http://www.loc.gov/standards/mods/modsrdf/v1/note'), "Accepted Acronym: #{abbrev.first.object.to_s}" ) if abbrev.first
 
       # Remove the placeholder statements.
       graph.delete(county)
