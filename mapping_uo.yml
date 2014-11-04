@@ -1887,7 +1887,7 @@ maic:
   proces: vra:technique
   point: dct:hasVersion
   measur: vra:measurements
-  object: oregon:compassDirection
+  object: oregon:objectOrientation
   primar:
     method:geographic
   second:
@@ -1896,7 +1896,7 @@ maic:
   period: vra:stylePeriod
   perioa: vra:stylePeriod
   relati: dct:relation
-  orient: oregon:compassDirection
+  orient: oregon:photographOrientation
   rights: marcrel:pht
   date: oregon:cco/viewDate
   righta:
