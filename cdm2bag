@@ -150,13 +150,11 @@ def add_content_file(graph, bag, dir, subject)
         break
       end
     end
-    puts "FILE #{file}"
     bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
   rescue Errno::ENOENT => e
     replaces = graph.query([nil, RDF::DC.replaces, nil])
     rep_uri = replaces.first ? replaces.first.object : nil
     @log.warn("#{fname}: No File Found for #{rep_uri}.")
-    puts bag
   end
 end
 
