@@ -1221,9 +1221,11 @@ uostock:
     method:date_isused
   instal: vra:material
   format: vra:material
+    method: aat
   artwor: vra:measurements
   materi: vra:material
   source: dct:hasVersion
+    method: aat #and op_ns subject
   sourcb: #SKIP
   artwob:
     method:geographic
