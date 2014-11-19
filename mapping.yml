@@ -779,12 +779,12 @@ mappings:
     object:
       method: types # Object Type
     type:
-      method: aat_from_search # Original Form
+      method: aat_streamsurvey # Original Form : ["Silver gelatin prints", "4 X 5 Negative", "text/plain", ""]
     source: dct:isPartOf # Original Collection : ["Pacific Northwest Stream Survey Collection", "", "Special Scientific Report: Fisheries"]
     relate: SKIP # Always blank
     identi: dct:identifier # Item Number
     langua:
-      method: aat_from_search # Other Forms : ["Nitrate negatives", "Silver gelatin prints", "", "print"]
+      method: aat_streamsurvey # Other Forms : ["Nitrate negatives", "Silver gelatin prints", "", "print"]
     rights: dct:rights # Restriction: ["Permission to use must be obtained from OSU Archives.", ""]
     relati: dct:relation # Related Materials : "25D; Album1 pg.39 Image 1", "25D-(3)", "25D"
     format: oregon:conversionSpecifications # Transmission Data
