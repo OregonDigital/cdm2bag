@@ -103,6 +103,16 @@ module MappingMethods
       }
     end
 
+    def streamsurvey_geographic(subject, data)
+      graph = RDF::Graph.new
+      return graph if data == "" || data.nil?
+      Array(data.split(";")).each do |str|
+        next if str.to_s.strip == ""
+        graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :name_startsWith => str, :orderBy => 'relevance'})
+      end
+      graph
+    end
+
     # def geonames_graph(uri, str)
     #   return @geocache[str][:graph] if @geocache[str].include? :graph
     #   geo_graph = RDF::Graph.load(uri)

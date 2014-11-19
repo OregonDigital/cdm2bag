@@ -27,7 +27,7 @@ Options:
   -h --help                 Show this help screen.
   -v --version              Show version.
   --image-file=<file>       CSV format file containing mapping from one image file to another in the format old,new
-  --image-file-path=<dir>   Path where the full size images are located. [default: metadata/COLLNAME]
+  --image-file-path=<dir>   Path where the full size images are located.
 
 DOCOPT
 
@@ -96,7 +96,8 @@ def map_set
       "fairbanks" => "fairbanks",
       'lchsa' => 'lchsa',
       'gwilliams' => 'gwilliams',
-      'herbarium' => 'herbarium'
+      'herbarium' => 'herbarium',
+      'streamsurvey' => 'streamsurvey',
   }
 end
 
@@ -137,30 +138,32 @@ def add_content_file(graph, bag, dir, subject)
     end
     fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
     fname = fname.split(/\\/).last
-
+    # Override the image dir if one is passed in on the command line along with a mapping file.
+    dir = @image_file_path if @image_file_path
     # Use the supplied filename unless it is in the image map (if one was passed in on the command line).
-    if @image_file_map and @image_file_map.has_value?(File.basename(fname, '.*'))
-      # Override the image dir if one is passed in on the command line along with a mapping file.
-      dir = @image_file_path if @image_file_path
-    else
-      fname = fname.to_s.split('\\')[-1].gsub(/^1_/, '')
-    end
+    fname = fname.to_s.split('\\')[-1].gsub(/^1_/, '') unless (@image_file_map and @image_file_map.has_value?(File.basename(fname, '.*')))
     file = File.join(dir, '', fname)
     require 'find'
     Find.find(dir) do |path|
       if File.basename(path) == fname
-         file = path
-         break
+        file = path
+        break
       end
     end
-    bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
+    if File.exist? file
+      bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
+    else
+      @log.warn("#{fname}: No File Found")
+    end
   rescue Errno::ENOENT => e
-    @log.warn("#{fname}: No File Found.")
+    replaces = graph.query([nil, RDF::DC.replaces, nil])
+    rep_uri = replaces.first ? replaces.first.object : nil
+    @log.warn("#{fname}: No File Found for #{rep_uri}.")
   end
 end
 
 def make_bag(dir, graph, subject, source_dir)
-  folder = @folder_id.to_s
+  folder = "%05d" % @folder_id.to_s
   @folder_id += 1
   bag = BagIt::Bag.new(File.join(dir, folder))
   write_desc_metadata(graph, bag)

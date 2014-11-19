@@ -47,7 +47,6 @@ module MappingMethods
         "reproduction" => "reproductions",
         "monotypes" => "monotypes (planographic prints)",
         "aquatint" => "aquatints (prints)",
-        "silver gelatin" => "gelatin silver prints"
       }
     end
 
@@ -93,6 +92,19 @@ module MappingMethods
 
     def aat_sheetmusic(subject, data)
       RDF::Graph.new << RDF::Statement.new(subject, RDF.type, RDF::URI('http://vocab.getty.edu/aat/300026430'))
+    end
+
+    def aat_streamsurvey(subject, data)
+      r = RDF::Graph.new
+      uri = 'http://vocab.getty.edu/aat/'
+      case data
+        when 'Silver gelatin prints'
+          uri += '300128695'
+        when '4 X 5 Negative', 'Nitrate negatives'
+          uri += '300127173'
+        else
+      end
+      r << RDF::Statement.new(subject, RDF.type, RDF::URI(uri))
     end
   end
 end

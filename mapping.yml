@@ -756,3 +756,53 @@ mappings:
     dmmodified: SKIP
     dmrecord:
       method: replace
+
+  #
+  # streamsurvey (Pacific NW Stream Survey)
+  #
+  streamsurvey:
+    title: dct:title # Image Title
+    digita: dct:isPartOf # Digital Collection Title -  ["Willamette River Basin Photographs", "Pacific Northwest Stream Survey Collection", ""]
+    creato: dct:creator # Creator
+    date:
+      method: xsd_date # Date Original
+    descri: dct:description # Description/Notes
+    fullte: SKIP # Full Text
+    subjec:
+      method: lcsubject # Subject
+    geogra:
+      method: streamsurvey_geographic # Geographic Subjects
+    geogrb:
+      method: streamsurvey_geographic # Rivers and Streams
+    huc: oregon:huc
+    llid: oregon:llid
+    object:
+      method: types # Object Type
+    type:
+      method: aat_streamsurvey # Original Form : ["Silver gelatin prints", "4 X 5 Negative", "text/plain", ""]
+    source: dct:isPartOf # Original Collection : ["Pacific Northwest Stream Survey Collection", "", "Special Scientific Report: Fisheries"]
+    relate: SKIP # Always blank
+    identi: dct:identifier # Item Number
+    langua:
+      method: aat_streamsurvey # Other Forms : ["Nitrate negatives", "Silver gelatin prints", "", "print"]
+    rights: dct:rights # Restriction: ["Permission to use must be obtained from OSU Archives.", ""]
+    relati: dct:relation # Related Materials : "25D; Album1 pg.39 Image 1", "25D-(3)", "25D"
+    format: oregon:conversionSpecifications # Transmission Data
+    covera: oregon:full # File Name : "SS81_2.tif", "SS81_3.tif", "SS81B1.tif"
+    datedi: oregon:dateDigitized # Date Digital
+    contra:
+      method: institution # Contributing Institution : ["Oregon State University Libraries", ""]
+    contri: modsrdf:note # Project questions & comments -- Internal Note Field : "Reviewed 12/11/02 -- added subject entry to Rivers and Streams; reviewed 4/15/2003 -- added Geog Subj. for Oregon City.
+    fullrs: SKIP # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
+    find: SKIP # "5.jpg", "6.jpg"
+    dmaccess: SKIP # Always blank
+    dmimage: SKIP # Always blank
+    dmad1: SKIP # Always blank
+    dmad2: SKIP # Always blank
+    dmoclcno: SKIP # Always blank
+    dmcreated:
+      method: dc_created
+    dmmodified:
+      method: dc_modified
+    dmrecord:
+      method: replace
