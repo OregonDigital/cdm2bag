@@ -758,9 +758,9 @@ mappings:
       method: replace
 
   #
-  # streamsurvey (Pacific NW Stream Survey)
+  # streamsurve (Pacific NW Stream Survey)
   #
-  streamsurvey:
+  streamsurve:
     title: dct:title # Image Title
     digita: dct:isPartOf # Digital Collection Title -  ["Willamette River Basin Photographs", "Pacific Northwest Stream Survey Collection", ""]
     creato: dct:creator # Creator
