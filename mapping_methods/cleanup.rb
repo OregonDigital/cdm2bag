@@ -126,7 +126,7 @@ module MappingMethods
       graph
     end
 
-    def streamsurvey_cleanup(collection, graph, subject)
+    def streamsurve_cleanup(collection, graph, subject)
       full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
       other = graph.query([subject, @namespaces['oregon']['otherFile'], nil])
       if full_stmt.first.nil?

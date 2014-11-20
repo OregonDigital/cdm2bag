@@ -97,7 +97,7 @@ def map_set
       'lchsa' => 'lchsa',
       'gwilliams' => 'gwilliams',
       'herbarium' => 'herbarium',
-      'streamsurvey' => 'streamsurvey',
+      'streamsurve' => 'streamsurvey',
   }
 end
 
@@ -137,35 +137,29 @@ def add_content_file(graph, bag, dir, subject)
       return nil
     end
     fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
-    # puts "FNAME: #{fname}"
     fname = fname.split(/\\/).last
-    # puts "FNAME: #{fname}"
     # Override the image dir if one is passed in on the command line along with a mapping file.
     dir = @image_file_path if @image_file_path
     # Use the supplied filename unless it is in the image map (if one was passed in on the command line).
     fname = fname.to_s.split('\\')[-1].gsub(/^1_/, '') unless (@image_file_map and @image_file_map.has_value?(File.basename(fname, '.*')))
-    # puts "FNAME: #{fname}"
     file = File.join(dir, '', fname)
     require 'find'
-    # puts "DIR: #{dir} FNAME: #{fname}"
-
     Find.find(dir) do |path|
-      # puts "PATH: #{path} BASE: #{File.basename(path)}"
       if File.basename(path) == fname
         file = path
         break
       end
     end
-    puts "FILE: #{file}" unless File.exist? file
     if File.exist? file
+      # @log.warn("FOUND: #{fname}")
       bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
     else
-      @log.warn("#{fname}: No File Found")
+      @log.warn("NOT FOUND: #{fname}")
     end
   rescue Errno::ENOENT => e
     replaces = graph.query([nil, RDF::DC.replaces, nil])
     rep_uri = replaces.first ? replaces.first.object : nil
-    @log.warn("#{fname}: No File Found for #{rep_uri}.")
+    @log.warn("#{fname} : No File Found for #{rep_uri}.")
   end
 end
 
@@ -212,20 +206,49 @@ def make_all_bags(dir, target)
   end
 end
 
-def move_bags_missing_images(target, collection)
-  # Hack to go through and pull out the bags that are missing images and put them in a separate folder for special handling.
+def get_bags_missing_images(target, collection)
+  # Hack to create a list of bags that are missing images.
   missing_dirs = []
   Dir.foreach(File.join(target, collection)) do |item|
-    unless '.' == item or '..' == item or '.DS_Store' == item or 'missing' == item
+    unless item.start_with?('.') or 'missing' == item
       data_dir = File.join(target, collection, item, 'data')
       found = false
       Dir.foreach(data_dir) do |subitem|
-        found = true unless '.' == subitem or '..' == subitem or '.DS_Store' == subitem
+        found = true unless subitem.start_with?('.')
       end
       missing_dirs << item unless found
     end
   end
+  missing_dirs
+end
+
+def list_missing_image_items(target, collection)
+  # Creates a list of the "replaces" URLs of the items whose bags are missing contents.
+  missing_items = []
+  missing_dirs = get_bags_missing_images(target, collection)
+  missing_dirs.each do |item|
+    replaces = ''
+    metadata = File.join(target, collection, item, 'descMetadata.nt')
+    File.readlines(metadata).each do |line|
+      # puts line
+      replaces = line if line.include? 'http://purl.org/dc/terms/replaces'
+      break if line.include? 'http://opaquenamespace.org/ns/contents' # Break before it sees child "replaces" items in complex objects.
+    end
+    if '' == replaces
+      puts "No replaces found in #{item}"
+    else
+      part = replaces.split(' ')[2].strip
+      missing_items << part[1,(part.length - 2)]
+    end
+  end
+  missing_items
+end
+
+def move_bags_missing_images(target, collection)
+  # Hack to go through and pull out the bags that are missing images and put them in a separate folder for special handling.
+  missing_dirs = get_bags_missing_images(target, collection)
   if missing_dirs.count > 0
+    puts "Moving #{missing_dirs.count} missing bags"
     missing = FileUtils.mkdir_p(File.join(target, collection, 'missing'))
     missing_dirs.each do |item|
       source = File.join(target, collection, item)
@@ -233,6 +256,7 @@ def move_bags_missing_images(target, collection)
       FileUtils.move(source, dest)
     end
   end
+  missing_dirs
 end
 
 begin
@@ -255,9 +279,7 @@ begin
     @namespaces[ns] = RDF::Vocabulary.new(base_uri)
   end
   @skip = ['unknown', 'n/a']
-
   @log = Logger.new('logfile.log')
-
   make_all_bags(@opts['DIR'], @opts['TARGET'] || 'bags')
   puts @missing_fields unless @missing_fields.empty?
 rescue Docopt::Exit => e
