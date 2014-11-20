@@ -432,15 +432,15 @@ Bestof:
  sourcb: oregon:sourceCondition
  type:
    method: type
- image: exif:fileSize
+ image: #SKIP
  format:
    method: format
- imagd: exif:width
- imagc: exif:height
+ imagd: #SKIP
+ imagc: #SKIP
  color: exif:colorSpace
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
- resolu: exif:resolution
+ resolu: #SKIP
  ditigi: #merge with captur
  additi: dct:hasVersion
  publis: #SKIP
@@ -858,11 +858,11 @@ wwdl:
  format:
    method:format
  captur: oregon:conversionSpecifications
- file: rdam:fileSize.en
- image: exif:width
- imaga: exif:height
+ file: #SKIP
+ image: #SKIP
+ imaga: #SKIP
  color: exif:colorSpace
- resolu: exif:resolution
+ resolu: #SKIP
  digita: # SKIP
  metada: # SKIP
  imagb: # SKIP
@@ -1099,11 +1099,11 @@ uopres:
   addita: dct:hasVersion
   datedi: oregon:dateDigitized
   captur: oregon:conversionSpecifications
-  file: rdam:fileSize.en
-  image: exif:width
-  imaga: exif:height
+  file: #SKIP
+  image: #SKIP
+  imaga: #SKIP
   color: exif:colorSpace
-  resolu: exif:resolution
+  resolu: #SKIP
   proces: # SKIP
   metada: # SKIP
   imagb: # SKIP
@@ -1743,15 +1743,15 @@ uo-athletics:
     citati: schema:citation
     origin: #SKIP
     reposi: marcrel:rps
-    image: rdam:fileSize.en
-    imaga: exif:width
-    imagb: exif:height
+    image: #SKIP
+    imaga: #SKIP
+    imagb: #SKIP
     color: exif:colorSpace
     sourcf: #SKIP
     sourcg: #SKIP
     captur: oregon:dateDigitized
     captua: oregon:conversionSpecifications
-    resolu: exif:resolution
+    resolu: #SKIP
     proces: #SKIP
     links: #SKIP
     addito: #SKIP
@@ -1976,12 +1976,12 @@ Moorhouse-wk:
   format:
     method: format
   image: # SKIP
-  imagd: exif:width
-  imagc: exif:height
+  imagd: #SKIP
+  imagc: #SKIP
   color: exif:colorSpace
   date: oregon:dateDigitized
   captur: oregon:conversionSpecifications
-  resolu: exif:resolution
+  resolu: #SKIP
   digiti: # SKIP
   scanni: # SKIP scanning pass
   additi: dct:hasVersion
