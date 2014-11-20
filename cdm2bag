@@ -137,19 +137,26 @@ def add_content_file(graph, bag, dir, subject)
       return nil
     end
     fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
+    # puts "FNAME: #{fname}"
     fname = fname.split(/\\/).last
+    # puts "FNAME: #{fname}"
     # Override the image dir if one is passed in on the command line along with a mapping file.
     dir = @image_file_path if @image_file_path
     # Use the supplied filename unless it is in the image map (if one was passed in on the command line).
     fname = fname.to_s.split('\\')[-1].gsub(/^1_/, '') unless (@image_file_map and @image_file_map.has_value?(File.basename(fname, '.*')))
+    # puts "FNAME: #{fname}"
     file = File.join(dir, '', fname)
     require 'find'
+    # puts "DIR: #{dir} FNAME: #{fname}"
+
     Find.find(dir) do |path|
+      # puts "PATH: #{path} BASE: #{File.basename(path)}"
       if File.basename(path) == fname
         file = path
         break
       end
     end
+    puts "FILE: #{file}" unless File.exist? file
     if File.exist? file
       bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
     else
@@ -201,6 +208,30 @@ def make_all_bags(dir, target)
   Dir.foreach(dir) do |collection|
     next if collection.start_with?(".")
     make_coll_bags(dir, target, collection)
+    move_bags_missing_images(target, collection)
+  end
+end
+
+def move_bags_missing_images(target, collection)
+  # Hack to go through and pull out the bags that are missing images and put them in a separate folder for special handling.
+  missing_dirs = []
+  Dir.foreach(File.join(target, collection)) do |item|
+    unless '.' == item or '..' == item or '.DS_Store' == item or 'missing' == item
+      data_dir = File.join(target, collection, item, 'data')
+      found = false
+      Dir.foreach(data_dir) do |subitem|
+        found = true unless '.' == subitem or '..' == subitem or '.DS_Store' == subitem
+      end
+      missing_dirs << item unless found
+    end
+  end
+  if missing_dirs.count > 0
+    missing = FileUtils.mkdir_p(File.join(target, collection, 'missing'))
+    missing_dirs.each do |item|
+      source = File.join(target, collection, item)
+      dest = File.join(missing, item)
+      FileUtils.move(source, dest)
+    end
   end
 end
 

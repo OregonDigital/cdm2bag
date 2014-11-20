@@ -788,12 +788,12 @@ mappings:
     rights: dct:rights # Restriction: ["Permission to use must be obtained from OSU Archives.", ""]
     relati: dct:relation # Related Materials : "25D; Album1 pg.39 Image 1", "25D-(3)", "25D"
     format: oregon:conversionSpecifications # Transmission Data
-    covera: oregon:full # File Name : "SS81_2.tif", "SS81_3.tif", "SS81B1.tif"
+    covera: oregon:otherFile # Used in case fullrs is empty - File Name : "SS81_2.tif", "SS81_3.tif", "SS81B1.tif"
     datedi: oregon:dateDigitized # Date Digital
     contra:
       method: institution # Contributing Institution : ["Oregon State University Libraries", ""]
     contri: modsrdf:note # Project questions & comments -- Internal Note Field : "Reviewed 12/11/02 -- added subject entry to Rivers and Streams; reviewed 4/15/2003 -- added Geog Subj. for Oregon City.
-    fullrs: SKIP # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
+    fullrs: oregon:full # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
     find: SKIP # "5.jpg", "6.jpg"
     dmaccess: SKIP # Always blank
     dmimage: SKIP # Always blank

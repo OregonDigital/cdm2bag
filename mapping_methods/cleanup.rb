@@ -125,14 +125,18 @@ module MappingMethods
       # graph.each { |x| puts x.inspect }
       graph
     end
-    #
-    # def herbarium_load_map
-    #   require 'csv'
-    #   accession_list = {}
-    #   params = {:headers => true, :return_headers => true, :header_converters => :symbol, :converters => :all}
-    #   CSV.read('metadata/herbarium/image-names-accession-numbers.csv', params).each { |row| accession_list[row.fields[1]] = row.fields[0] }
-    #   @filename_map = accession_list
-    # end
+
+    def streamsurvey_cleanup(collection, graph, subject)
+      full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
+      other = graph.query([subject, @namespaces['oregon']['otherFile'], nil])
+      if full_stmt.first.nil?
+        # we will use otherFile for the file name
+        other_file = File.basename(other.first.object.to_s, '.*')
+        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{other_file}.tif")
+      end
+      graph.delete(other)
+      graph
+    end
 
     def human_to_date(subject, human_date)
 
