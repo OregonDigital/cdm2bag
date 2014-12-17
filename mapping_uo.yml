@@ -2077,3 +2077,40 @@ bookarts:
  dmmodified: #SKIP
  dmrecord:
    method replace
+
+
+  #
+  # ormaps
+  #
+ormaps:
+  title: dct:title
+  altern: dct:alternative
+  descri: dct:description
+  subjec: dct:subject
+  contri:
+    method: geographic
+  west: # concatenate with east using exif:gpsLongitude
+  east: exif:gpsLongitude
+  north: # concatenate with south using exif:gpsLatitude
+  south: exif:gpsLatitude
+  covera: dct:spatial
+  creato: dct:creator
+  date: dct:date
+  identi: dct:identifier
+  format:
+    method:format
+  type:
+    method:type
+  source: dct:source
+  langua: dct:relation
+  relati: dct:relation
+  rights:
+    method: rights
+  publis: # SKIP
+  audien: oregon:conversionSpecifications
+  datea: oregon:dateDigitized
+  catalo: # SKIP
+  metada: # SKIP
+  digita: oregon:set
+  relate: # SKIP
+  # add contributingInstitution
