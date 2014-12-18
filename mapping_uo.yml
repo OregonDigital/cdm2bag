@@ -2093,7 +2093,7 @@ ormaps:
   east: exif:gpsLongitude
   north: # concatenate with south using exif:gpsLatitude
   south: exif:gpsLatitude
-  covera: dct:spatial
+  covera: schema:box
   creato: dct:creator
   date: dct:date
   identi: dct:identifier
