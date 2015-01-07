@@ -61,18 +61,19 @@ module MappingMethods
         filename = fn.first.object.to_s
         graph.delete(fn)
         graph << RDF::Statement.new(subject, RDF::DC.identifier, filename)
+      else
+        @log.warn('No fileName')
       end
 
       full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
       full_file = full_stmt.first.object.to_s.downcase
+      graph.delete(full_stmt)
       if full_file.end_with? '.cpd'
         # Load the compound object data into the graph.
         graph = load_compound_objects(collection, graph, subject)
-        graph.delete(full_stmt)
       else
-        if full_file.end_with? '.pdf'
+        if filename.end_with? '.pdf'
           # The PDFs we have use the filename specified in oregon:fileName, not oregon:full so remove the existing oregon:full name.
-          graph.delete(full_stmt)
           # puts "PDF FILE: #{full_file}"
           graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), filename)
         else
@@ -81,12 +82,10 @@ module MappingMethods
           if accession.first
             barcode = @image_file_map[accession.first.object.to_s] if @image_file_map
             if barcode
-              graph.delete(full_stmt)
               graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{barcode}.tif")
               graph << RDF::Statement.new(subject, RDF::URI('http://bibframe.org/vocab/barcode'), barcode)
             else
-              graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{accession.first.object.to_s}.tif")
-              @log.warn("No matching barcode for #{accession.first.object.to_s}, using existing tif")
+              graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), filename)
             end
           else
             # If it's an image file, it should have an accession number.
@@ -126,15 +125,50 @@ module MappingMethods
       graph
     end
 
+    def gwilliams_cleanup(collection, graph, subject)
+      full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
+      full_file = full_stmt.first.object.to_s.downcase
+      graph.delete(full_stmt)
+      if full_file.end_with? '.cpd'
+        # Load the compound object data into the graph.
+        graph = load_compound_objects(collection, graph, subject)
+      else
+        # We will store full in case we need the .jpg because the .tif is missing.
+        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['fullJpg']), full_file)
+
+        # The full TIFF filename is in fullTiff
+        tiff_stmt = graph.query([subject, @namespaces['oregon']['fullTiff'], nil])
+        if tiff_stmt.first.nil?
+          @log.warn('No TIFF file found')
+        else
+          graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{tiff_stmt.first.object.to_s}")
+        end
+        graph.delete(tiff_stmt)
+      end
+      graph
+    end
+
     def streamsurve_cleanup(collection, graph, subject)
       full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
-      other = graph.query([subject, @namespaces['oregon']['otherFile'], nil])
-      if full_stmt.first.nil?
-        # we will use otherFile for the file name
-        other_file = File.basename(other.first.object.to_s, '.*')
-        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{other_file}.tif")
+      full_file = full_stmt.first.object.to_s.downcase
+      graph.delete(full_stmt)
+      if full_file.end_with? '.cpd'
+        # Load the compound object data into the graph.
+        graph = load_compound_objects(collection, graph, subject)
+      else
+        # We will store full in case we need the .jpg because the .tif is missing.
+        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['fullJpg']), full_file)
+        other_stmt = graph.query([subject, @namespaces['oregon']['otherFile'], nil])
+        if other_stmt.first.nil?
+          @log.warn('No otherFile found')
+        else
+          # we will use otherFile for the file name.
+          other_file = File.basename(other_stmt.first.object.to_s, '.*')
+          graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{other_file}.tif")
+        end
+        graph.delete(other_stmt)
       end
-      graph.delete(other)
+      # graph.each {|x| puts x.inspect}
       graph
     end
 

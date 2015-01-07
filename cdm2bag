@@ -48,6 +48,7 @@ def create_graphs(file, collection)
     end
   end
   @cpd_item_count = compounds.count
+  puts "#{@cpd_item_count} compound items found"
   items.clear.concat(singles).concat(compounds)
   items.each do |record|
     bnode = RDF::Node.new
@@ -128,12 +129,16 @@ end
 
 def add_content_file(graph, bag, dir, subject)
   begin
+    # Get the replaces statement for this graph so we can refer to it later.
+    replaces_stmt = graph.query([subject, RDF::DC.replaces, nil])
+    replaces_uri = replaces_stmt.first ? replaces_stmt.first.object : nil
+
     query = RDF::Query.new do
       pattern [subject, RDF::URI('http://opaquenamespace.org/ns/full'), :full]
     end
     results = query.execute(graph)
     if results.empty?
-      puts 'no full'
+      @log.warn("No FULL found for #{replaces_uri}")
       return nil
     end
     fname = Pathname(results.first[:full].to_s).basename.to_s unless fname
@@ -150,16 +155,27 @@ def add_content_file(graph, bag, dir, subject)
         break
       end
     end
+    fulljpg_stmt = graph.query([subject, @namespaces['oregon']['fullJpg'], nil])
     if File.exist? file
-      # @log.warn("FOUND: #{fname}")
       bag.add_file("content.#{Pathname(file).basename.to_s.split('.').last}", file)
     else
-      @log.warn("NOT FOUND: #{fname}")
+      @log.warn("#{fname} :: No file found for #{replaces_uri}. Searching for JPG...")
+      jpg_found = false
+      # Try the fullJpg if it's present.  JPGs will be in /metadata/jpg folder.
+      unless fulljpg_stmt.first.nil?
+        fulljpg = fulljpg_stmt.first.object.to_s
+        jpg_file = File.join(dir, 'jpg', fulljpg)
+        if File.exist? jpg_file
+          puts "FOUND #{jpg_file}"
+          bag.add_file("content.#{Pathname(jpg_file).basename.to_s.split('.').last}", jpg_file)
+          jpg_found = true
+        end
+      end
+      @log.warn("#{jpg_file} :: No file found for #{replaces_uri}") unless jpg_found
     end
+    graph.delete(fulljpg_stmt)
   rescue Errno::ENOENT => e
-    replaces = graph.query([nil, RDF::DC.replaces, nil])
-    rep_uri = replaces.first ? replaces.first.object : nil
-    @log.warn("#{fname} : No File Found for #{rep_uri}.")
+    @log.warn("#{fname} :: No file found for #{replaces_uri}.")
   end
 end
 
@@ -167,8 +183,8 @@ def make_bag(dir, graph, subject, source_dir)
   folder = "%05d" % @folder_id.to_s
   @folder_id += 1
   bag = BagIt::Bag.new(File.join(dir, folder))
-  write_desc_metadata(graph, bag)
   add_content_file(graph, bag, source_dir, subject)
+  write_desc_metadata(graph, bag)
   bag.tagmanifest!
   bag.manifest!
 end
@@ -202,6 +218,9 @@ def make_all_bags(dir, target)
   Dir.foreach(dir) do |collection|
     next if collection.start_with?(".")
     make_coll_bags(dir, target, collection)
+
+    # Use these next methods to clean up collections that are missing items, otherwise safe to comment out.
+    list_missing_image_items(target, collection)
     move_bags_missing_images(target, collection)
   end
 end
@@ -216,7 +235,18 @@ def get_bags_missing_images(target, collection)
       Dir.foreach(data_dir) do |subitem|
         found = true unless subitem.start_with?('.')
       end
-      missing_dirs << item unless found
+      unless found
+        # No data so make sure it's not compound
+        metadata = File.join(target, collection, item, 'descMetadata.nt')
+        is_compound = false
+        File.readlines(metadata).each do |line|
+          if line.include? 'http://opaquenamespace.org/ns/compoundObject'
+            is_compound = true
+            break
+          end
+        end
+        missing_dirs << item unless is_compound
+      end
     end
   end
   missing_dirs
@@ -230,12 +260,11 @@ def list_missing_image_items(target, collection)
     replaces = ''
     metadata = File.join(target, collection, item, 'descMetadata.nt')
     File.readlines(metadata).each do |line|
-      # puts line
       replaces = line if line.include? 'http://purl.org/dc/terms/replaces'
       break if line.include? 'http://opaquenamespace.org/ns/contents' # Break before it sees child "replaces" items in complex objects.
     end
     if '' == replaces
-      puts "No replaces found in #{item}"
+      @log.warn("No replaces found in #{item}")
     else
       part = replaces.split(' ')[2].strip
       missing_items << part[1,(part.length - 2)]
@@ -248,7 +277,7 @@ def move_bags_missing_images(target, collection)
   # Hack to go through and pull out the bags that are missing images and put them in a separate folder for special handling.
   missing_dirs = get_bags_missing_images(target, collection)
   if missing_dirs.count > 0
-    puts "Moving #{missing_dirs.count} missing bags"
+    @log.warn("Moving #{missing_dirs.count} missing bags")
     missing = FileUtils.mkdir_p(File.join(target, collection, 'missing'))
     missing_dirs.each do |item|
       source = File.join(target, collection, item)

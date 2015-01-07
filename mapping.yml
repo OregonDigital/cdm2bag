@@ -692,9 +692,9 @@ mappings:
     catalo: SKIP # always empty
     dmaccess: SKIP
     dmimage: SKIP
-    fullrs: oregon:full
+    fullrs: oregon:fullTiff
     dmoclcno: SKIP
-    find: oregon:checkForCompound # Cleanup will look for .cpd files
+    find: oregon:full # Cleanup will look for .cpd files
     dmcreated:
       method: dc_created
     dmmodified:
@@ -745,7 +745,7 @@ mappings:
     compou: dce:identifier # Accession Number
     projec: SKIP # Always empty
     fullrs: SKIP # Use the file mapping spreadsheet
-    find: oregon:full
+    find: oregon:full # Check for .cpd files
     dmaccess: SKIP # : ["", "ORE11000", "ip:128.193.*; deny:file"]
     dmimage: SKIP # Always empty
     dmad1: SKIP # Always empty
@@ -785,7 +785,8 @@ mappings:
     identi: dct:identifier # Item Number
     langua:
       method: aat_streamsurvey # Other Forms : ["Nitrate negatives", "Silver gelatin prints", "", "print"]
-    rights: dct:rights # Restriction: ["Permission to use must be obtained from OSU Archives.", ""]
+    rights:
+      method: streamsurve_rights
     relati: dct:relation # Related Materials : "25D; Album1 pg.39 Image 1", "25D-(3)", "25D"
     format: oregon:conversionSpecifications # Transmission Data
     covera: oregon:otherFile # Used in case fullrs is empty - File Name : "SS81_2.tif", "SS81_3.tif", "SS81B1.tif"
@@ -793,8 +794,8 @@ mappings:
     contra:
       method: institution # Contributing Institution : ["Oregon State University Libraries", ""]
     contri: modsrdf:note # Project questions & comments -- Internal Note Field : "Reviewed 12/11/02 -- added subject entry to Rivers and Streams; reviewed 4/15/2003 -- added Geog Subj. for Oregon City.
-    fullrs: oregon:full # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
-    find: SKIP # "5.jpg", "6.jpg"
+    fullrs: oregon:otherFile # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
+    find: oregon:full # "5.jpg", "6.jpg"
     dmaccess: SKIP # Always blank
     dmimage: SKIP # Always blank
     dmad1: SKIP # Always blank
