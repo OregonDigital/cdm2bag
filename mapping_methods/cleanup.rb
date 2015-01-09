@@ -77,6 +77,9 @@ module MappingMethods
           # puts "PDF FILE: #{full_file}"
           graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), filename)
         else
+          # We will store full in case we need the .jpg because the .tif is missing.
+          graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['fullJpg']), full_file)
+
           # If oregon:full is not a pdf, replace it with the new barcode filename referenced by the accession number.
           accession = graph.query([nil, @namespaces['oregon']['cco/accessionNumber'], nil])
           if accession.first
