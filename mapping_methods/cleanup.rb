@@ -130,9 +130,9 @@ module MappingMethods
 
     def gwilliams_cleanup(collection, graph, subject)
       full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
-      full_file = full_stmt.first.object.to_s.downcase
+      full_file = full_stmt.first.object.to_s.downcase if full_stmt.first
       graph.delete(full_stmt)
-      if full_file.end_with? '.cpd'
+      if full_file && full_file.end_with?('.cpd')
         # Load the compound object data into the graph.
         graph = load_compound_objects(collection, graph, subject)
       else

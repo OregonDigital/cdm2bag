@@ -794,7 +794,7 @@ mappings:
     contra:
       method: institution # Contributing Institution : ["Oregon State University Libraries", ""]
     contri: modsrdf:note # Project questions & comments -- Internal Note Field : "Reviewed 12/11/02 -- added subject entry to Rivers and Streams; reviewed 4/15/2003 -- added Geog Subj. for Oregon City.
-    fullrs: oregon:otherFile # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
+    fullrs: oregon:fullTiff # "Willamette12\\SS81B3a1.tif", "Willamette12\\SS81B3a2.tif"
     find: oregon:full # "5.jpg", "6.jpg"
     dmaccess: SKIP # Always blank
     dmimage: SKIP # Always blank
