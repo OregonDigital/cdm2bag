@@ -1323,7 +1323,7 @@ archivision:
    method: types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note  #or skip
+ course: #SKIP
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
@@ -1400,7 +1400,7 @@ artimages:
       method:types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note
+ course: #SKIP too much garbage
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
@@ -1476,7 +1476,7 @@ artlicensed:
       method:types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note  #or skip
+ course: #SKIP
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
