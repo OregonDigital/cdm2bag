@@ -107,4 +107,39 @@ module MappingMethods
       r << RDF::Statement.new(subject, RDF.type, RDF::URI(uri))
     end
   end
+
+  # Workaround for frequent net connection errors with Getty sparql endpoint.
+  def cached_types
+    {
+      'Silver gelatin prints' => '300128695',
+      'Gelatin silver prints' => '300128695',
+      'Postcards' => '300026816',
+      'Color Slide' => '300128366',
+      'Posters' => '300027221',
+      'Halftone print' => '300154372',
+      'Signs (Notices)' => '300213259',
+      'Magazine covers' => '300215389',
+      'Maps' => '300028094',
+      'Emblems' => '300123036',
+      'Ephemera' => '300028881',
+      'Tickets' => '300027381',
+      'Periodicals' => '300026657',
+      'Envelopes' => '300197601',
+      'Stereographs' => '300127197',
+      'Photographic prints' => '300127104',
+    }
+  end
+
+  def aat_gwilliams(subject, data)
+    r = RDF::Graph.new
+    uri = 'http://vocab.getty.edu/aat/'
+    data = data.gsub(';', '') || data
+    if cached_types[data].nil?
+      puts "Unknown GWilliams Type: #{data}"
+    else
+      uri += cached_types[data]
+    end
+    r << RDF::Statement.new(subject, RDF.type, RDF::URI(uri))
+  end
+
 end

@@ -104,5 +104,9 @@ module MappingMethods
       graph << RDF::Statement(subject, RDF::URI('http://data.archiveshub.ac.uk/def/useRestrictions'), data)
       graph
     end
+
+    def streamsurve_rights(subject, data)
+      graph << RDF::Statement.new(subject, RDF::DC.rights, RDF::URI('http://www.europeana.eu/rights/rr-f/'))
+    end
   end
 end
