@@ -280,11 +280,11 @@ module MappingMethods
               last = cpd_node
               pages << cpd_node
             end
-            # Set the 'first' and 'last' terms for the parent object
+            # Set the 'first' and 'last' terms for the parent object.
             graph << RDF::Statement.new(subject, RDF::URI('http://www.iana.org/assignments/relation/first'), first) unless first.nil?
             graph << RDF::Statement.new(subject, RDF::URI('http://www.iana.org/assignments/relation/last'), last) unless last.nil?
 
-            # Set the 'next' term for each complex child object
+            # Set the 'next' term for each complex child object.
             pages.each_with_index do |pg, i|
               graph << RDF::Statement.new(pg, RDF::URI('http://www.iana.org/assignments/relation/next'), pages[i+1]) if i+1 < pages.count
             end

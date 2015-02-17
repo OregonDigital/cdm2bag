@@ -240,7 +240,7 @@ def get_bags_missing_images(target, collection)
         metadata = File.join(target, collection, item, 'descMetadata.nt')
         is_compound = false
         File.readlines(metadata).each do |line|
-          if line.include? 'http://opaquenamespace.org/ns/compoundObject'
+          if line.include? 'http://opaquenamespace.org/ns/contents'
             is_compound = true
             break
           end
