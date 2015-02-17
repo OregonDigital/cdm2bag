@@ -258,7 +258,6 @@ module MappingMethods
     end
 
     def load_compound_objects(collection, graph, subject)
-
       begin
         # Get the id from 'replaces' object so we can retrieve the .cpd file.
         replaces = graph.query([nil, RDF::DC.replaces, nil])
@@ -268,25 +267,27 @@ module MappingMethods
         if 200 == cpd_file.code
           cpd_doc = Nokogiri::XML.parse(cpd_file)
           if cpd_doc.xpath('/cpd/page')
-            file_node = RDF::Node.new
-
-            # Connect the graph to the compound object list.
-            graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contents']),  file_node)
-
-            # Pull out the "type" from the compound object as it's used as a title.
-            graph << RDF::Statement.new(file_node, RDF::DC.title, cpd_doc.at_xpath('/cpd/type').text)
-
             # Pull out the individual 'page' element(s) from the .cpd and add them to the graph.
             pages = []
+            first = nil
+            last = nil
             cpd_doc.xpath('/cpd/page').each_with_index do |page, i|
+              replaces_uri = RDF::URI.new("http://oregondigital.org/u?/#{collection},#{page.at_xpath('pageptr').text}")
+              graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contents']), replaces_uri)
               cpd_node = RDF::Node.new
-              graph << RDF::Statement.new(cpd_node, RDF::DC.title, page.at_xpath('pagetitle').text)
-              graph << RDF::Statement.new(cpd_node, RDF::DC.replaces, RDF::URI.new("http://oregondigital.org/u?/#{collection},#{page.at_xpath('pageptr').text}"))
-              graph << RDF::Statement.new(cpd_node, RDF::URI.new(@namespaces['oregon']['full']), page.at_xpath('pagefile').text)
-              graph << RDF::Statement.new(cpd_node, RDF.type, RDF::URI.new(@namespaces['oregon']['compoundObject']))
+              graph << RDF::Statement.new(cpd_node, RDF::URI('http://www.openarchives.org/ore/1.0/datamodel#proxyFor'), replaces_uri)
+              first = cpd_node if i == 0
+              last = cpd_node
               pages << cpd_node
             end
-            RDF::List.new(file_node, graph, pages)
+            # Set the 'first' and 'last' terms for the parent object
+            graph << RDF::Statement.new(subject, RDF::URI('http://www.iana.org/assignments/relation/first'), first) unless first.nil?
+            graph << RDF::Statement.new(subject, RDF::URI('http://www.iana.org/assignments/relation/last'), last) unless last.nil?
+
+            # Set the 'next' term for each complex child object
+            pages.each_with_index do |pg, i|
+              graph << RDF::Statement.new(pg, RDF::URI('http://www.iana.org/assignments/relation/next'), pages[i+1]) if i+1 < pages.count
+            end
             # graph.each { |x| puts x.inspect}
           end
         else
