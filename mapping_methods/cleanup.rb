@@ -323,24 +323,5 @@ module MappingMethods
       graph
     end
 
-    def geocode_address(address)
-      lat_long = {}
-      if @geocode_cache.has_key?(address)
-        # Return the value from the cache
-        lat_long =  @geocode_cache[address]
-        @log.warn("Using cached coordinates: #{lat_long}")
-      else
-        address_encoded = URI.encode "#{address}"
-        url = "http://open.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluu82lu7nl%2Cr5%3Do5-948nh0&maxResults=1#{address_encoded}"
-        response = RestClient.get url
-        response = JSON.parse(response)
-        locations = response['results'][0]['locations']
-        if locations.count > 0
-          lat_long = locations[0]['latLng']
-          @geocode_cache[address] = lat_long
-        end
-      end
-      lat_long
-    end
   end
 end
