@@ -807,3 +807,55 @@ mappings:
       method: dc_modified
     dmrecord:
       method: replace
+
+  #
+  # archpnw - This one is just for testing.  UO has the correct mapping -ME
+  #
+  archpnw:
+    title: dct:title
+    view: SKIP
+    varian: SKIP
+    relate: SKIP
+    creato: SKIP
+    creata: SKIP
+    date: SKIP
+    covera: SKIP
+    city: SKIP
+    county: SKIP
+    state: SKIP
+    countr: SKIP
+    site: SKIP
+    photog: SKIP
+    photoa: SKIP
+    catalo: SKIP
+    object: SKIP
+    period: SKIP
+    materi: SKIP
+    measur: SKIP
+    signif: SKIP
+    refere: SKIP
+    notes: SKIP
+    creatb: SKIP
+    metada: SKIP
+    digita: SKIP
+    sourca: SKIP
+    source: SKIP
+    sourcb: SKIP
+    publis: SKIP
+    rights: SKIP
+    type: SKIP
+    format: SKIP
+    identi: SKIP
+    techni: SKIP
+    contri: SKIP
+    fullrs: SKIP
+    find: SKIP
+    dmaccess: SKIP
+    dmimage: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    dmoclcno: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmrecord:
+      method:replace

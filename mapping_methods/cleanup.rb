@@ -1,4 +1,5 @@
 require 'rdf'
+require 'rest-client'
 
 module MappingMethods
   module Cleanup
@@ -175,6 +176,29 @@ module MappingMethods
       graph
     end
 
+    def archpnw_cleanup(collection, graph, subject)
+      # Get the id from 'replaces' object so we can retrieve the .cpd file.
+      replaces = graph.query([nil, RDF::DC.replaces, nil])
+      cis_id = replaces.first.object.to_s.split("#{collection},").last.to_i
+
+      # Find the ID in the CSV file
+      if @latlong.nil?
+        list = {}
+        params = {:headers => true, :return_headers => true, :header_converters => :symbol, :converters => :all}
+        CSV.read('archpnw_geonames_complete.csv', params).each {|row| list[row.fields[0].to_i] = [row.fields[2].to_s, row.fields[3].to_s, row.fields[4].to_s] }
+        @latlong = list
+      end
+
+      geoinfo = @latlong[cis_id]
+      if '0' == geoinfo[0]
+        @log.warn("No coordinates found for #{cis_id}")
+      else
+        @log.warn("Coordinates found: #{geoinfo[0]},#{geoinfo[1]} : #{geoinfo[2]}")
+        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['exif']['gpsLatitude']), geoinfo[0].to_s)
+        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['exif']['gpsLongitude']), geoinfo[1].to_s)
+      end
+    end
+
     def human_to_date(subject, human_date)
 
       # Attempts to convert the plain language formatted date into an ISO8601 formatted dct:date statement.
@@ -299,5 +323,24 @@ module MappingMethods
       graph
     end
 
+    def geocode_address(address)
+      lat_long = {}
+      if @geocode_cache.has_key?(address)
+        # Return the value from the cache
+        lat_long =  @geocode_cache[address]
+        @log.warn("Using cached coordinates: #{lat_long}")
+      else
+        address_encoded = URI.encode "#{address}"
+        url = "http://open.mapquestapi.com/geocoding/v1/address?key=Fmjtd%7Cluu82lu7nl%2Cr5%3Do5-948nh0&maxResults=1#{address_encoded}"
+        response = RestClient.get url
+        response = JSON.parse(response)
+        locations = response['results'][0]['locations']
+        if locations.count > 0
+          lat_long = locations[0]['latLng']
+          @geocode_cache[address] = lat_long
+        end
+      end
+      lat_long
+    end
   end
 end
