@@ -75,6 +75,12 @@ module MappingMethods
       graph
     end
 
+	def cultural_rights(subject, data)
+      graph = RDF::Graph.new << RDF::Statement(subject, RDF::URI('http://purl.org/dc/terms/rights'), RDF::URI('http://www.europeana.eu/rights/rr-f/'))
+      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/rightsHolder'), 'Oregon Multicultural Archives, OSU Special Collections & Archives Research Center')
+      graph
+    end
+
     def rockshore_public_domain(subject, data)
       graph = RDF::Graph.new
       licenses = findCCLicenses(data)

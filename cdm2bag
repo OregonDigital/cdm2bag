@@ -52,6 +52,9 @@ def create_graphs(file, collection)
       begin
         if @collection_mappings[tag.to_s].include? 'method' and not (ln == nil or ln == '')
           result = send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+
+#puts "Collection mapping #{@collection_mappings[tag.to_s]}  Result = #{result.nil?}"
+
           graph << result unless result.nil?
         else
           next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
@@ -59,6 +62,9 @@ def create_graphs(file, collection)
           graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
         end
       rescue NoMethodError
+
+puts "NoMethodError: #{tag} / #{@collection_mappings[tag.to_s]}"
+
         @missing_fields << tag unless @missing_fields.include? tag
       end
     end
@@ -103,6 +109,7 @@ def map_set
       'gwilliams' => 'gwilliams',
       'herbarium' => 'herbarium',
       'streamsurve' => 'streamsurvey',
+	  'cultural' => 'oregon-multicultural-archives'
   }
 end
 
@@ -301,6 +308,9 @@ def dry_run(dir)
     next if collection.start_with?(".")
     tiffs, jpgs, missing = [], [], []
     full, full_tiff = nil, nil
+
+puts collection
+
     @mappings['mappings'][collection].each do |k,v|
       full = k if v == 'oregon:full'
       full_tiff = k if v == 'oregon:fullTiff'
@@ -310,6 +320,9 @@ def dry_run(dir)
     jpg_path = File.join(image_dir, 'jpg')
     items = rearrange_complex_items(File.join(dir, collection, 'desc.all'))
     items.each do |item|
+
+			puts item
+
       item_full = item.send(full)
       item_tiff = item.send(full_tiff).split(/\\/).last
       item_tiff = item_tiff.split(/\//).last unless item_tiff.nil?
@@ -318,7 +331,7 @@ def dry_run(dir)
       elsif !item_full.nil? && File.exist?(File.join(jpg_path, item_full))
         jpgs << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\",#{item_full}"
       else
-        missing << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\""
+        missing << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\" #{item_tiff}"
       end
     end
     puts "ITEMS: #{items.count}"

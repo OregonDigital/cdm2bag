@@ -175,6 +175,23 @@ module MappingMethods
       graph
     end
 
+
+    def cultural_cleanup(collection, graph, subject)
+      full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
+      full_file = full_stmt.first.object.to_s.downcase
+      graph.delete(full_stmt) # This filename isn't saved so we don't need this triple anymore.
+      if full_file.end_with? '.cpd'
+        # Load the compound object data into the graph.
+        graph = load_compound_objects(collection, graph, subject)
+
+        puts "Getting #{full_file}"
+      else
+        # Do something here if necessary.
+      end
+      graph
+    end
+
+
     def human_to_date(subject, human_date)
 
       # Attempts to convert the plain language formatted date into an ISO8601 formatted dct:date statement.
@@ -278,7 +295,8 @@ module MappingMethods
 
             # Pull out the individual 'page' element(s) from the .cpd and add them to the graph.
             pages = []
-            cpd_doc.xpath('/cpd/page').each_with_index do |page, i|
+            cpd_doc.xpath('/cpd//page').each_with_index do |page, i|
+#puts "page #{i}"
               cpd_node = RDF::Node.new
               graph << RDF::Statement.new(cpd_node, RDF::DC.title, page.at_xpath('pagetitle').text)
               graph << RDF::Statement.new(cpd_node, RDF::DC.replaces, RDF::URI.new("http://oregondigital.org/u?/#{collection},#{page.at_xpath('pageptr').text}"))
@@ -287,7 +305,7 @@ module MappingMethods
               pages << cpd_node
             end
             RDF::List.new(file_node, graph, pages)
-            # graph.each { |x| puts x.inspect}
+             #graph.each { |x| puts x.inspect}
           end
         else
           raise "Unexpected result code received: #{cpd_file.code}"

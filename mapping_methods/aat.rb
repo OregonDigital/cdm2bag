@@ -20,7 +20,15 @@ module MappingMethods
       Array(data).each do |type|
         filtered_type = type.downcase.strip.gsub("film ","")
         filtered_type = type_match[filtered_type] if type_match.include?(filtered_type)
-        uri = aat_search(filtered_type).first
+
+#        if type.strip.include? "Autochrome"
+#          uri = "http://vocab.getty.edu/aat/300138292"
+#        elsif type.strip.include? "Clippings"
+#          uri = "http://vocab.getty.edu/aat/300026867"
+#		else
+          uri = aat_search(filtered_type).first
+#		end
+
         unless uri
           r << RDF::Statement.new(subject, RDF.type, type)
           puts "No result for #{type}"
