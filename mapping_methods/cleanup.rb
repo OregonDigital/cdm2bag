@@ -175,6 +175,21 @@ module MappingMethods
       graph
     end
 
+    def cultural_cleanup(collection, graph, subject)
+      full_stmt = graph.query([subject, @namespaces['oregon']['full'], nil])
+      full_file = full_stmt.first.object.to_s.downcase
+      graph.delete(full_stmt) # This filename isn't saved so we don't need this triple anymore.
+      if full_file.end_with? '.cpd'
+        # Load the compound object data into the graph.
+        graph = load_compound_objects(collection, graph, subject)
+
+        puts "Getting #{full_file}"
+      else
+        # Do something here if necessary.
+      end
+      graph
+    end
+
     def human_to_date(subject, human_date)
 
       # Attempts to convert the plain language formatted date into an ISO8601 formatted dct:date statement.
