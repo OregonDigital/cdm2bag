@@ -432,15 +432,15 @@ Bestof:
  sourcb: oregon:sourceCondition
  type:
    method: type
- image: exif:fileSize
+ image: #SKIP
  format:
    method: format
- imagd: exif:width
- imagc: exif:height
+ imagd: #SKIP
+ imagc: #SKIP
  color: exif:colorSpace
  date: oregon:dateDigitized
  captur: oregon:conversionSpecifications
- resolu: exif:resolution
+ resolu: #SKIP
  ditigi: #merge with captur
  additi: dct:hasVersion
  publis: #SKIP
@@ -858,11 +858,11 @@ wwdl:
  format:
    method:format
  captur: oregon:conversionSpecifications
- file: rdam:fileSize.en
- image: exif:width
- imaga: exif:height
+ file: #SKIP
+ image: #SKIP
+ imaga: #SKIP
  color: exif:colorSpace
- resolu: exif:resolution
+ resolu: #SKIP
  digita: # SKIP
  metada: # SKIP
  imagb: # SKIP
@@ -1099,11 +1099,11 @@ uopres:
   addita: dct:hasVersion
   datedi: oregon:dateDigitized
   captur: oregon:conversionSpecifications
-  file: rdam:fileSize.en
-  image: exif:width
-  imaga: exif:height
+  file: #SKIP
+  image: #SKIP
+  imaga: #SKIP
   color: exif:colorSpace
-  resolu: exif:resolution
+  resolu: #SKIP
   proces: # SKIP
   metada: # SKIP
   imagb: # SKIP
@@ -1221,9 +1221,11 @@ uostock:
     method:date_isused
   instal: vra:material
   format: vra:material
+    method: aat
   artwor: vra:measurements
   materi: vra:material
   source: dct:hasVersion
+    method: aat #and op_ns subject
   sourcb: #SKIP
   artwob:
     method:geographic
@@ -1321,7 +1323,7 @@ archivision:
    method: types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note  #or skip
+ course: #SKIP
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
@@ -1398,7 +1400,7 @@ artimages:
       method:types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note
+ course: #SKIP too much garbage
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
@@ -1474,7 +1476,7 @@ artlicensed:
       method:types
  identi: dct:identifier
  vrca: holding:label
- course: modsrdf:note  #or skip
+ course: #SKIP
  sessio: #SKIP
  projec: #SKIP
  projea: #SKIP
@@ -1741,15 +1743,15 @@ uo-athletics:
     citati: schema:citation
     origin: #SKIP
     reposi: marcrel:rps
-    image: rdam:fileSize.en
-    imaga: exif:width
-    imagb: exif:height
+    image: #SKIP
+    imaga: #SKIP
+    imagb: #SKIP
     color: exif:colorSpace
     sourcf: #SKIP
     sourcg: #SKIP
     captur: oregon:dateDigitized
     captua: oregon:conversionSpecifications
-    resolu: exif:resolution
+    resolu: #SKIP
     proces: #SKIP
     links: #SKIP
     addito: #SKIP
@@ -1887,7 +1889,7 @@ maic:
   proces: vra:technique
   point: dct:hasVersion
   measur: vra:measurements
-  object: oregon:compassDirection
+  object: oregon:objectOrientation
   primar:
     method:geographic
   second:
@@ -1896,7 +1898,7 @@ maic:
   period: vra:stylePeriod
   perioa: vra:stylePeriod
   relati: dct:relation
-  orient: oregon:compassDirection
+  orient: oregon:photographOrientation
   rights: marcrel:pht
   date: oregon:cco/viewDate
   righta:
@@ -1974,12 +1976,12 @@ Moorhouse-wk:
   format:
     method: format
   image: # SKIP
-  imagd: exif:width
-  imagc: exif:height
+  imagd: #SKIP
+  imagc: #SKIP
   color: exif:colorSpace
   date: oregon:dateDigitized
   captur: oregon:conversionSpecifications
-  resolu: exif:resolution
+  resolu: #SKIP
   digiti: # SKIP
   scanni: # SKIP scanning pass
   additi: dct:hasVersion
@@ -2075,3 +2077,40 @@ bookarts:
  dmmodified: #SKIP
  dmrecord:
    method replace
+
+
+  #
+  # ormaps
+  #
+ormaps:
+  title: dct:title
+  altern: dct:alternative
+  descri: dct:description
+  subjec: dct:subject
+  contri:
+    method: geographic
+  west: # concatenate with east using exif:gpsLongitude
+  east: exif:gpsLongitude
+  north: # concatenate with south using exif:gpsLatitude
+  south: exif:gpsLatitude
+  covera: schema:box
+  creato: dct:creator
+  date: dct:date
+  identi: dct:identifier
+  format:
+    method:format
+  type:
+    method:type
+  source: dct:source
+  langua: dct:relation
+  relati: dct:relation
+  rights:
+    method: rights
+  publis: # SKIP
+  audien: oregon:conversionSpecifications
+  datea: oregon:dateDigitized
+  catalo: # SKIP
+  metada: # SKIP
+  digita: oregon:set
+  relate: # SKIP
+  # add contributingInstitution
