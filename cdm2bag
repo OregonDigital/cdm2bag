@@ -95,6 +95,11 @@ def add_set(collection, graph, subject)
   if set
     graph << RDF::Statement(subject, @namespaces["oregon"]["set"], RDF::URI("http://oregondigital.org/resource/oregondigital:#{set}"))
   end
+
+  # Add SCARC set to SCARC collections
+  if set == 'oregon-multicultural-archives'
+    graph << RDF::Statement(subject, @namespaces["oregon"]["set"], RDF::URI("http://oregondigital.org/resource/oregondigital:osu-scarc"))
+  end
 end
 
 def map_set

@@ -25,7 +25,7 @@ module MappingMethods
         uri ||= ""
         if !uri.nil? && uri != "" 
 
-puts "URI: #{uri}"
+#puts "URI: #{uri}"
 
           parsed_uri = uri["id"].gsub("info:lc", "http://id.loc.gov")
 
@@ -42,27 +42,32 @@ puts "URI: #{uri}"
 
 
 	def name_uri_from_opaquens(data)
-	  @names ||= RDF::Graph.load("https://raw.githubusercontent.com/OregonDigital/opaque_ns/master/people.jsonld")
-	  @names ||= RDF::Graph.load("https://raw.githubusercontent.com/OregonDigital/opaque_ns/master/creator.jsonld")
+	  @people ||= RDF::Graph.load("https://raw.githubusercontent.com/OregonDigital/opaque_ns/master/people.jsonld") 
+	  @creators ||= RDF::Graph.load("https://raw.githubusercontent.com/OregonDigital/opaque_ns/master/creator.jsonld")
+	  @subjects ||= RDF::Graph.load("https://raw.githubusercontent.com/OregonDigital/opaque_ns/master/subject.jsonld")  
 
-	  @name_client ||= SPARQL::Client.new(@names)
+	  @graph ||= @people << @creators << @subjects
+
+	  @graph_client = SPARQL::Client.new(@graph)
+
 	  @name_query_cache ||= {}
 
 #puts "Searching OpaqueNamespace for #{data}"
 
-      query = @name_query_cache[data.downcase] || @name_client.query("SELECT DISTINCT ?s ?p ?o WHERE { ?s <#{RDF::RDFS.label}> ?o. FILTER(strstarts(lcase(?o), '#{data.downcase}'))}")
+      query = @name_query_cache[data.downcase] || @graph_client.query("SELECT DISTINCT ?s ?p ?o WHERE { ?s <#{RDF::RDFS.label}> ?o. FILTER(strstarts(lcase(?o), '#{data.downcase}'))}") 
+
 	  @name_query_cache[data.downcase] ||= query
 	  solution = query.first
 	  if solution
 
-puts "URI found: #{solution[:s]}"
+#puts "URI found: #{solution[:s]}"
 
         result = {"id" => solution[:s].to_s, "label" => data.to_s}
 	  else
-#	    puts "No OpaqueNamespace name match found for #{data}"
+	    puts "No OpaqueNamespace name match found for #{data}"
 	  end
+#puts "Result: #{result}"
       result
-puts "Result: #{result}"
     end
 
     def lcsubject_siuslaw(subject, data)

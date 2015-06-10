@@ -574,35 +574,40 @@ mappings:
     date:
       method: xsd_date
     time: SKIP # time period, generated from date by system
-    creato: dct:creator
-    interv: mrel:ive
-    intera: mrel:ivr
-    transc: mrel:trc
+    creato: # dct:creator - Photographer
+      method: creator_pht
+    interv: # marcrel:ive
+      method: creator_ive
+    intera: #marcrel:ivr
+      method: creator_ivr
+    transc: #marcrel:trc
+      method: creator_trc
     descri: dct:description
-    subjec:  #SKIP
+    subjec: # SKIP
       method: lcsubject
-    covera: 
+    covera: # SKIP
       method: cultural_geographic
     type: 
       method: types
-    publis: SKIP
-      #      method: aat_from_search #"microsoft word"!
+    publis: # SKIP
+      method: aat_from_search # "microsoft word"!
     data: oregon:dateDigitized
     langua: dct:identifier
     contri:
       method: collection
     relate: SKIP # other collection this item belongs to?
-    format: SKIP # non AAT formats?  MIME TYPE?
+    format:  SKIP # non AAT formats?  MIME TYPE?
+    # method: aat_from_search
     digita: SKIP  
     rights:
       method: cultural_rights
     source: oregon:conversionSpecifications
     identi: SKIP
     file: SKIP
-    durati: SKIP #always blank
+    durati: SKIP # always blank
     langub: SKIP # only a couple values, all 'English'
-    contra: SKIP #always blank
-    full: oregon:fullText
+    contra: SKIP # always blank
+    full: SKIP # oregon:fullText
     status: SKIP # Cataloged/Uncataloged
     catalo: SKIP # ASK! cataloger id in various domains
     fullrs: oregon:fullTiff  # was oregon:fullTiff

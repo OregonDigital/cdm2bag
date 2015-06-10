@@ -57,13 +57,13 @@ module MappingMethods
       Array(data.split(";")).each do |str|
         next if str.to_s.strip == ""
 		if str.include? "Siskiyou County"
-		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5571369'))
+		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5571369/'))
 		elsif str == "Tule Lake, California"
-		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://www.geonames.org/5572966')) 
+		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5572966/')) 
 		elsif str.include? "Warm Springs Indian Reservation"
-		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://www.geonames.org/10104133')) 
+		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/10104133/')) 
 		else
-          graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :orderBy => 'relevance', :adminCode1 => "OR"})
+          graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :orderBy => 'relevance'})
 		end
       end
       graph
