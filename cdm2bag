@@ -326,7 +326,7 @@ puts collection
     items = rearrange_complex_items(File.join(dir, collection, 'desc.all'))
     items.each do |item|
 
-			puts item
+#			puts item
 
       item_full = item.send(full)
       item_tiff = item.send(full_tiff).split(/\\/).last

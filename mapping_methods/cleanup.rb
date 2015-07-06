@@ -185,7 +185,17 @@ module MappingMethods
 
         puts "Getting #{full_file}"
       else
-        # Do something here if necessary.
+        # We will store full in case we need the .jpg because the .tif is missing.
+        graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['fullJpg']), full_file)
+
+        # The full TIFF filename is in fullTiff
+        tiff_stmt = graph.query([subject, @namespaces['oregon']['fullTiff'], nil])
+        if tiff_stmt.first.nil?
+          @log.warn('No TIFF file found')
+        else
+          graph << RDF::Statement.new(subject, RDF::URI(@namespaces['oregon']['full']), "#{tiff_stmt.first.object.to_s}")
+        end
+        graph.delete(tiff_stmt)
       end
       graph
     end
@@ -279,14 +289,17 @@ module MappingMethods
         cis_id = replaces.first.object.to_s.split("#{collection},").last
         cpd_url = "http://oregondigital.org/cgi-bin/showfile.exe?CISOROOT=/#{collection}&CISOPTR=#{cis_id}&filename=cpdfilename"
         cpd_file = RestClient.get cpd_url
+
+puts "CPD url: #{cpd_url}"
+
         if 200 == cpd_file.code
           cpd_doc = Nokogiri::XML.parse(cpd_file)
-          if cpd_doc.xpath('/cpd/page')
+          if cpd_doc.xpath('/cpd//page')
             # Pull out the individual 'page' element(s) from the .cpd and add them to the graph.
             pages = []
             first = nil
             last = nil
-            cpd_doc.xpath('/cpd/page').each_with_index do |page, i|
+            cpd_doc.xpath('/cpd//page').each_with_index do |page, i|
               replaces_uri = RDF::URI.new("http://oregondigital.org/u?/#{collection},#{page.at_xpath('pageptr').text}")
               graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contents']), replaces_uri)
               cpd_node = RDF::Node.new
@@ -294,6 +307,22 @@ module MappingMethods
               first = cpd_node if i == 0
               last = cpd_node
               pages << cpd_node
+
+			  pagetitle = page.at_xpath('pagetitle').text
+			  pageptr = page.at_xpath('pageptr').text
+
+#object_page_title = graph.query([replaces_uri, RDF::DC.title, nil])
+
+
+      # Prepend a label to the lchsaPhotog field and add as a dct:description.
+#      photog = graph.query([nil, @namespaces['oregon']['lchsaPhotog'], nil])
+#      graph.delete(photog) # Remove placeholder statement.
+#      graph << RDF::Statement.new(subject, RDF::URI.new(RDF::DC.description), "Photographer information: #{photog.first.object.to_s}") if photog.first
+
+
+#puts "Page: #{i} - #{pagetitle} \ #{pageptr}"
+#puts "Object page title: #{object_page_title.first.object.to_s} "
+
             end
             # Set the 'first' and 'last' terms for the parent object.
             graph << RDF::Statement.new(subject, RDF::URI('http://www.iana.org/assignments/relation/first'), first) unless first.nil?
@@ -304,6 +333,8 @@ module MappingMethods
               graph << RDF::Statement.new(pg, RDF::URI('http://www.iana.org/assignments/relation/next'), pages[i+1]) if i+1 < pages.count
             end
             # graph.each { |x| puts x.inspect}
+          else
+            puts "No pages found"
           end
         else
           raise "Unexpected result code received: #{cpd_file.code}"
