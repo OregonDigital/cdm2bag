@@ -866,7 +866,9 @@ mappings:
       method: replace
   art:
     title: dct:title
-    creato: dce:creator
+    creato:
+      method:
+        lcname
     date: dct:date
     period: dct:temporal
     catego:

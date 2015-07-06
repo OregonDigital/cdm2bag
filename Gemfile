@@ -9,3 +9,4 @@ gem 'rest-client'
 gem 'iso-639'
 gem 'rdf-raptor', :require => false
 gem 'qa', :require => false
+gem 'pry'

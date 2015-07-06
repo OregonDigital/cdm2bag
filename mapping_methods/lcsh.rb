@@ -5,6 +5,32 @@ require 'qa/authorities/web_service_base'
 require 'qa/authorities/loc'
 module MappingMethods
   module Lcsh
+
+    def lcname(subject, data)
+      authority = Qa::Authorities::Loc.new
+      graph = RDF::Graph.new
+      regex = /(?<name>.*) \(.*?(?<birth>[0-9]{4}).*(?<death>[0-9]{4})?.*\)/
+      split_data = regex.match(data)
+      if split_data[:name] && split_data[:birth]
+        results = authority.search(split_data[:name], "names")
+        results = results.select do |x|
+          x["label"].include?(split_data[:birth].to_s) || x["label"].include?(split_data[:death].to_s)
+        end
+        if results.length == 1
+          match = results[0]
+          puts "Matching #{match["label"]} to #{data}"
+          graph << RDF::Statement.new(subject, RDF::DC.creator, RDF::URI(match["id"]))
+        else
+          puts "Unable to find definitive match for #{data}"
+          graph << RDF::Statement.new(subject, RDF::DC11.creator, data)
+        end
+      else
+        puts "Unable to extract birth/death from #{data}"
+        graph << RDF::Statement.new(subject, RDF::DC11.creator, data)
+      end
+      graph
+    end
+
     def lcsubject(subject, data)
       authority = Qa::Authorities::Loc.new
       graph = RDF::Graph.new

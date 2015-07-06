@@ -34,6 +34,7 @@ GEM
       docopt (~> 0.5.0)
       validatable (~> 1.6)
     builder (3.1.4)
+    coderay (1.1.0)
     deprecation (0.1.0)
       activesupport
     docopt (0.5.0)
@@ -69,6 +70,7 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    method_source (0.8.2)
     mime-types (1.25.1)
     mini_portile (0.6.0)
     minitest (5.4.0)
@@ -78,6 +80,10 @@ GEM
     nokogiri (1.6.3.1)
       mini_portile (= 0.6.0)
     polyglot (0.3.5)
+    pry (0.10.1)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     qa (0.3.0)
       activerecord-import
       deprecation
@@ -143,6 +149,7 @@ GEM
     rest-client (1.7.2)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    slop (3.6.0)
     sparql (1.1.2.1)
       builder (>= 3.0)
       ebnf (>= 0.3.2)
@@ -184,6 +191,7 @@ DEPENDENCIES
   iso-639
   linkeddata
   nokogiri
+  pry
   qa
   rdf (~> 1.1.0.1)
   rdf-raptor
