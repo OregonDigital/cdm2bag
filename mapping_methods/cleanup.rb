@@ -16,6 +16,11 @@ module MappingMethods
       graph
     end
 
+    def art_cleanup(collection, graph, subject)
+      # Add contributing institution
+      graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contributingInstitution']), RDF::URI.new('http://dbpedia.org/resource/Oregon_State_University'))
+    end
+
     def lchsa_cleanup(collection, graph, subject)
 
       # Add the repository field for this collection.

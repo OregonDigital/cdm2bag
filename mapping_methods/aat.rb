@@ -127,6 +127,23 @@ module MappingMethods
       'Envelopes' => '300197601',
       'Stereographs' => '300127197',
       'Photographic prints' => '300127104',
+      'Painting' => '300033618',
+      'painting' => '300033618',
+      'Photography' => '300046300',
+      'Drawing' => '300033973',
+      'Print' => '300041273',
+      'Diagram' => '300015387',
+      'Sculpture' => '300047090',
+      'Architecture' => '300263552',
+      'Documentary Photography' => '300134547',
+      'Glasswork' => '300010898',
+      'Multimedia works' => '300047910',
+      'Assemblages (sculpture)' => '300047194',
+      'Collage' => '300033963',
+      'Photomontage' => '300134699',
+      'Screen print' => '300178688',
+      'Installation' => '300182935',
+      'Stage Design' => '300054190'
     }
   end
 
@@ -140,6 +157,58 @@ module MappingMethods
       uri += cached_types[data]
     end
     r << RDF::Statement.new(subject, RDF.type, RDF::URI(uri))
+  end
+
+  def cached_cultures
+    {
+      "American" => "http://vocab.getty.edu/aat/300107956",
+      "Flemish" => "http://vocab.getty.edu/aat/300111184",
+      "Canadian" => "http://vocab.getty.edu/aat/300107962",
+      "Swiss" => "http://vocab.getty.edu/aat/300111221",
+      "French" => "http://vocab.getty.edu/aat/300111188",
+      "German" => "http://vocab.getty.edu/aat/300111192",
+      "Greek (ancient)" => "http://vocab.getty.edu/aat/300020072",
+      "English" => "http://vocab.getty.edu/aat/300111178",
+      "Chilean" => "http://vocab.getty.edu/aat/300107968",
+      "Italian" => "http://vocab.getty.edu/aat/300111198"
+    }
+  end
+
+  def aat_culture(subject, data)
+    r = RDF::Graph.new
+    data = data.gsub(";", "").strip
+    if cached_cultures[data]
+      r << RDF::Statement.new(subject, RDF::URI("http://opaquenamespace.org/ns/culturalContext"), RDF::URI(cached_cultures[data]))
+    else
+      puts "Unable to find URI for culture #{data}"
+      r << RDF::Statement.new(subject, RDF::URI("http://opaquenamespace.org/ns/culturalContext"), data)
+    end
+    r
+  end
+
+  def art_material(subject, data)
+    r = RDF::Graph.new
+    data = data.gsub("; on", " on")
+    data = data.gsub(/;$/,'')
+    data = data.strip
+    r << RDF::Statement.new(subject, RDF::URI("http://opaquenamespace.org/ns/material"), data)
+  end
+
+  def aat_art(subject, data)
+    r = RDF::Graph.new
+    uri = 'http://vocab.getty.edu/aat/'
+    data = data.split(";").map(&:strip)
+    data.each do |type|
+      new_uri = ""
+      if cached_types[type].nil?
+        puts "Unknown Art Type: #{data}"
+        r << RDF::Statement.new(subject, RDF.type, type)
+      else
+        new_uri = uri + cached_types[type]
+        r << RDF::Statement.new(subject, RDF.type, RDF::URI(new_uri))
+      end
+    end
+    r
   end
 
 end

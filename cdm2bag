@@ -114,7 +114,8 @@ def map_set
       'gwilliams' => 'gwilliams',
       'herbarium' => 'herbarium',
       'streamsurve' => 'streamsurvey',
-	  'cultural' => 'oregon-multicultural-archives'
+      'cultural' => 'oregon-multicultural-archives',
+      'art' => 'art'
   }
 end
 

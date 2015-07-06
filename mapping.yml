@@ -813,9 +813,6 @@ mappings:
       method: dc_modified
     dmrecord:
       method: replace
-
-
-
   #
   # archives - Best of Archives Collection
   #
@@ -867,4 +864,35 @@ mappings:
       method: dc_modified
     dmrecord:
       method: replace
-
+  art:
+    title: dct:title
+    creato: dce:creator
+    date: dct:date
+    period: dct:temporal
+    catego:
+      method:
+        aat_art
+    materi: 
+      method: art_material
+    proces: oregon:material
+    dimens: oregon:measurements
+    reposi: marcrel:rps
+    region: dct:date
+    tribe: SKIP
+    cultur: 
+      method: 
+        aat_culture
+    descri: dct:description
+    access: dct:identifier
+    source: dct:source
+    subjec: 
+      method:
+        art_rights
+    catalo: SKIP
+    digita: SKIP
+    fullrs: oregon:full
+    find: SKIP
+    dmaccess: SKIP
+    dmoclcno: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
