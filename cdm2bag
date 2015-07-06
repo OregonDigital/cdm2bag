@@ -8,6 +8,7 @@ require 'docopt'
 require './mapping_methods.rb'
 require_relative 'lib/desc_parser'
 require 'csv'
+require 'rdf/rdfa'
 
 include MappingMethods
 
@@ -63,7 +64,7 @@ def create_graphs(file, collection)
         end
       rescue NoMethodError
 
-puts "NoMethodError: #{tag} / #{@collection_mappings[tag.to_s]}"
+        puts "NoMethodError: #{tag} / #{@collection_mappings[tag.to_s]}"
 
         @missing_fields << tag unless @missing_fields.include? tag
       end

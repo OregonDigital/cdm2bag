@@ -898,3 +898,4 @@ mappings:
     dmoclcno: SKIP
     dmcreated: SKIP
     dmmodified: SKIP
+    dmimage: SKIP

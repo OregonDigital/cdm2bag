@@ -16,7 +16,7 @@ module MappingMethods
       end
       regex = /(?<name>.*) \(.*?(?<birth>[0-9]{4}).*(?<death>[0-9]{4})?.*\)/
       split_data = regex.match(data)
-      if split_data[:name] && split_data[:birth]
+      if split_data && split_data[:name] && split_data[:birth]
         results = authority.search(split_data[:name], "names")
         results = results.select do |x|
           (split_data[:birth].to_s != "" && x["label"].include?(split_data[:birth].to_s)) || (split_data[:death].to_s != "" && x["label"].include?(split_data[:death].to_s))
@@ -28,10 +28,12 @@ module MappingMethods
           graph << RDF::Statement.new(subject, RDF::DC.creator, RDF::URI(match["id"]))
         else
           puts "Unable to find definitive match for #{data}"
+          @lcname_matches[data] = data
           graph << RDF::Statement.new(subject, RDF::DC11.creator, data)
         end
       else
         puts "Unable to extract birth/death from #{data}"
+        @lcname_matches[data] = data
         graph << RDF::Statement.new(subject, RDF::DC11.creator, data)
       end
       graph
