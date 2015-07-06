@@ -14,12 +14,24 @@ module MappingMethods
         graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data])
         return graph
       end
-      regex = /(?<name>.*) \(.*?(?<birth>[0-9]{4}).*(?<death>[0-9]{4})?.*\)/
+      regex = /(?<name>.*) \(.*?(?<birth>[0-9]{3,4})[^0-9]*(?<death>[0-9]{3,4})?.*\)/
       split_data = regex.match(data)
       if split_data && split_data[:name] && split_data[:birth]
         results = authority.search(split_data[:name], "names")
         results = results.select do |x|
-          (split_data[:birth].to_s != "" && x["label"].include?(split_data[:birth].to_s)) || (split_data[:death].to_s != "" && x["label"].include?(split_data[:death].to_s))
+          if split_data[:birth].to_s != ""
+            if split_data[:death].to_s != ""
+              # If we have both, they have to have both.
+              x["label"].include?(split_data[:death].to_s) && x["label"].include?(split_data[:birth])
+            else
+              # Otherwise, just find birth
+              x["label"].include?(split_data[:birth].to_s)
+            end
+          elsif split_data[:death].to_s != ""
+            x["label"].include?(split_data[:death].to_s)
+          else
+            false
+          end
         end
         if results.length != 0
           match = results[0]
