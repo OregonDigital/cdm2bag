@@ -18,7 +18,7 @@ Consumes a directory of ContentDM collections and converts them into
 bags.
 
 Usage:
-  #{__FILE__} [--skip] [--map-file=<file>] [--image-file=<file>] [--image-file-path=<dir>] DIR [TARGET]
+  #{__FILE__} [--skip] [--map-file=<file>] [--image-file=<file>] [--image-file-path=<dir>] [--dry-run] DIR [TARGET]
   #{__FILE__} -h | --version
 
 Options:
@@ -28,28 +28,14 @@ Options:
   -v --version              Show version.
   --image-file=<file>       CSV format file containing mapping from one image file to another in the format old,new
   --image-file-path=<dir>   Path where the full size images are located.
+  --dry-run                 Check for missing image files only, don't make calls to extenal APIs.
 
 DOCOPT
 
 def create_graphs(file, collection)
-
   graphs = []
-  compounds = []
-  singles = []
   graph = RDF::Graph.new
-
-  items = DescParser.parse(file)
-  # Make a quick pass through and determine if there are any compound objects, moving them to the end of the list.
-  items.each do |rec|
-    if rec.find.to_s.downcase.end_with? '.cpd'
-      compounds << rec
-    else
-      singles << rec
-    end
-  end
-  @cpd_item_count = compounds.count
-  puts "#{@cpd_item_count} compound items found"
-  items.clear.concat(singles).concat(compounds)
+  items = rearrange_complex_items(file)
   items.each do |record|
     bnode = RDF::Node.new
     record.marshal_dump.each do |tag, ln|
@@ -66,6 +52,9 @@ def create_graphs(file, collection)
       begin
         if @collection_mappings[tag.to_s].include? 'method' and not (ln == nil or ln == '')
           result = send(@collection_mappings[tag.to_s]['method'].to_sym, bnode, ln) unless @skip.include? ln.downcase
+
+#puts "Collection mapping #{@collection_mappings[tag.to_s]}  Result = #{result.nil?}"
+
           graph << result unless result.nil?
         else
           next if @collection_mappings[tag.to_s] == "SKIP" or (ln == nil or ln == '')
@@ -73,6 +62,9 @@ def create_graphs(file, collection)
           graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
         end
       rescue NoMethodError
+
+puts "NoMethodError: #{tag} / #{@collection_mappings[tag.to_s]}"
+
         @missing_fields << tag unless @missing_fields.include? tag
       end
     end
@@ -80,10 +72,33 @@ def create_graphs(file, collection)
   graphs
 end
 
+def rearrange_complex_items(file)
+  compounds = []
+  singles = []
+  items = DescParser.parse(file)
+  # Make a quick pass through and determine if there are any compound objects, moving them to the end of the list.
+  items.each do |rec|
+    if rec.find.to_s.downcase.end_with? '.cpd'
+      compounds << rec
+    else
+      singles << rec
+    end
+  end
+  @cpd_item_count = compounds.count
+  puts "#{@cpd_item_count} compound items found"
+  items.clear.concat(singles).concat(compounds)
+  items
+end
+
 def add_set(collection, graph, subject)
   set = map_set[collection.downcase]
   if set
     graph << RDF::Statement(subject, @namespaces["oregon"]["set"], RDF::URI("http://oregondigital.org/resource/oregondigital:#{set}"))
+  end
+
+  # Add SCARC set to SCARC collections
+  if set == 'oregon-multicultural-archives'
+    graph << RDF::Statement(subject, @namespaces["oregon"]["set"], RDF::URI("http://oregondigital.org/resource/oregondigital:osu-scarc"))
   end
 end
 
@@ -99,6 +114,7 @@ def map_set
       'gwilliams' => 'gwilliams',
       'herbarium' => 'herbarium',
       'streamsurve' => 'streamsurvey',
+	  'cultural' => 'oregon-multicultural-archives'
   }
 end
 
@@ -288,10 +304,55 @@ def move_bags_missing_images(target, collection)
   missing_dirs
 end
 
+def dry_run(dir)
+  # Bypass the normal processing and just check if there are missing image files.
+  # Makes the assumption that:
+  #   The field containing .cpd or .jpg files is mapped to oregon:full
+  #   The field containing .tif files is mapped to oregon:fullTiff
+  Dir.foreach(dir) do |collection|
+    next if collection.start_with?(".")
+    tiffs, jpgs, missing = [], [], []
+    full, full_tiff = nil, nil
+
+puts collection
+
+    @mappings['mappings'][collection].each do |k,v|
+      full = k if v == 'oregon:full'
+      full_tiff = k if v == 'oregon:fullTiff'
+    end
+    image_dir = @image_file_path.nil? ? File.join(dir, collection) : @image_file_path
+    tiff_path = File.join(image_dir, 'full')
+    jpg_path = File.join(image_dir, 'jpg')
+    items = rearrange_complex_items(File.join(dir, collection, 'desc.all'))
+    items.each do |item|
+
+#			puts item
+
+      item_full = item.send(full)
+      item_tiff = item.send(full_tiff).split(/\\/).last
+      item_tiff = item_tiff.split(/\//).last unless item_tiff.nil?
+      if !item_tiff.nil? && File.exist?(File.join(tiff_path, item_tiff))
+        tiffs << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\",#{item_tiff}"
+      elsif !item_full.nil? && File.exist?(File.join(jpg_path, item_full))
+        jpgs << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\",#{item_full}"
+      else
+        missing << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\" #{item_tiff}"
+      end
+    end
+    puts "ITEMS: #{items.count}"
+    puts "TIFFS FOUND: #{tiffs.count}"
+    puts tiffs
+    puts "JPGs FOUND: #{jpgs.count}"
+    puts jpgs
+    puts "MISSING: #{missing.count}"
+    puts missing
+  end
+
+end
+
 begin
   @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.2')
   @folder_id = 1
-
   @missing_fields = []
   @mappings = YAML.load_file(@opts['--map-file'])
   @image_file_path = @opts['--image-file-path'] if @opts['--image-file-path']
@@ -309,8 +370,13 @@ begin
   end
   @skip = ['unknown', 'n/a']
   @log = Logger.new('logfile.log')
-  make_all_bags(@opts['DIR'], @opts['TARGET'] || 'bags')
-  puts @missing_fields unless @missing_fields.empty?
+  if @opts['--dry-run']
+    puts 'DRY RUN'
+    dry_run(@opts['DIR'])
+  else
+    make_all_bags(@opts['DIR'], @opts['TARGET'] || 'bags')
+    puts @missing_fields unless @missing_fields.empty?
+  end
 rescue Docopt::Exit => e
   puts e.message
 end
