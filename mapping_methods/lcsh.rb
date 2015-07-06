@@ -24,8 +24,8 @@ module MappingMethods
         if results.length != 0
           match = results[0]
           puts "Matching #{match["label"]} to #{data}"
-          @lcname_matches[data] = RDF::URI(match["id"])
-          graph << RDF::Statement.new(subject, RDF::DC.creator, RDF::URI(match["id"]))
+          @lcname_matches[data] = RDF::URI(match["id"].gsub("info:lc", "http://id.loc.gov"))
+          graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data])
         else
           puts "Unable to find definitive match for #{data}"
           @lcname_matches[data] = data
