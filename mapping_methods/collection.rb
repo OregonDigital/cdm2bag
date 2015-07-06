@@ -87,7 +87,7 @@ module MappingMethods
     end
 
     def collection(subject, data)
-		# Disable local lookup, pass through collection URI
+    # Disable local lookup, pass through collection URI
 #      data = data.gsub(';','')
 #      collection = COLLECTION_URIS[data.to_sym] || data
 #      puts "No URI found for #{data}" unless collection.kind_of? RDF::URI

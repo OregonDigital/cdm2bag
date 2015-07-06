@@ -18,7 +18,7 @@ module MappingMethods
           uri = @lc_cache[creator_name.downcase] || 
             authority.search("#{creator_name}", "names").find{|x| x["label"].strip.downcase == creator_name.downcase} ||
             authority.search("#{creator_name}", "subjects").find{|x| x["label"].strip.downcase == creator_name.downcase} || 
-			MappingMethods::Lcsh::name_uri_from_opaquens("#{creator_name}")
+            MappingMethods::Lcsh::name_uri_from_opaquens("#{creator_name}")
         rescue StandardError => e
           puts e
         end
@@ -29,78 +29,76 @@ module MappingMethods
           return parsed_uri
         else
           puts "No URI found for #{creator_name}" unless @lc_cache.include?(creator_name.downcase)
-		  return creator_name
-		end
+          return creator_name
+        end
         @lc_cache[creator_name.downcase] ||= uri
       end
     end
 
 
-	# Interviewee
+    # Interviewee
     def creator_ive(subject, data)
       data = data.split(";").map(&:strip)
       graph = RDF::Graph.new
       data.each do |name|
-		result = lc_lookup(name)
+        result = lc_lookup(name)
 #puts "Result: #{result}"
-		if result.include?("http")
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ive"), RDF::URI(result))
-		else
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ive"), result)
-		end
+        if result.include?("http")
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ive"), RDF::URI(result))
+        else
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ive"), result)
+        end
       end
       graph
     end
 
-	# Interviewer
+    # Interviewer
     def creator_ivr(subject, data)
       data = data.split(";").map(&:strip)
       graph = RDF::Graph.new
       data.each do |name|
-		result = lc_lookup(name)
+        result = lc_lookup(name)
 #puts "Result: #{result}"
-		if result.include?("http")
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ivr"), RDF::URI(result))
-		else
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ivr"), result)
-		end
+        if result.include?("http")
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ivr"), RDF::URI(result))
+        else
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/ivr"), result)
+        end
       end
       graph
     end
 
-	# Transcriber
+    # Transcriber
     def creator_trc(subject, data)
       data = data.split(";").map(&:strip)
       graph = RDF::Graph.new
       data.each do |name|
-		result = lc_lookup(name)
+        result = lc_lookup(name)
 #puts "Result: #{result}"
-		if result.include?("http")
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/trc"), RDF::URI(result))
-		else
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/trc"), result)
-		end
+        if result.include?("http")
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/trc"), RDF::URI(result))
+        else
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/trc"), result)
+        end
       end
       graph
     end
 
-	# Photographer
+    # Photographer
     def creator_pht(subject, data)
       data = data.split(";").map(&:strip)
       graph = RDF::Graph.new
       data.each do |name|
-		result = lc_lookup(name)
+        result = lc_lookup(name)
 #puts "Result: #{result}"
-		if result.include?("http")
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/pht"), RDF::URI(result))
-		else
-		  graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/pht"), result)
-		end
+        if result.include?("http")
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/pht"), RDF::URI(result))
+        else
+          graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/pht"), result)
+        end
       end
       graph
     end
-
-
 
     def gifford_creator(subject, data)
       data = data.split(";").map(&:strip)

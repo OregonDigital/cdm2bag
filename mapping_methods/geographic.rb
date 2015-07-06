@@ -19,7 +19,7 @@ module MappingMethods
         uri = "http://sws.geonames.org/#{response['geonames'][0]['geonameId']}/"
         geocache[str] = {:uri => RDF::URI(uri)}
       else
-		puts "No location found for #{str}"
+        puts "No location found for #{str}"
         geocache[str] = {:uri => str}
       end
     end
@@ -56,15 +56,15 @@ module MappingMethods
       return graph if data == "" || data.nil?
       Array(data.split(";")).each do |str|
         next if str.to_s.strip == ""
-		if str.include? "Siskiyou County"
-		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5571369/'))
-		elsif str == "Tule Lake, California"
-		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5572966/')) 
-		elsif str.include? "Warm Springs Indian Reservation"
-		  graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/10104133/')) 
-		else
+        if str.include? "Siskiyou County"
+          graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5571369/'))
+        elsif str == "Tule Lake, California"
+          graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/5572966/')) 
+        elsif str.include? "Warm Springs Indian Reservation"
+          graph << RDF::Statement.new(subject, RDF::DC[:spatial], RDF::URI('http://sws.geonames.org/10104133/')) 
+        else
           graph << geographic(subject, str, RDF::DC[:spatial], {:countryBias => "US", :orderBy => 'relevance'})
-		end
+        end
       end
       graph
     end

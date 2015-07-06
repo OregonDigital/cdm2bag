@@ -308,8 +308,8 @@ puts "CPD url: #{cpd_url}"
               last = cpd_node
               pages << cpd_node
 
-			  pagetitle = page.at_xpath('pagetitle').text
-			  pageptr = page.at_xpath('pageptr').text
+              pagetitle = page.at_xpath('pagetitle').text
+              pageptr = page.at_xpath('pageptr').text
 
 #object_page_title = graph.query([replaces_uri, RDF::DC.title, nil])
 
