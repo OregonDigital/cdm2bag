@@ -17,6 +17,7 @@ module MappingMethods
     end
 
     def art_cleanup(collection, graph, subject)
+      graph = cultural_cleanup(collection, graph, subject)
       # Add contributing institution
       graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contributingInstitution']), RDF::URI.new('http://dbpedia.org/resource/Oregon_State_University'))
     end

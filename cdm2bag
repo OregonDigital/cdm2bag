@@ -19,7 +19,7 @@ Consumes a directory of ContentDM collections and converts them into
 bags.
 
 Usage:
-  #{__FILE__} [--skip] [--map-file=<file>] [--image-file=<file>] [--image-file-path=<dir>] [--dry-run] DIR [TARGET]
+  #{__FILE__} [--skip] [--map-file=<file>] [--image-file=<file>] [--image-file-path=<dir>] [--limit=<record_limit>] [--dry-run] DIR [TARGET]
   #{__FILE__} -h | --version
 
 Options:
@@ -29,6 +29,7 @@ Options:
   -v --version              Show version.
   --image-file=<file>       CSV format file containing mapping from one image file to another in the format old,new
   --image-file-path=<dir>   Path where the full size images are located.
+  --limit=<record_limit>    Only parse this many records.
   --dry-run                 Check for missing image files only, don't make calls to extenal APIs.
 
 DOCOPT
@@ -77,6 +78,9 @@ def rearrange_complex_items(file)
   compounds = []
   singles = []
   items = DescParser.parse(file)
+  if @limit
+    items = items[0..@limit.to_i-1]
+  end
   # Make a quick pass through and determine if there are any compound objects, moving them to the end of the list.
   items.each do |rec|
     if rec.find.to_s.downcase.end_with? '.cpd'
@@ -356,6 +360,7 @@ begin
   @missing_fields = []
   @mappings = YAML.load_file(@opts['--map-file'])
   @image_file_path = @opts['--image-file-path'] if @opts['--image-file-path']
+  @limit = @opts['--limit']
 
   # If there is an image file present, split it into k->v pairs for filename lookup.
   if @opts['--image-file']

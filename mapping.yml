@@ -893,7 +893,7 @@ mappings:
     catalo: SKIP
     digita: SKIP
     fullrs: oregon:fullTiff
-    find: SKIP
+    find: oregon:full
     dmaccess: SKIP
     dmoclcno: SKIP
     dmcreated: SKIP
