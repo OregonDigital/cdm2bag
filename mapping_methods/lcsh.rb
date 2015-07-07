@@ -3,15 +3,25 @@ require 'linkeddata'
 module Qa; end
 require 'qa/authorities/web_service_base'
 require 'qa/authorities/loc'
+require 'yaml'
 module MappingMethods
   module Lcsh
 
     def lcname(subject, data)
       authority = Qa::Authorities::Loc.new
       graph = RDF::Graph.new
-      @lcname_matches ||= {}
+      if File.exist?("lcname_cache.yml") && !@lcname_matches
+        @lcname_matches = YAML.load(File.read("lcname_cache.yml"))
+        puts "LOADING #{@lcname_matches.keys.length} ENTRIES FROM NAME CACHE"
+      else
+        @lcname_matches ||= {}
+      end
       if @lcname_matches[data]
-        graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data])
+        predicate = RDF::DC.creator
+        unless @lcname_matches[data][:uri].kind_of? RDF::URI
+          predicate = RDF::DC11.creator
+        end
+        graph << RDF::Statement.new(subject, predicate, @lcname_matches[data][:uri])
         return graph
       end
       regex = /(?<name>.*) \(.*?(?<birth>[0-9]{3,4})[^0-9]*(?<death>[0-9]{3,4})?.*\)/
@@ -36,18 +46,60 @@ module MappingMethods
         if results.length != 0
           match = results[0]
           puts "Matching #{match["label"]} to #{data}"
-          @lcname_matches[data] = RDF::URI(match["id"].gsub("info:lc", "http://id.loc.gov"))
-          graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data])
+          @lcname_matches[data] = {:uri => RDF::URI(match["id"].gsub("info:lc", "http://id.loc.gov")), :label => match["label"] }
+          graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data][:uri])
         else
           puts "Unable to find definitive match for #{data}"
-          @lcname_matches[data] = data
+          @lcname_matches[data] = {:uri => data, :label => data}
           graph << RDF::Statement.new(subject, RDF::DC11.creator, data)
         end
       else
         puts "Unable to extract birth/death from #{data}"
-        @lcname_matches[data] = data
+        @lcname_matches[data] = {:uri => data, :label => data}
         graph << RDF::Statement.new(subject, RDF::DC11.creator, data)
       end
+      File.open("lcname_cache.yml", 'w') do |f|
+        f.write @lcname_matches.to_yaml
+      end
+      graph
+    end
+
+    def lc_repository(subject, data)
+      graph = RDF::Graph.new
+      return graph if data == ""
+      authority = Qa::Authorities::Loc.new
+      if File.exist?("repository_cache.yml") && !@lc_repository_matches
+        @lc_repository_matches = YAML.load(File.read("repository_cache.yml"))
+        puts "LOADING #{@lc_repository_matches.keys.length} ENTRIES FROM REPOSITORY CACHE"
+      else
+        @lc_repository_matches ||= {}
+      end
+      if @lc_repository_matches[data]
+        graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/rps"), @lc_repository_matches[data][:uri])
+        return graph
+      end
+      repository_name = data.split(",").first
+      results = authority.search("#{repository_name} rdftype:CorporateName")
+      results.select! do |result|
+        result["label"].include?(repository_name) || result["label"].gsub(".", "").include?(repository_name)
+      end
+      results.select! do |result|
+        new_graph = RDF::Graph.new
+        new_graph.load(result["id"].gsub("info:lc", "http://id.loc.gov"))
+        new_graph.query([nil, RDF::SKOS.altLabel, nil]).objects.to_a.select{|x| x.to_s == repository_name}.length > 0 || new_graph.query([nil, RDF::SKOS.prefLabel, nil]).objects.to_a.select{|x| x.to_s == repository_name}.length > 0
+      end
+      if results.length > 0
+        result = results.first
+        puts "Repository Match: #{data} is #{result["label"]}"
+        @lc_repository_matches[data] = {:uri => RDF::URI(result["id"].gsub("info:lc", "http://id.loc.gov")), :label => result["label"]}
+      else
+        puts "Missing Repository Match for #{data}"
+        @lc_repository_matches[data] = {:uri => data, :label => data}
+      end
+      File.open("repository_cache.yml", 'w') do |f|
+        f.write @lc_repository_matches.to_yaml
+      end
+      graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/rps"), @lc_repository_matches[data][:uri])
       graph
     end
 

@@ -4,3 +4,5 @@ descMetadata.nt
 bundle
 .idea
 logfile.log
+repository_cache.yml
+lcname_cache.yml

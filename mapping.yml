@@ -878,7 +878,8 @@ mappings:
       method: art_material
     proces: oregon:material
     dimens: oregon:measurements
-    reposi: marcrel:rps
+    reposi:
+      method: lc_repository
     region: dct:date
     tribe: SKIP
     cultur: 
