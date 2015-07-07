@@ -1,5 +1,13 @@
 require 'rdf'
 require 'sparql/client'
+class Hash
+  def stringify_keys
+    keys.each do |key|
+      self[key.to_s] = delete(key)
+    end
+    self
+  end
+end
 
 module MappingMethods
   module AAT
@@ -12,6 +20,22 @@ module MappingMethods
 
       q = "select distinct ?subj {?subj skos:prefLabel|skos:altLabel ?label. filter(str(?label)=\"#{str}\")}"
       @type_cache[str] = sparql.query(q, :content_type => "application/sparql-results+json")
+    end
+
+    def aat_fuzzy_search(str)
+      @type_cache ||= {}
+      return @type_cache[str] if @type_cache.include?(str)
+      sparql = SPARQL::Client.new("http://vocab.getty.edu/sparql")
+
+      q = "select ?id ?label {?id skos:prefLabel|skos:altLabel ?label. FILTER contains(?label,\"#{str}\")}"
+      intermediate = sparql.query(q, :content_type => "application/sparql-results+json").map(&:to_h).map(&:stringify_keys)
+      result = intermediate.map do |hsh|
+        next unless hsh["id"]
+        description = RDF::Graph.new.tap{|x| x.load(hsh["id"])}.query([nil, RDF::SCHEMA.description,nil]).objects.to_a.first
+        hsh["label"] = "#{hsh["label"]} (#{description})"
+        hsh
+      end
+      @type_cache[str] = result
     end
 
     def aat_from_search(subject, data)
