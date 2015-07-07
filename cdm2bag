@@ -328,10 +328,8 @@ puts collection
     items = rearrange_complex_items(File.join(dir, collection, 'desc.all'))
     items.each do |item|
 
-#			puts item
-
-      item_full = item.send(full)
-      item_tiff = item.send(full_tiff).split(/\\/).last
+      item_full = item.send(full) if full
+      item_tiff = item.send(full_tiff).split(/\\/).last if full_tiff
       item_tiff = item_tiff.split(/\//).last unless item_tiff.nil?
       if !item_tiff.nil? && File.exist?(File.join(tiff_path, item_tiff))
         tiffs << "\"http://oregondigital.org/u?/#{collection},#{item.dmrecord}\",#{item_tiff}"

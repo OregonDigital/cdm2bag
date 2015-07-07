@@ -892,7 +892,7 @@ mappings:
         art_rights
     catalo: SKIP
     digita: SKIP
-    fullrs: oregon:full
+    fullrs: oregon:fullTiff
     find: SKIP
     dmaccess: SKIP
     dmoclcno: SKIP
