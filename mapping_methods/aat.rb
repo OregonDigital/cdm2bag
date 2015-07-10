@@ -27,7 +27,7 @@ module MappingMethods
       return @type_cache[str] if @type_cache.include?(str)
       sparql = SPARQL::Client.new("http://vocab.getty.edu/sparql")
 
-      q = "select ?id ?label {?id skos:prefLabel|skos:altLabel ?label. FILTER contains(?label,\"#{str}\")}"
+      q = "select ?id ?label {?id skos:prefLabel|skos:altLabel ?label; skos:inScheme <http://vocab.getty.edu/ulan/>. FILTER contains(?label,\"#{str}\")}"
       intermediate = sparql.query(q, :content_type => "application/sparql-results+json").map(&:to_h).map(&:stringify_keys)
       result = intermediate.map do |hsh|
         next unless hsh["id"]

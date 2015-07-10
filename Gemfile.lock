@@ -52,6 +52,7 @@ GEM
     json (1.8.3)
     json-ld (1.1.4)
       rdf (~> 1.1)
+    levenshtein (0.2.2)
     link_header (0.0.8)
     linkeddata (1.1.0)
       json-ld (>= 1.1.0)
@@ -190,6 +191,7 @@ DEPENDENCIES
   bagit
   docopt
   iso-639
+  levenshtein
   linkeddata
   nokogiri
   pry

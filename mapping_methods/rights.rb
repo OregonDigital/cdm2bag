@@ -117,7 +117,8 @@ module MappingMethods
     
     def art_rights(subject, data)
       graph = RDF::Graph.new
-      graph << RDF::Statement.new(subject, RDF::DC.rights, RDF::URI("http://www.europeana.eu/rights/rr-f/"))
+      graph << RDF::Statement.new(subject, RDF::DC.rights, RDF::URI("http://www.europeana.eu/rights/rr-r/"))
+      graph << RDF::Statement(subject, RDF::URI('http://opaquenamespace.org/rights/AccessRestrictions'), RDF::URI("http://dbpedia.org/resource/Oregon_State_University"))
       graph << RDF::Statement.new(subject, RDF::DC11.rights, "Copyright resides with the creator(s) of the image or their assigns and may be subject to copyright restrictions. The use of this image is intended solely for educational purposes and for individuals affiliated with Oregon State University.")
     end
   end

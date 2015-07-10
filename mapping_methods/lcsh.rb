@@ -20,6 +20,7 @@ module MappingMethods
 
     def lcname(subject, data)
       graph = RDF::Graph.new
+      data = data.gsub(/;$/,'')
       if File.exist?("lcname_cache.yml") && !@lcname_matches
         @lcname_matches = YAML.load(File.read("lcname_cache.yml"))
         puts "LOADING #{@lcname_matches.keys.length} ENTRIES FROM NAME CACHE"
@@ -78,8 +79,8 @@ module MappingMethods
 
     def lc_repository(subject, data)
       graph = RDF::Graph.new
+      data = data.gsub(/;$/,'')
       return graph if data == ""
-      authority = Qa::Authorities::Loc.new
       if File.exist?("repository_cache.yml") && !@lc_repository_matches
         @lc_repository_matches = YAML.load(File.read("repository_cache.yml"))
         puts "LOADING #{@lc_repository_matches.keys.length} ENTRIES FROM REPOSITORY CACHE"
