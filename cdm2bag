@@ -63,11 +63,11 @@ def create_graphs(file, collection)
           ns, term = @collection_mappings[tag.to_s].split(':')
           graph << RDF::Statement.new(bnode, @namespaces[ns][term], ln) unless @skip.include? ln.downcase
         end
-      rescue NoMethodError
-
-        puts "NoMethodError: #{tag} / #{@collection_mappings[tag.to_s]}"
-
-        @missing_fields << tag unless @missing_fields.include? tag
+      # rescue NoMethodError
+      #
+      #   puts "NoMethodError: #{tag} / #{@collection_mappings[tag.to_s]}"
+      #
+      #   @missing_fields << tag unless @missing_fields.include? tag
       end
     end
   end
@@ -120,7 +120,8 @@ def map_set
       'herbarium' => 'herbarium',
       'streamsurve' => 'streamsurvey',
       'cultural' => 'oregon-multicultural-archives',
-      'art' => 'art'
+      'art' => 'art-architecture-design',
+      'cgdc' => 'columbia-gorge'
   }
 end
 
@@ -354,6 +355,7 @@ puts collection
 
 end
 
+require 'pry'
 begin
   @opts = Docopt::docopt(doc, version: 'cdm2bag 0.0.2')
   @folder_id = 1

@@ -28,7 +28,7 @@ module MappingMethods
         @lcname_matches ||= {}
       end
       if @lcname_matches[data]
-        predicate = RDF::DC.creator
+        predicate = RDF::DC11.creator
         unless @lcname_matches[data][:uri].kind_of? RDF::URI
           predicate = RDF::DC11.creator
         end
@@ -60,7 +60,9 @@ module MappingMethods
           match = results[0]
           puts "Matching #{match["label"]} to #{data}"
           @lcname_matches[data] = {:uri => RDF::URI(match["id"].gsub("info:lc", "http://id.loc.gov")), :label => match["label"] }
-          graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data][:uri])
+          # graph << RDF::Statement.new(subject, RDF::DC.creator, @lcname_matches[data][:uri])
+          # Temporarily all DC11 because reasons.
+          graph << RDF::Statement.new(subject, RDF::DC11.creator, @lcname_matches[data][:uri])
         else
           puts "Unable to find definitive match for #{data}"
           @lcname_matches[data] = {:uri => data, :label => data}

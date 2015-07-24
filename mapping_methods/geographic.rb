@@ -3,10 +3,17 @@ require 'rest-client'
 require 'json'
 require 'rdf/ntriples'
 require 'rdf/raptor'
+require 'yaml'
 
 module MappingMethods
   module Geographic
     def geocache
+      unless @geocache
+        if File.exist?("geo_cache.yml")
+          @geocache = YAML.load(File.read("geo_cache.yml"))
+          puts "LOADING #{@geocache.length} ENTRIES FROM GEO CACHE"
+        end
+      end
       @geocache ||= {}
     end
 
@@ -17,11 +24,16 @@ module MappingMethods
       response = JSON.parse(response)
       if response["totalResultsCount"] != 0
         uri = "http://sws.geonames.org/#{response['geonames'][0]['geonameId']}/"
-        geocache[str] = {:uri => RDF::URI(uri)}
+        puts "Found location #{uri} for #{str}"
+        geocache[str] = {:uri => RDF::URI(uri), :label => response['geonames'][0]['name']}
       else
         puts "No location found for #{str}"
-        geocache[str] = {:uri => str}
+        geocache[str] = {:uri => str, :label => str}
       end
+      File.open("geo_cache.yml", 'w') do |f|
+        f.write geocache.to_yaml
+      end
+      geocache
     end
 
     def geographic_oe(subject, data)

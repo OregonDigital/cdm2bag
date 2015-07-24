@@ -6,3 +6,5 @@ bundle
 logfile.log
 repository_cache.yml
 lcname_cache.yml
+geo_cache.yml
+type_cache.yml

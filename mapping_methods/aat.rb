@@ -1,5 +1,6 @@
 require 'rdf'
 require 'sparql/client'
+require 'yaml'
 class Hash
   def stringify_keys
     keys.each do |key|
@@ -14,12 +15,22 @@ module MappingMethods
 
     def aat_search(str)
       str = str.downcase
+      if File.exist?("type_cache.yml") && !@type_cache
+        @type_cache = YAML.load(File.read("type_cache.yml"))
+        puts "LOADING #{@type_cache.keys.length} ENTRIES FROM TYPE CACHE"
+      end
       @type_cache ||= {}
       return @type_cache[str] if @type_cache.include?(str)
       sparql = SPARQL::Client.new("http://vocab.getty.edu/sparql")
 
-      q = "select distinct ?subj {?subj skos:prefLabel|skos:altLabel ?label. filter(str(?label)=\"#{str}\")}"
-      @type_cache[str] = sparql.query(q, :content_type => "application/sparql-results+json")
+      q = "select distinct ?subj ?label {?subj skos:prefLabel|skos:altLabel ?label. filter(str(?label)=\"#{str}\")}"
+      result = sparql.query(q, :content_type => "application/sparql-results+json").to_a
+      result = result.map{|x| {:uri => x.subj, :label => x.label.to_s}}
+      @type_cache[str] = result.first || {:uri => str, :label => str}
+      File.open("type_cache.yml", 'w') do |f|
+        f.write @type_cache.to_yaml
+      end
+      @type_cache[str]
     end
 
     def aat_fuzzy_search(str)
@@ -44,13 +55,12 @@ module MappingMethods
       Array(data).each do |type|
         filtered_type = type.downcase.strip.gsub("film ","")
         filtered_type = type_match[filtered_type] if type_match.include?(filtered_type)
-        uri = aat_search(filtered_type).first
+        uri = (aat_search(filtered_type) || {})[:uri]
         unless uri
           r << RDF::Statement.new(subject, RDF.type, type)
           puts "No result for #{type}"
           next
         end
-        uri = uri.to_hash[:subj] if uri
         r << RDF::Statement.new(subject, RDF.type, uri)
       end
       r

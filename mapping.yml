@@ -21,6 +21,7 @@ namespaces:
   biol: "http://ontologi.es/biol/botany#"
   schema: "http://schema.org/"
   swpo: "http://sw-portal.deri.org/ontologies/swportal#"
+  rdae: "http://rdfvocab.info/Elements/"
 
 ##
 # METHODS:
@@ -900,3 +901,33 @@ mappings:
     dmcreated: SKIP
     dmmodified: SKIP
     dmimage: SKIP
+  cgdc:
+    title: dct:title
+    descri: dct:description
+    creato: marcrel:pht
+    publis: marcrel:dnr
+    contri: 
+      method: streamsurvey_geographic
+    date: dct:created
+    type: SKIP
+    format:
+      method: aat_from_search
+    identi: dct:identifier
+    audien: oregon:sourceCondition
+    other: SKIP
+    scann: SKIP
+    color: rdae:colourContent
+    collec: modsrdf:note
+    fullrs: oregon:fullTiff
+    find: oregon:full
+    dmaccess: SKIP
+    dmoclcno: SKIP
+    dmcreated: SKIP
+    dmmodified: SKIP
+    dmimage: SKIP
+    dmad1: SKIP
+    dmad2: SKIP
+    covera: SKIP
+    langua: oregon:lchsaWidth # temp to create dc:extent in cleanup
+    relati: oregon:lchsaHeight # temp to create dc:extent in cleanup
+    rights: oregon:lchsaUnit # temp to create dc:extent in cleanup
