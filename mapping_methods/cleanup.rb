@@ -29,17 +29,16 @@ module MappingMethods
       width = graph.query([nil, @namespaces['oregon']['lchsaWidth'], nil])
       unit = graph.query([nil, @namespaces['oregon']['lchsaUnit'], nil])
 
+      # Only make the dct:extent entry if all of the elements are present.
+      if height.first and width.first and unit.first
+        dims = "#{width.first.object.to_s.gsub(/[^0-9\.\/ '"]/,'')} x #{height.first.object.to_s.gsub(/[^0-9\.\/ '"]/,'')} #{unit.first.object.to_s.downcase}"
+        graph << RDF::Statement.new(subject, RDF::URI.new("http://opaquenamespace.org/ns/measurements"), dims)
+      end
       # Remove the placeholder statements.
       graph.delete(height)
       graph.delete(width)
       graph.delete(unit)
 
-      # Only make the dct:extent entry if all of the elements are present.
-      if height.first and width.first and unit.first
-        dims = "#{width.first.object.to_s.gsub(/[^0-9\.]/,'')} x #{height.first.object.to_s.gsub(/[^0-9\.]/,'')} #{unit.first.object.to_s.downcase}"
-        puts "UPDATING MEASUREMENT"
-        graph << RDF::Statement.new(subject, RDF::URI.new("http://opaquenamespace.org/ns/measurements"), dims)
-      end
       # Add contributing institution
       graph << RDF::Statement.new(subject, RDF::URI.new(@namespaces['oregon']['contributingInstitution']), RDF::URI.new('http://dbpedia.org/resource/Oregon_State_University'))
       graph

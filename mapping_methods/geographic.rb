@@ -25,7 +25,10 @@ module MappingMethods
       if response["totalResultsCount"] != 0
         uri = "http://sws.geonames.org/#{response['geonames'][0]['geonameId']}/"
         puts "Found location #{uri} for #{str}"
-        geocache[str] = {:uri => RDF::URI(uri), :label => response['geonames'][0]['name']}
+        parent = parent_name(uri)
+        grandparent = parent_name(parent[:uri])
+        great_grandparent = parent_name(grandparent[:uri])
+        geocache[str] = {:uri => RDF::URI(uri), :label => [parent[:label], grandparent[:label], great_grandparent[:label]].join(" >> ")}
       else
         puts "No location found for #{str}"
         geocache[str] = {:uri => str, :label => str}
@@ -34,6 +37,13 @@ module MappingMethods
         f.write geocache.to_yaml
       end
       geocache
+    end
+
+    def parent_name(uri)
+      g = RDF::Graph.new
+      g.load(RDF::URI(uri.to_s))
+      parent_uri = g.query([nil, RDF::URI("http://www.geonames.org/ontology#parentFeature"),nil]).objects.first
+      {:uri => parent_uri, :label => g.query([nil, RDF::URI("http://www.geonames.org/ontology#name"),nil]).objects.first.to_s}
     end
 
     def geographic_oe(subject, data)
