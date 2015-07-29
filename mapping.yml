@@ -905,7 +905,8 @@ mappings:
     title: dct:title
     descri: dct:description
     creato: marcrel:pht
-    publis: marcrel:dnr
+    publis:
+      method: cgdc_donor
     contri: 
       method: streamsurvey_geographic
     date: dct:created

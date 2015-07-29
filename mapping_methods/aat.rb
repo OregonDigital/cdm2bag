@@ -26,7 +26,7 @@ module MappingMethods
       q = "select distinct ?subj ?label {?subj skos:prefLabel|skos:altLabel ?label. filter(str(?label)=\"#{str}\")}"
       result = sparql.query(q, :content_type => "application/sparql-results+json").to_a
       result = result.map{|x| {:uri => x.subj, :label => x.label.to_s}}
-      @type_cache[str] = result.first || {:uri => str, :label => str}
+      @type_cache[str] = [result.first || {:uri => str, :label => str}]
       File.open("type_cache.yml", 'w') do |f|
         f.write @type_cache.to_yaml
       end
@@ -55,13 +55,15 @@ module MappingMethods
       Array(data).each do |type|
         filtered_type = type.downcase.strip.gsub("film ","")
         filtered_type = type_match[filtered_type] if type_match.include?(filtered_type)
-        uri = (aat_search(filtered_type) || {})[:uri]
-        unless uri
+        uri = (aat_search(filtered_type) || [{}]).map{|x| x[:uri]}
+        unless uri.length > 0
           r << RDF::Statement.new(subject, RDF.type, type)
           puts "No result for #{type}"
           next
         end
-        r << RDF::Statement.new(subject, RDF.type, uri)
+        Array(uri).each do |u|
+          r << RDF::Statement.new(subject, RDF.type, u)
+        end
       end
       r
     end

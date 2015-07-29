@@ -113,5 +113,15 @@ module MappingMethods
       end
       graph
     end
+
+    def cgdc_donor(subject, data)
+      graph = RDF::Graph.new
+      if data.strip == "Wasco County Pioneer Association"
+        graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/dnr"), RDF::URI("http://id.loc.gov/authorities/names/no2005000226"))
+      else
+        graph << RDF::Statement.new(subject, RDF::URI("http://id.loc.gov/vocabulary/relators/dnr"), data)
+      end
+      graph
+    end
   end
 end
