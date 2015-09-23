@@ -1,4 +1,4 @@
-ContentDM to BagIt
+CONTENTdm to BagIt
 ==================
 
 **cdm2bag** is a Ruby script that facilitated the bulk migration of collections into Oregon Digital. Now that our migration is completed, future work will happen with **csv2bag**: http://github.com/OregonDigital/csv2bag
